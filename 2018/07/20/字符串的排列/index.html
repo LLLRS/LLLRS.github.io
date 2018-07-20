@@ -124,7 +124,7 @@
 
 
 
-  <meta name="keywords" content="算法,Java,leetcode," />
+  <meta name="keywords" content="算法,Java," />
 
 
 
@@ -137,20 +137,18 @@
 
 
 
-<meta name="description" content="N皇后问题是一个非常经典的问题，即如何能够在N*N的棋盘上放置N个皇后，使得任何一个皇后都无法直接吃掉其他的皇后。为了达到此目的，任两个皇后都不能处于同一条横行、纵行或斜线上。注意仅当 N= 1 或N≥ 4 时问题有解。 这个问题依然可以用递归来解决。由于每一行只能放置一个皇后，所以可以尝试在从每一行的N个位置上尝试放置皇后，直到放满N个皇后。在尝试的过程中，维护三个数组表示该位置是否可以放置皇">
-<meta name="keywords" content="算法,Java,leetcode">
+<meta name="description" content="题目要求：输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串(字典序)abc,acb,bac,bca,cab和cba。输入一个字符串,长度不超9(可能有字符重复),字符只包括大小写字母。 解决思路1-递归算法采用递归的方法，根据不同位置上字母的组合，先把结果保存在TreeSet中，这样既可以去掉重复的字符串，又可以保证字">
+<meta name="keywords" content="算法,Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 第51题  N-Queens">
-<meta property="og:url" content="https://myrens.github.io/2018/04/08/leetcode 第51题  N-Queens/index.html">
+<meta property="og:title" content="字符串的排列">
+<meta property="og:url" content="https://myrens.github.io/2018/07/20/字符串的排列/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="N皇后问题是一个非常经典的问题，即如何能够在N*N的棋盘上放置N个皇后，使得任何一个皇后都无法直接吃掉其他的皇后。为了达到此目的，任两个皇后都不能处于同一条横行、纵行或斜线上。注意仅当 N= 1 或N≥ 4 时问题有解。 这个问题依然可以用递归来解决。由于每一行只能放置一个皇后，所以可以尝试在从每一行的N个位置上尝试放置皇后，直到放满N个皇后。在尝试的过程中，维护三个数组表示该位置是否可以放置皇">
+<meta property="og:description" content="题目要求：输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串(字典序)abc,acb,bac,bca,cab和cba。输入一个字符串,长度不超9(可能有字符重复),字符只包括大小写字母。 解决思路1-递归算法采用递归的方法，根据不同位置上字母的组合，先把结果保存在TreeSet中，这样既可以去掉重复的字符串，又可以保证字">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://myrens.github.io/2018/04/08/leetcode%20第51题%20%20N-Queens/1.bmp">
-<meta property="og:updated_time" content="2018-07-02T14:50:00.070Z">
+<meta property="og:updated_time" content="2018-07-20T13:39:15.348Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode 第51题  N-Queens">
-<meta name="twitter:description" content="N皇后问题是一个非常经典的问题，即如何能够在N*N的棋盘上放置N个皇后，使得任何一个皇后都无法直接吃掉其他的皇后。为了达到此目的，任两个皇后都不能处于同一条横行、纵行或斜线上。注意仅当 N= 1 或N≥ 4 时问题有解。 这个问题依然可以用递归来解决。由于每一行只能放置一个皇后，所以可以尝试在从每一行的N个位置上尝试放置皇后，直到放满N个皇后。在尝试的过程中，维护三个数组表示该位置是否可以放置皇">
-<meta name="twitter:image" content="https://myrens.github.io/2018/04/08/leetcode%20第51题%20%20N-Queens/1.bmp">
+<meta name="twitter:title" content="字符串的排列">
+<meta name="twitter:description" content="题目要求：输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串(字典序)abc,acb,bac,bca,cab和cba。输入一个字符串,长度不超9(可能有字符重复),字符只包括大小写字母。 解决思路1-递归算法采用递归的方法，根据不同位置上字母的组合，先把结果保存在TreeSet中，这样既可以去掉重复的字符串，又可以保证字">
 
 
 
@@ -180,13 +178,13 @@
 
 
 
-  <link rel="canonical" href="https://myrens.github.io/2018/04/08/leetcode 第51题  N-Queens/"/>
+  <link rel="canonical" href="https://myrens.github.io/2018/07/20/字符串的排列/"/>
 
 
 
 
 
-  <title>leetcode 第51题  N-Queens | 爱生活,爱柒柒</title>
+  <title>字符串的排列 | 爱生活,爱柒柒</title>
   
 
 
@@ -363,7 +361,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://myrens.github.io/2018/04/08/leetcode 第51题  N-Queens/">
+    <link itemprop="mainEntityOfPage" href="https://myrens.github.io/2018/07/20/字符串的排列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LI Ren">
@@ -380,7 +378,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode 第51题  N-Queens</h1>
+          <h1 class="post-title" itemprop="name headline">字符串的排列</h1>
         
 
         <div class="post-meta">
@@ -392,8 +390,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:19:14+08:00">
-                2018-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-20T21:17:49+08:00">
+                2018-07-20
               </time>
             
 
@@ -415,8 +413,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/剑指offer/" itemprop="url" rel="index">
+                    <span itemprop="name">剑指offer</span>
                   </a>
                 </span>
 
@@ -433,8 +431,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/08/leetcode 第51题  N-Queens/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/08/leetcode 第51题  N-Queens/" itemprop="commentCount"></span>
+                <a href="/2018/07/20/字符串的排列/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/07/20/字符串的排列/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -442,7 +440,7 @@
 
           
           
-             <span id="/2018/04/08/leetcode 第51题  N-Queens/" class="leancloud_visitors" data-flag-title="leetcode 第51题  N-Queens">
+             <span id="/2018/07/20/字符串的排列/" class="leancloud_visitors" data-flag-title="字符串的排列">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -469,7 +467,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  394
+                  774
                 </span>
               
 
@@ -495,63 +493,16 @@
 
       
         <a id="more"></a>
-<p>N皇后问题是一个非常经典的问题，即如何能够在N*N的棋盘上放置N个皇后，使得任何一个皇后都无法直接吃掉其他的皇后。为了达到此目的，任两个皇后都不能处于同一条横行、纵行或斜线上。注意仅当 N= 1 或N≥ 4 时问题有解。<br><img src="/2018/04/08/leetcode 第51题  N-Queens/1.bmp" alt="这里写图片描述"></p>
-<p>这个问题依然可以用递归来解决。由于每一行只能放置一个皇后，所以可以尝试在从每一行的N个位置上尝试放置皇后，直到放满N个皇后。在尝试的过程中，维护三个数组表示该位置是否可以放置皇后，其中列用自身表示，主对角线上用横竖坐标的差表示，副对角线上用横竖坐标的和表示。</p>
-<h2 id="JAVA代码实现"><a href="#JAVA代码实现" class="headerlink" title="JAVA代码实现"></a>JAVA代码实现</h2><pre><code>class Solution {
+<h2 id="题目要求："><a href="#题目要求：" class="headerlink" title="题目要求："></a>题目要求：</h2><p>输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串(字典序)abc,acb,bac,bca,cab和cba。输入一个字符串,长度不超9(可能有字符重复),字符只包括大小写字母。</p>
+<h2 id="解决思路1-递归算法"><a href="#解决思路1-递归算法" class="headerlink" title="解决思路1-递归算法"></a>解决思路1-递归算法</h2><p>采用递归的方法，根据不同位置上字母的组合，先把结果保存在TreeSet中，这样既可以去掉重复的字符串，又可以保证字符串之间的字典顺序。</p>
+<h2 id="java代码1"><a href="#java代码1" class="headerlink" title="java代码1"></a>java代码1</h2><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">TreeSet&lt;<span class="keyword">String</span>&gt; t = <span class="keyword">new</span> TreeSet&lt;&gt;();</span><br><span class="line">    <span class="built_in">boolean</span>[]  used = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">public</span> ArrayList&lt;<span class="keyword">String</span>&gt; Permutation(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</span><br><span class="line">         </span><br><span class="line">        ArrayList&lt;<span class="keyword">String</span>&gt; res = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">String</span>&gt;();</span><br><span class="line">        <span class="built_in">int</span> len = <span class="built_in">str</span>.length();</span><br><span class="line">        <span class="keyword">if</span>(len == <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line">        used = <span class="keyword">new</span> <span class="built_in">boolean</span>[len];</span><br><span class="line">         </span><br><span class="line">        PermutationAux(<span class="built_in">str</span>,len,<span class="number">0</span>,<span class="keyword">new</span> StringBuilder());</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">String</span> tt : t)</span><br><span class="line">            res.<span class="built_in">add</span>(tt);</span><br><span class="line">         </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> PermutationAux(<span class="keyword">String</span> s,<span class="built_in">int</span> n,<span class="built_in">int</span> cnt,StringBuilder sb)&#123;</span><br><span class="line">         </span><br><span class="line">        <span class="keyword">if</span>(sb.length() == n)&#123;</span><br><span class="line">            t.<span class="built_in">add</span>(sb.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">         </span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!used[i])&#123;</span><br><span class="line">                used[i] = <span class="keyword">true</span>;</span><br><span class="line">                sb.<span class="built_in">append</span>(s.charAt(i));</span><br><span class="line">                PermutationAux(s,n,cnt+<span class="number">1</span>,sb);</span><br><span class="line">                sb.setLength(sb.length()<span class="number">-1</span>);</span><br><span class="line">                used[i] = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">         </span><br><span class="line">         </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解决思路2-字典序排列算法"><a href="#解决思路2-字典序排列算法" class="headerlink" title="解决思路2-字典序排列算法"></a>解决思路2-字典序排列算法</h2><p>一个全排列可看做一个字符串，字符串可有前缀、后缀。<br>生成给定全排列的下一个排列.所谓一个的下一个就是这一个与下一个之间没有其他的。<br>这就要求这一个与下一个有尽可能长的共同前缀，也即变化限制在尽可能短的后缀上。</p>
+<p>【例】 如何得到346987521的下一个<br>1，从尾部往前找第一个P(i-1) &lt; P(i)的位置<br>3 4 6 &lt;- 9 &lt;- 8 &lt;- 7 &lt;- 5 &lt;- 2 &lt;- 1<br>最终找到6是第一个变小的数字，记录下6的位置i-1</p>
+<p>2，从i位置往后找到最后一个大于6的数<br>    3 4 6 -&gt; 9 -&gt; 8 -&gt; 7 5 2 1<br>最终找到7的位置，记录位置为m</p>
+<p>3，交换位置i-1和m的值<br>    3 4 7 9 8 6 5 2 1<br>4，倒序i位置后的所有数据<br>    3 4 7 1 2 5 6 8 9<br>则347125689为346987521的下一个排列</p>
+<p>详情可以参考<a href="https://www.nowcoder.com/questionTerminal/fe6b651b66ae47d7acce78ffdd9a96c7" target="_blank" rel="noopener">牛客网</a>上@天天502关于这个揭发这个回答。</p>
+<h2 id="java代码2"><a href="#java代码2" class="headerlink" title="java代码2"></a>java代码2</h2><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> ArrayList&lt;<span class="keyword">String</span>&gt; Permutation(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        ArrayList&lt;<span class="keyword">String</span>&gt; res = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">String</span>&gt;();</span><br><span class="line">        <span class="built_in">int</span> len = <span class="built_in">str</span>.length();</span><br><span class="line">        <span class="keyword">if</span>(len == <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">char</span>[] ch =  <span class="built_in">str</span>.toCharArray();</span><br><span class="line">        Arrays.<span class="built_in">sort</span>(ch);</span><br><span class="line">        res.<span class="built_in">add</span>(<span class="keyword">String</span>.valueOf(ch));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="built_in">int</span> l = len<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">while</span>(l&gt;<span class="number">0</span>&amp;&amp;ch[l<span class="number">-1</span>]&gt;=ch[l]) l--;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(l==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">int</span> r = l;</span><br><span class="line">            <span class="keyword">while</span>(r&lt;len&amp;&amp;ch[r]&gt;ch[l<span class="number">-1</span>]) r++;</span><br><span class="line">            </span><br><span class="line">            swap(ch,l<span class="number">-1</span>,r<span class="number">-1</span>);</span><br><span class="line">            <span class="built_in">reverse</span>(ch,l);</span><br><span class="line">            </span><br><span class="line">            res.<span class="built_in">add</span>(<span class="keyword">String</span>.valueOf(ch));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="built_in">reverse</span>(<span class="built_in">char</span>[] chars,<span class="built_in">int</span> k)&#123;</span><br><span class="line">        <span class="keyword">if</span>(chars==<span class="keyword">null</span> || chars.length&lt;=k)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">int</span> len = chars.length;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;(len-k)/<span class="number">2</span>;i++)&#123;</span><br><span class="line">            <span class="built_in">int</span> m = k+i;</span><br><span class="line">            <span class="built_in">int</span> n = len<span class="number">-1</span>-i;</span><br><span class="line">            <span class="keyword">if</span>(m&lt;=n)&#123;</span><br><span class="line">                swap(chars,m,n);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> swap(<span class="built_in">char</span>[] cs,<span class="built_in">int</span> i,<span class="built_in">int</span> j)&#123;</span><br><span class="line">        <span class="built_in">char</span> temp = cs[i];</span><br><span class="line">        cs[i] = cs[j];</span><br><span class="line">        cs[j] = temp;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-     boolean[] col = null;
-     boolean[] dia1 = null;
-     boolean[] dia2 = null; 
-     List&lt;List&lt;String&gt;&gt; res = new ArrayList&lt;&gt;();
-
-     public  List&lt;List&lt;String&gt;&gt; solveNQueens(int n) {
-         col = new boolean[n];
-         dia1 = new boolean[2*n-1];
-         dia2 = new boolean[2*n-1];
-
-         dfs(n, 0, new ArrayList&lt;&gt;());
-         return res;         
-     }
-
-     public  void dfs(int n,int row,List&lt;Integer&gt; st) {
-         if(row==n){
-             res.add(aux(n, st));
-             return;
-         }
-
-         for(int i=0;i&lt;n;i++){
-             if(!col[i]&amp;&amp;!dia1[row-i+n-1]&amp;&amp;!dia2[row+i]){
-                 col[i] = true;
-                 dia1[row-i+n-1] = true;
-                 dia2[row+i] = true;
-                 st.add(i);
-                 dfs(n, row+1, st);
-                 st.remove(st.size()-1);
-                 col[i] = false;
-                 dia1[row-i+n-1] = false;
-                 dia2[row+i] = false;
-             }
-
-         }
-
-     }
-
-     public List&lt;String&gt; aux(int n,List&lt;Integer&gt; st) {
-         char[] t = new char[n];
-
-         List&lt;String&gt; temp = new ArrayList&lt;&gt;();
-         for(int i=0;i&lt;n;i++) t[i] = &apos;.&apos;;                
-         for(int i=0;i&lt;n;i++){
-             int k = st.get(i);
-             t[k] = &apos;Q&apos;;
-             temp.add(String.valueOf(t));
-             t[k] = &apos;.&apos;; 
-         }
-
-         return temp;         
-     }
-}
-</code></pre>
       
     </div>
     
@@ -561,7 +512,7 @@
 	  
 		<div class="copyright">
 		<p><span>
-		<b>本文地址：</b><a href="/2018/04/08/leetcode 第51题  N-Queens/" title="leetcode 第51题  N-Queens">https://myrens.github.io/2018/04/08/leetcode 第51题  N-Queens/</a><br /><b>转载请注明出处，谢谢！</b>
+		<b>本文地址：</b><a href="/2018/07/20/字符串的排列/" title="字符串的排列">https://myrens.github.io/2018/07/20/字符串的排列/</a><br /><b>转载请注明出处，谢谢！</b>
 		</span></p>
 		</div>
 	  
@@ -606,8 +557,6 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
-          
         </div>
       
 
@@ -635,12 +584,6 @@
 			<div class="post-nav-next post-nav-item">
 
 		      
-
-		       <a href="/2018/06/21/seckill/" rel="prev" title="seckill">
-
-		          <i class="fa fa-chevron-left"></i> seckill
-				</a>
-			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -649,9 +592,9 @@
 
 		      
 		
-		        <a href="/2018/04/08/leetcode 第77题 Combinations/" rel="next" title="leetcode 第77题 Combinations">
+		        <a href="/2018/06/21/seckill/" rel="next" title="seckill">
 		
-		         leetcode 第77题 Combinations <i class="fa fa-chevron-right"></i>
+		         seckill <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -861,7 +804,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVA代码实现"><span class="nav-number">1.</span> <span class="nav-text">JAVA代码实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目要求："><span class="nav-number">1.</span> <span class="nav-text">题目要求：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路1-递归算法"><span class="nav-number">2.</span> <span class="nav-text">解决思路1-递归算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java代码1"><span class="nav-number">3.</span> <span class="nav-text">java代码1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路2-字典序排列算法"><span class="nav-number">4.</span> <span class="nav-text">解决思路2-字典序排列算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java代码2"><span class="nav-number">5.</span> <span class="nav-text">java代码2</span></a></li></ol></div>
             
 
           </div>
