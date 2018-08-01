@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://myrens.github.io/"/>
-  <updated>2018-07-29T02:07:21.489Z</updated>
-  <id>https://myrens.github.io/</id>
+  <link href="https://9191rs.me/"/>
+  <updated>2018-08-01T10:25:49.047Z</updated>
+  <id>https://9191rs.me/</id>
   
   <author>
     <name>LI Ren</name>
@@ -17,9 +17,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>旋转数组的最小数字</title>
+    <link href="https://9191rs.me/%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97.html"/>
+    <id>https://9191rs.me/旋转数组的最小数字.html</id>
+    <published>2018-08-01T06:29:09.000Z</published>
+    <updated>2018-08-01T10:25:49.047Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="旋转数组的最小数字"><a href="#旋转数组的最小数字" class="headerlink" title="旋转数组的最小数字"></a>旋转数组的最小数字</h2><h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，<br>输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。<br>NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>采用二分法解答这个问题，<br>mid = l + (r - l)/2<br>需要考虑三种情况：<br>(1)nums[mid] &gt; nums[r]:<br>&#8195;出现这种情况的nums类似[3,4,5,6,0,1,2]，此时最小数字一定在mid的右边。</p><p>(2)nums[mid] == nums[r]:<br>&#8195;出现这种情况的nums类似 [1,0,1,1,1] 或者[1,1,1,0,1]，此时最小数字不好判断在mid左边<br>还是右边,这时只好一个一个试 。<br>(3)nums[mid] &lt; nums[r]:<br>&#8195;出现这种情况的nums类似[2,2,3,4,5,6,6],此时最小数字一定就是nums[mid]或者在mid的左边。<br>因为右边必然都是递增的。</p><h3 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h3><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> minNumberInRotatenums(<span class="built_in">int</span> [] nums) &#123;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> <span class="built_in">len</span> = nums.length;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">len</span>==<span class="number">0</span>) return <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> l = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> r = <span class="built_in">len</span><span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line"><span class="built_in">int</span> <span class="built_in">mid</span> = l + (r-l)/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span>(nums[<span class="built_in">mid</span>]&gt;nums[r])</span><br><span class="line">l = <span class="built_in">mid</span> + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(nums[<span class="built_in">mid</span>]==nums[r])</span><br><span class="line">r--;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">r = <span class="built_in">mid</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return nums[l];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;旋转数组的最小数字&quot;&gt;&lt;a href=&quot;#旋转数组的最小数字&quot; class=&quot;headerlink&quot; title=&quot;旋转数组的最小数字&quot;&gt;&lt;/a&gt;旋转数组的最小数字&lt;/h2&gt;&lt;h3 id=&quot;题目要求&quot;&gt;&lt;a href=&quot;#题目要求&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
+    
+  </entry>
+  
+  <entry>
     <title>冒泡排序的三种实现</title>
-    <link href="https://myrens.github.io/2018/07/29/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E7%9A%84%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%8E%B0/"/>
-    <id>https://myrens.github.io/2018/07/29/冒泡排序的三种实现/</id>
+    <link href="https://9191rs.me/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E7%9A%84%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%8E%B0.html"/>
+    <id>https://9191rs.me/冒泡排序的三种实现.html</id>
     <published>2018-07-29T01:52:07.000Z</published>
     <updated>2018-07-29T02:07:21.489Z</updated>
     
@@ -34,19 +61,19 @@
     
     </summary>
     
-      <category term="排序" scheme="https://myrens.github.io/categories/%E6%8E%92%E5%BA%8F/"/>
+      <category term="排序" scheme="https://9191rs.me/categories/%E6%8E%92%E5%BA%8F/"/>
     
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="冒泡排序" scheme="https://myrens.github.io/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/"/>
+      <category term="冒泡排序" scheme="https://9191rs.me/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/"/>
     
   </entry>
   
   <entry>
     <title>字符串的排列</title>
-    <link href="https://myrens.github.io/2018/07/20/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97/"/>
-    <id>https://myrens.github.io/2018/07/20/字符串的排列/</id>
+    <link href="https://9191rs.me/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97.html"/>
+    <id>https://9191rs.me/字符串的排列.html</id>
     <published>2018-07-20T13:17:49.000Z</published>
     <updated>2018-07-20T13:39:15.348Z</updated>
     
@@ -62,19 +89,19 @@
     
     </summary>
     
-      <category term="剑指offer" scheme="https://myrens.github.io/categories/%E5%89%91%E6%8C%87offer/"/>
+      <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>seckill</title>
-    <link href="https://myrens.github.io/2018/06/21/seckill/"/>
-    <id>https://myrens.github.io/2018/06/21/seckill/</id>
+    <link href="https://9191rs.me/seckill.html"/>
+    <id>https://9191rs.me/seckill.html</id>
     <published>2018-06-21T15:01:45.000Z</published>
     <updated>2018-07-02T14:06:27.229Z</updated>
     
@@ -86,19 +113,19 @@
     
     </summary>
     
-      <category term="ssm" scheme="https://myrens.github.io/categories/ssm/"/>
+      <category term="ssm" scheme="https://9191rs.me/categories/ssm/"/>
     
     
-      <category term="ssm" scheme="https://myrens.github.io/tags/ssm/"/>
+      <category term="ssm" scheme="https://9191rs.me/tags/ssm/"/>
     
-      <category term="github" scheme="https://myrens.github.io/tags/github/"/>
+      <category term="github" scheme="https://9191rs.me/tags/github/"/>
     
   </entry>
   
   <entry>
     <title>leetcode 第51题  N-Queens</title>
-    <link href="https://myrens.github.io/2018/04/08/leetcode%20%E7%AC%AC51%E9%A2%98%20%20N-Queens/"/>
-    <id>https://myrens.github.io/2018/04/08/leetcode 第51题  N-Queens/</id>
+    <link href="https://9191rs.me/leetcode%20%E7%AC%AC51%E9%A2%98%20%20N-Queens.html"/>
+    <id>https://9191rs.me/leetcode 第51题  N-Queens.html</id>
     <published>2018-04-08T14:19:14.000Z</published>
     <updated>2018-07-02T14:50:00.070Z</updated>
     
@@ -114,21 +141,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>leetcode 第77题 Combinations</title>
-    <link href="https://myrens.github.io/2018/04/08/leetcode%20%E7%AC%AC77%E9%A2%98%20Combinations/"/>
-    <id>https://myrens.github.io/2018/04/08/leetcode 第77题 Combinations/</id>
+    <link href="https://9191rs.me/leetcode%20%E7%AC%AC77%E9%A2%98%20Combinations.html"/>
+    <id>https://9191rs.me/leetcode 第77题 Combinations.html</id>
     <published>2018-04-08T13:53:43.000Z</published>
     <updated>2018-07-02T14:37:34.856Z</updated>
     
@@ -145,21 +172,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>leetcode 第46题和第47题 全排列问题</title>
-    <link href="https://myrens.github.io/2018/04/08/leetcode%20%E7%AC%AC46%E9%A2%98%E5%92%8C%E7%AC%AC47%E9%A2%98%20%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98/"/>
-    <id>https://myrens.github.io/2018/04/08/leetcode 第46题和第47题 全排列问题/</id>
+    <link href="https://9191rs.me/leetcode%20%E7%AC%AC46%E9%A2%98%E5%92%8C%E7%AC%AC47%E9%A2%98%20%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98.html"/>
+    <id>https://9191rs.me/leetcode 第46题和第47题 全排列问题.html</id>
     <published>2018-04-08T13:41:07.000Z</published>
     <updated>2018-07-02T14:18:40.249Z</updated>
     
@@ -176,21 +203,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>leetcode 第17题 Letter Combinations of a Phone Number</title>
-    <link href="https://myrens.github.io/2018/04/08/leetcode%20%E7%AC%AC17%E9%A2%98%20Letter%20Combinations%20of%20a%20Phone%20Number/"/>
-    <id>https://myrens.github.io/2018/04/08/leetcode 第17题 Letter Combinations of a Phone Number/</id>
+    <link href="https://9191rs.me/leetcode%20%E7%AC%AC17%E9%A2%98%20Letter%20Combinations%20of%20a%20Phone%20Number.html"/>
+    <id>https://9191rs.me/leetcode 第17题 Letter Combinations of a Phone Number.html</id>
     <published>2018-04-08T13:08:48.000Z</published>
     <updated>2018-07-02T14:40:29.599Z</updated>
     
@@ -206,21 +233,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>二叉搜索树（BST）的相关问题</title>
-    <link href="https://myrens.github.io/2018/04/01/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%EF%BC%88BST%EF%BC%89%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
-    <id>https://myrens.github.io/2018/04/01/二叉搜索树（BST）的相关问题/</id>
+    <link href="https://9191rs.me/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%EF%BC%88BST%EF%BC%89%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98.html"/>
+    <id>https://9191rs.me/二叉搜索树（BST）的相关问题.html</id>
     <published>2018-04-01T14:14:52.000Z</published>
     <updated>2018-07-20T13:45:16.219Z</updated>
     
@@ -237,21 +264,21 @@
     
     </summary>
     
-      <category term="二叉树" scheme="https://myrens.github.io/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
+      <category term="二叉树" scheme="https://9191rs.me/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="BST" scheme="https://myrens.github.io/tags/BST/"/>
+      <category term="BST" scheme="https://9191rs.me/tags/BST/"/>
     
   </entry>
   
   <entry>
     <title>leetcode 第235题 和 第236 题：Lowest Common Ancestor</title>
-    <link href="https://myrens.github.io/2018/04/01/leetcode%20%E7%AC%AC235%E9%A2%98%20%E5%92%8C%20%E7%AC%AC236%20%E9%A2%98%EF%BC%9ALowest%20Common%20Ancestor/"/>
-    <id>https://myrens.github.io/2018/04/01/leetcode 第235题 和 第236 题：Lowest Common Ancestor/</id>
+    <link href="https://9191rs.me/leetcode%20%E7%AC%AC235%E9%A2%98%20%E5%92%8C%20%E7%AC%AC236%20%E9%A2%98%EF%BC%9ALowest%20Common%20Ancestor.html"/>
+    <id>https://9191rs.me/leetcode 第235题 和 第236 题：Lowest Common Ancestor.html</id>
     <published>2018-04-01T13:11:09.000Z</published>
     <updated>2018-07-02T14:18:39.122Z</updated>
     
@@ -267,21 +294,21 @@
     
     </summary>
     
-      <category term="leetcode 数据结构" scheme="https://myrens.github.io/categories/leetcode-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+      <category term="leetcode 数据结构" scheme="https://9191rs.me/categories/leetcode-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>leetcode 第19题 Remove Nth Node From End of List</title>
-    <link href="https://myrens.github.io/2018/03/25/leetcode%20%E7%AC%AC19%E9%A2%98%20Remove%20Nth%20Node%20From%20End%20of%20List/"/>
-    <id>https://myrens.github.io/2018/03/25/leetcode 第19题 Remove Nth Node From End of List/</id>
+    <link href="https://9191rs.me/leetcode%20%E7%AC%AC19%E9%A2%98%20Remove%20Nth%20Node%20From%20End%20of%20List.html"/>
+    <id>https://9191rs.me/leetcode 第19题 Remove Nth Node From End of List.html</id>
     <published>2018-03-25T14:02:12.000Z</published>
     <updated>2018-07-02T14:18:56.081Z</updated>
     
@@ -297,21 +324,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>基于链表的归并排序</title>
-    <link href="https://myrens.github.io/2018/03/25/%E5%9F%BA%E4%BA%8E%E9%93%BE%E8%A1%A8%E7%9A%84%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
-    <id>https://myrens.github.io/2018/03/25/基于链表的归并排序/</id>
+    <link href="https://9191rs.me/%E5%9F%BA%E4%BA%8E%E9%93%BE%E8%A1%A8%E7%9A%84%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.html"/>
+    <id>https://9191rs.me/基于链表的归并排序.html</id>
     <published>2018-03-25T13:37:25.000Z</published>
     <updated>2018-07-02T14:21:24.297Z</updated>
     
@@ -327,21 +354,21 @@
     
     </summary>
     
-      <category term="链表" scheme="https://myrens.github.io/categories/%E9%93%BE%E8%A1%A8/"/>
+      <category term="链表" scheme="https://9191rs.me/categories/%E9%93%BE%E8%A1%A8/"/>
     
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
-      <category term="数据结构" scheme="https://myrens.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+      <category term="数据结构" scheme="https://9191rs.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   
   <entry>
     <title>基于链表的插入排序</title>
-    <link href="https://myrens.github.io/2018/03/25/%E5%9F%BA%E4%BA%8E%E9%93%BE%E8%A1%A8%E7%9A%84%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/"/>
-    <id>https://myrens.github.io/2018/03/25/基于链表的插入排序/</id>
+    <link href="https://9191rs.me/%E5%9F%BA%E4%BA%8E%E9%93%BE%E8%A1%A8%E7%9A%84%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F.html"/>
+    <id>https://9191rs.me/基于链表的插入排序.html</id>
     <published>2018-03-25T13:15:43.000Z</published>
     <updated>2018-07-02T14:21:24.294Z</updated>
     
@@ -357,21 +384,21 @@
     
     </summary>
     
-      <category term="链表" scheme="https://myrens.github.io/categories/%E9%93%BE%E8%A1%A8/"/>
+      <category term="链表" scheme="https://9191rs.me/categories/%E9%93%BE%E8%A1%A8/"/>
     
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
-      <category term="数据结构" scheme="https://myrens.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+      <category term="数据结构" scheme="https://9191rs.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   
   <entry>
     <title>leetcode 第149题  Max Points on a Line</title>
-    <link href="https://myrens.github.io/2018/03/18/leetcode%20%E7%AC%AC149%E9%A2%98%20%20Max%20Points%20on%20a%20Line/"/>
-    <id>https://myrens.github.io/2018/03/18/leetcode 第149题  Max Points on a Line/</id>
+    <link href="https://9191rs.me/leetcode%20%E7%AC%AC149%E9%A2%98%20%20Max%20Points%20on%20a%20Line.html"/>
+    <id>https://9191rs.me/leetcode 第149题  Max Points on a Line.html</id>
     <published>2018-03-18T12:58:29.000Z</published>
     <updated>2018-07-02T14:18:40.254Z</updated>
     
@@ -388,21 +415,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>leetcode Two Sum问题</title>
-    <link href="https://myrens.github.io/2018/03/18/leetcode%20Two%20Sum%E9%97%AE%E9%A2%98/"/>
-    <id>https://myrens.github.io/2018/03/18/leetcode Two Sum问题/</id>
+    <link href="https://9191rs.me/leetcode%20Two%20Sum%E9%97%AE%E9%A2%98.html"/>
+    <id>https://9191rs.me/leetcode Two Sum问题.html</id>
     <published>2018-03-18T12:19:36.000Z</published>
     <updated>2018-07-02T14:17:48.361Z</updated>
     
@@ -423,21 +450,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>leetcode76题 Minimum Window Substring</title>
-    <link href="https://myrens.github.io/2018/03/11/leetcode76%E9%A2%98%20Minimum%20Window%20Substring/"/>
-    <id>https://myrens.github.io/2018/03/11/leetcode76题 Minimum Window Substring/</id>
+    <link href="https://9191rs.me/leetcode76%E9%A2%98%20Minimum%20Window%20Substring.html"/>
+    <id>https://9191rs.me/leetcode76题 Minimum Window Substring.html</id>
     <published>2018-03-11T12:16:31.000Z</published>
     <updated>2018-07-02T14:18:05.363Z</updated>
     
@@ -454,21 +481,21 @@
     
     </summary>
     
-      <category term="leetcode" scheme="https://myrens.github.io/categories/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
   </entry>
   
   <entry>
     <title>算法中时间复杂度分析</title>
-    <link href="https://myrens.github.io/2018/03/05/%E7%AE%97%E6%B3%95%E4%B8%AD%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/"/>
-    <id>https://myrens.github.io/2018/03/05/算法中时间复杂度分析/</id>
+    <link href="https://9191rs.me/%E7%AE%97%E6%B3%95%E4%B8%AD%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90.html"/>
+    <id>https://9191rs.me/算法中时间复杂度分析.html</id>
     <published>2018-03-05T02:47:54.000Z</published>
     <updated>2018-07-02T14:35:41.832Z</updated>
     
@@ -490,19 +517,19 @@
     
     </summary>
     
-      <category term="算法" scheme="https://myrens.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="算法" scheme="https://myrens.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>判断链表成环，且找出环的起点</title>
-    <link href="https://myrens.github.io/2017/11/28/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%88%90%E7%8E%AF%EF%BC%8C%E4%B8%94%E6%89%BE%E5%87%BA%E7%8E%AF%E7%9A%84%E8%B5%B7%E7%82%B9/"/>
-    <id>https://myrens.github.io/2017/11/28/判断链表成环，且找出环的起点/</id>
+    <link href="https://9191rs.me/%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%88%90%E7%8E%AF%EF%BC%8C%E4%B8%94%E6%89%BE%E5%87%BA%E7%8E%AF%E7%9A%84%E8%B5%B7%E7%82%B9.html"/>
+    <id>https://9191rs.me/判断链表成环，且找出环的起点.html</id>
     <published>2017-11-28T13:14:00.000Z</published>
     <updated>2018-07-02T14:42:53.776Z</updated>
     
@@ -518,21 +545,21 @@
     
     </summary>
     
-      <category term="链表" scheme="https://myrens.github.io/categories/%E9%93%BE%E8%A1%A8/"/>
+      <category term="链表" scheme="https://9191rs.me/categories/%E9%93%BE%E8%A1%A8/"/>
     
     
-      <category term="Java" scheme="https://myrens.github.io/tags/Java/"/>
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
-      <category term="leetcode" scheme="https://myrens.github.io/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
-      <category term="数据结构" scheme="https://myrens.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+      <category term="数据结构" scheme="https://9191rs.me/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   
   <entry>
     <title>Hello Hexo</title>
-    <link href="https://myrens.github.io/2017/03/18/hello-world/"/>
-    <id>https://myrens.github.io/2017/03/18/hello-world/</id>
+    <link href="https://9191rs.me/hello-world.html"/>
+    <id>https://9191rs.me/hello-world.html</id>
     <published>2017-03-18T12:19:36.000Z</published>
     <updated>2018-07-02T14:25:58.429Z</updated>
     
@@ -544,14 +571,14 @@
     
     </summary>
     
-      <category term="hexo" scheme="https://myrens.github.io/categories/hexo/"/>
+      <category term="hexo" scheme="https://9191rs.me/categories/hexo/"/>
     
     
-      <category term="hexo" scheme="https://myrens.github.io/tags/hexo/"/>
+      <category term="hexo" scheme="https://9191rs.me/tags/hexo/"/>
     
-      <category term="Next" scheme="https://myrens.github.io/tags/Next/"/>
+      <category term="Next" scheme="https://9191rs.me/tags/Next/"/>
     
-      <category term="配置" scheme="https://myrens.github.io/tags/%E9%85%8D%E7%BD%AE/"/>
+      <category term="配置" scheme="https://9191rs.me/tags/%E9%85%8D%E7%BD%AE/"/>
     
   </entry>
   

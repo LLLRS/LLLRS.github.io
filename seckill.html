@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+  <meta name="keywords" content="ssm,github," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="爱生活,爱柒柒" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="仿照慕课网完成的一个基于SSM的秒杀项目">
+<meta name="keywords" content="ssm,github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="seckill">
+<meta property="og:url" content="https://9191rs.me/seckill.html">
+<meta property="og:site_name" content="爱生活,爱柒柒">
+<meta property="og:description" content="仿照慕课网完成的一个基于SSM的秒杀项目">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://9191rs.me/2018/06/21/seckill/P.JPG">
+<meta property="og:image" content="https://9191rs.me/2018/06/21/seckill/do.png">
+<meta property="og:image" content="https://9191rs.me/2018/06/21/seckill/restful.png">
+<meta property="og:image" content="https://9191rs.me/2018/06/21/seckill/list.JPG">
+<meta property="og:image" content="https://9191rs.me/2018/06/21/seckill/m1.JPG">
+<meta property="og:image" content="https://9191rs.me/2018/06/21/seckill/m2.JPG">
+<meta property="og:image" content="https://9191rs.me/2018/06/21/seckill/m3.JPG">
+<meta property="og:updated_time" content="2018-07-02T14:06:27.229Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="seckill">
+<meta name="twitter:description" content="仿照慕课网完成的一个基于SSM的秒杀项目">
+<meta name="twitter:image" content="https://9191rs.me/2018/06/21/seckill/P.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://9191rs.me/seckill.html"/>
+
+
+
+
+
+  <title>seckill | 爱生活,爱柒柒</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">爱生活,爱柒柒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'tLXWKdsstE5UZFCodRRQ','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/seckill.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LI Ren">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爱生活,爱柒柒">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">seckill</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-21T23:01:45+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ssm/" itemprop="url" rel="index">
+                    <span itemprop="name">ssm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/seckill.html" class="leancloud_visitors" data-flag-title="seckill">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,500
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  仿照慕课网完成的一个基于SSM的秒杀项目
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="仿照慕课网完成的一个基于SSM的秒杀项目"><a href="#仿照慕课网完成的一个基于SSM的秒杀项目" class="headerlink" title="仿照慕课网完成的一个基于SSM的秒杀项目"></a>仿照慕课网完成的一个基于SSM的秒杀项目</h2><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>刚开始学习SSM框架的使用，也看了一些相关的书籍，但也不是很明白。<a href="https://www.imooc.com/course/programdetail/pid/59" target="_blank" rel="noopener">慕课网</a> 上的这套视频讲的很基础，非常适合入门学习，再看完这套视频之后，想把这个过程记录一下，加深自己的理解。<strong>在这里也感谢慕课网<a href="https://www.imooc.com/u/2145618/courses?sort=publish" target="_blank" rel="noopener">@yijun zhang</a>的分享的这门课程</strong>。 </p>
+<p>本次课程的开发环境是IDEA+Maven+SSM框架，一共分为四个模块：</p>
+<ul>
+<li><a href="#1">Java高并发秒杀APi之业务分析与DAO层</a></li>
+<li><a href="#2">Java高并发秒杀APi之Service</a></li>
+<li><a href="#3">Java高并发秒杀APi之Web层</a></li>
+<li><a href="#4">Java高并发秒杀APi之高并发优化</a></li>
+</ul>
+<p>下面分别对这四个方面进行讨论。</p>
+<h2 id="Java高并发秒杀APi之业务分析与DAO层"><a href="#Java高并发秒杀APi之业务分析与DAO层" class="headerlink" title="Java高并发秒杀APi之业务分析与DAO层"></a><a id="1">Java高并发秒杀APi之业务分析与DAO层</a></h2><h3 id="1-项目初始化"><a href="#1-项目初始化" class="headerlink" title="1.项目初始化"></a>1.项目初始化</h3><p>采用Idea提供maven项目工程模板创建工程结构：</p>
+<p><img src="/2018/06/21/seckill/P.JPG" alt=""><br>在porm.xml里修改项目需要的坐标配置信息,<a href="https://github.com/LLLRS/seckil/blob/master/pom.xml" target="_blank" rel="noopener">参考</a>。</p>
+<h3 id="2-Dao层设计开发"><a href="#2-Dao层设计开发" class="headerlink" title="2.Dao层设计开发"></a>2.Dao层设计开发</h3><p><strong>Dao是数据访问的缩写，它只进行数据的访问操作,不涉及逻辑业务</strong><br><br>首先创建数据库，相关表的sql语句查看<a href="https://github.com/LLLRS/seckil/blob/master/src/main/sql/schema.sql" target="_blank" rel="noopener">参考</a>。<br>然后创建表对应的实体类，在org.seckill.entity包下创建Seckill.java和SuccessKilled.java。<br>然后针对实体创建出对应dao层的接口，在org.seckill.dao包下创建SeckillDao.java和SuccessKilledDao.java,<a href="https://github.com/LLLRS/seckil/tree/master/src/main/java/org/seckill/dao" target="_blank" rel="noopener">参考</a>。<br>这里需要说明的是我们所创建的Dao接口并不需要要我们手动去实现，而是采用MyBatis去实现。<strong>Mybatis提供了Mapper动态代理开发的方式为自动实现Dao的接口。</strong><br>MyBatis提供了两种方式去实现Dao接口XML文件配置和注解，本次项目我们采用XML文件配置。首先在resources包下创建MyBatis全局配置文件mybatis-config.xml文件，打开<a href="http://mybatis.github.io/mybatis-3/zh/index.html" target="_blank" rel="noopener">MyBatis提供的文档</a>，点击左边的”入门”栏框，可以看到mybatis全局配置文件。在配置过程中，可以参考这个文档的一些内容去配置项目的mybatis-config.xml文件。接下来采用Mybatis提供的Mapper功能，实现Dao接口的开发，这里需要再次创建两个文件SeckillDao.xml和SuccessKilledDao.xml，<a href="https://github.com/LLLRS/seckil/tree/master/src/main/resources/mapper" target="_blank" rel="noopener">参考</a>。在这两个xml编写相应的SQL语句，这也是MyBatis的成功之处。</p>
+<p>接下来要实现的是MyBatis和Spring的整合，整合目标:更少的编码:只写接口，不写实现类。更少的配置:别名、配置扫描映射xml文件、dao实现。足够的灵活性:自由定制SQL语句、自由传结果集自动赋值。<br>在resources包下创建一个spring包，里面放置spring对Dao、Service、transaction的配置文件。在浏览器中输入进入到Spring的官网可以看到其<a href="http://docs.spring.io/spring/docs/" target="_blank" rel="noopener">官方文档</a>,然后根据约定，编写<a href="https://github.com/LLLRS/seckil/blob/master/src/main/resources/spring/spring-dao.xml" target="_blank" rel="noopener">Spring-dao.xml</a>。</p>
+<p>以上就基本完成了Dao层的开发，接下来就需要对写的代码进行单元测试，测试代码放在test包下，<a href="https://github.com/LLLRS/seckil/tree/master/src/test/java/org/seckill/dao" target="_blank" rel="noopener">参考</a>。</p>
+<h2 id="Java高并发秒杀APi之Service"><a href="#Java高并发秒杀APi之Service" class="headerlink" title="Java高并发秒杀APi之Service"></a><a id="2">Java高并发秒杀APi之Service</a></h2><p>首先是Service接口的设计，这个接口里的应该是按照使用者的角度去编写，应该考虑到每个方法所返回的业务相关的对象，<br>这个对象用于封装Ser和Web层之间的数据传递<a href="https://github.com/LLLRS/seckil/tree/master/src/main/java/org/seckill/dto" target="_blank" rel="noopener">Dto层</a>,<br>dto和entity的区别在于:entity用于业务数据的封装，而dto用于完成web和service层的数据传递。另外还要整个秒杀过程中可能出现的异常，定义对应的<a href="https://github.com/LLLRS/seckil/tree/master/src/main/java/org/seckill/exception" target="_blank" rel="noopener">异常处理类</a>,<br>这些异常一般都应该是RuntimeException。设计好接口之后，就应该对其进行实现。</p>
+<p>接下来就需要利用Spring对Service进行处理，在spring包下创建一个<a href="https://github.com/LLLRS/seckil/blob/master/src/main/resources/spring/spring-service.xml" target="_blank" rel="noopener">spring-service.xml</a>文件，采用注解(@Component @Service @Dao @Controller)的方式ji将刚才实现的Service实现类进行注入到Spring Ioc容器中。每个Service实现类采用( @Transactional)进行事务管理。</p>
+<p>最好跟Dao层一样，利用Juit对Service层进行<a href="https://github.com/LLLRS/seckil/blob/master/src/test/java/org/seckill/service/SeckillServiceTest.java" target="_blank" rel="noopener">测试</a>。</p>
+<h2 id="Java高并发秒杀APi之Web层"><a href="#Java高并发秒杀APi之Web层" class="headerlink" title="Java高并发秒杀APi之Web层"></a><a id="3">Java高并发秒杀APi之Web层</a></h2><p>Web层包含前端交互设计、Restful:url满足Restful设计规范、Spring MVC、bootstrap+jquery这四个方面的开发。</p>
+<p>它的前端交互流程设计如下图:<br><br><br><img src="/2018/06/21/seckill/do.png" alt=""> </p>
+<p>Restful是一种优雅的URI表述方式，用来设计访问URL。通过这个URL的设计，就可以很自然的感知到这个URL代表的是哪种业务场景或者什么样的数据或资源。基于Restful设计的URL，对于接口的使用者、前端、web系统或者搜索引擎甚至是我们的用户，都是非常友好的。下面看看这个秒杀系统的URL设计:<br><br><br><img src="/2018/06/21/seckill/restful.png" alt=""> </p>
+<p><strong>整合配置Spring MVC框架</strong><br>首先在WEB-INF的<a href="https://github.com/LLLRS/seckil/blob/master/src/main/webapp/WEB-INF/web.xml" target="_blank" rel="noopener">web.xml</a>中进行我们前端控制器DispatcherServlet的配置,然后在spring容器中进行web层相关bean(即Controller)的配置，在spring包下创建一个<a href="https://github.com/LLLRS/seckil/blob/master/src/main/resources/spring/spring-web.xml" target="_blank" rel="noopener">spring-web.xml</a>，这样就完成了Spring MVC的相关配置(即将Spring MVC框架整合到了我们的项目中)，接下来就要基于Restful接口进行项目的Controller开发工作了。Controller中的每一个方法都对应我们系统中的一个资源URL，其设计应该遵循Restful接口的设计风格。<a href="https://github.com/LLLRS/seckil/blob/master/src/main/java/org/seckill/web/SeckillController.java" target="_blank" rel="noopener">Controller</a>开发中的方法完全是对照Service接口方法进行开发的，第一个方法用于访问我们商品的列表页，第二个方法访问商品的详情页，第三个方法用于返回一个json数据，数据中封装了我们商品的秒杀地址，第四个方法用于封装用户是否秒杀成功的信息，第五个方法用于返回系统当前时间。</p>
+<p>接下来的工作主要就是页面开发，现在基本的趋势是前后端分离，所以了解一点即可。</p>
+<p><strong>做完了这三个层，已经可以进行展示了</strong>：<br>运行Tomcat服务器,在浏览器中输入<a href="http://localhost:8080/seckill/list" target="_blank" rel="noopener">http://localhost:8080/seckill/list</a><br>列表页：</p>
+<p><img src="/2018/06/21/seckill/list.JPG" alt="">  </p>
+<p>详情页：<br><img src="/2018/06/21/seckill/m1.JPG" alt=""><br><img src="/2018/06/21/seckill/m2.JPG" alt=""><br>再次秒杀会显示重复秒杀：<br><img src="/2018/06/21/seckill/m3.JPG" alt=""></p>
+<hr>
+
+      
+    </div>
+    
+    
+    
+	<div align="center">
+	  
+		<div class="copyright">
+		<p><span>
+		<b>本文地址：</b><a href="/seckill.html" title="seckill">https://9191rs.me/seckill.html</a><br /><b>转载请注明出处，谢谢！</b>
+		</span></p>
+		</div>
+	  
+	</div>
+		
+	
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>欢迎一起进行交流！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="LI Ren 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ssm/" rel="tag"># ssm</a>
+          
+            <a href="/tags/github/" rel="tag"># github</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+		
+		  <div class="post-nav">
+			<div class="post-nav-next post-nav-item">
+
+		      
+
+		       <a href="/字符串的排列.html" rel="prev" title="字符串的排列">
+
+		          <i class="fa fa-chevron-left"></i> 字符串的排列
+				</a>
+			  
+			</div>
+
+			<span class="post-nav-divider"></span>
+
+			<div class="post-nav-prev post-nav-item">
+
+		      
+		
+		        <a href="/leetcode 第51题  N-Queens.html" rel="next" title="leetcode 第51题  N-Queens">
+		
+		         leetcode 第51题  N-Queens <i class="fa fa-chevron-right"></i>
+				</a>
+			  
+			</div>
+		  </div>
+		
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/logo.jpeg"
+                alt="LI Ren" />
+            
+              <p class="site-author-name" itemprop="name">LI Ren</p>
+              <p class="site-description motion-element" itemprop="description">且自前行，莫问归处！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LLLRS" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="15311257617@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://tengj.top/" title="嘟嘟独立博客" target="_blank">嘟嘟独立博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://crossoverjie.top/" title="crossoverjie" target="_blank">crossoverjie</a>
+                  </li>
+                
+              </ul>
+			  <div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("06/28/2018 12:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+            </div>
+          
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿照慕课网完成的一个基于SSM的秒杀项目"><span class="nav-number">1.</span> <span class="nav-text">仿照慕课网完成的一个基于SSM的秒杀项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">2.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java高并发秒杀APi之业务分析与DAO层"><span class="nav-number">3.</span> <span class="nav-text">Java高并发秒杀APi之业务分析与DAO层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-项目初始化"><span class="nav-number">3.1.</span> <span class="nav-text">1.项目初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Dao层设计开发"><span class="nav-number">3.2.</span> <span class="nav-text">2.Dao层设计开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java高并发秒杀APi之Service"><span class="nav-number">4.</span> <span class="nav-text">Java高并发秒杀APi之Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java高并发秒杀APi之Web层"><span class="nav-number">5.</span> <span class="nav-text">Java高并发秒杀APi之Web层</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LI Ren</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span><br>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("oilMyKSMaPtFHPbgcbiCfJL6-gzGzoHsz", "oUBvV1jEzR3mJ3RvgWoHex8G");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 小红心 -->
+	<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
