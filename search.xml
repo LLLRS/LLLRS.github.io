@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[滑动窗口的最大值]]></title>
+    <url>%2Fposts%2F8268%2F</url>
+    <content type="text"><![CDATA[滑动窗口的最大值题目描述给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，他们的最大值分别为{4,4,6,6,6,5}； 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个： {[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}， {2,3,[4,2,6],2,5,1}， {2,3,4,[2,6,2],5,1}， {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}。均不匹配 思路分析对于这个题目而言，暴力解法是比较遍历整个数组，求出每一个滑动窗口的最大值，但是这样做的话带来了大量的重复计算。因此，如果考虑滑动窗口之间的相关性，可以用一个队列来模拟整个过程。 对新来的元素k，将其与队列中的元素相比较1、前面比k小的，直接移出队列（因为不再可能成为后面滑动窗口的最大值了!）,2、前面比k大的X，比较两者下标，判断X是否已不在窗口之内，不在了，直接移出队列注意：队列中存放的是每个元素对应的索引 重复下来，队列的第一个元素是滑动窗口中的最大值 Java实现12345678910111213141516171819202122232425262728public ArrayList&lt;Integer&gt; maxInWindows(int [] nums, int size)&#123; ArrayList&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;(); int len = nums.length; if(len==0||size==0||size&gt;len) return res; LinkedList&lt;Integer&gt; q = new LinkedList&lt;&gt;(); for(int i=0;i&lt;size-1;i++)&#123; while(!q.isEmpty()&amp;&amp;nums[i]&gt;nums[q.getLast()]) q.removeLast(); q.addLast(i); &#125; for(int i=size-1;i&lt;len;i++)&#123; while(!q.isEmpty()&amp;&amp;nums[i]&gt;nums[q.getLast()]) q.removeLast(); q.addLast(i); if(i-q.getFirst() + 1&gt;size) q.removeFirst(); res.add(nums[q.getFirst()]); &#125; return res;&#125;]]></content>
+      <categories>
+        <category>剑指offer</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Java</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[正则表达式匹配]]></title>
+    <url>%2Fposts%2F16074%2F</url>
+    <content type="text"><![CDATA[正则表达式匹配题目描述请实现一个函数用来匹配包括’.’和’ ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’ ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”abaca”匹配，但是与”aa.a”和”ab*a”均不匹配 思路分析要判断是否匹配，首先对’ . ‘ 和 ‘ * ‘的作用进行分析： ‘ . ‘比较简单，就是可以指代任意字符，切不可忽略。 ‘ ‘一般出现在一个字符的后面，表示它前面的字符可以出现0次或者多次。如果字符串第一个字符跟模式第一个字符不匹配，则模式后移2个字符，继续匹配。如果字符串第一个字符跟模式第一个字符匹配，可以有3种匹配方式：1、模式后移2字符，相当于x被忽略2、字符串后移1字符，模式后移2字符，即只匹配一次3、字符串后移1字符，模式不变，即继续匹配字符下一位 Java实现1234567891011121314151617181920212223242526272829public boolean match(char[] s, char[] p)&#123; if(s==null||p==null) return false; return match(s,0, p,0);&#125;private boolean match(char[] s,int si,char[] p,int pi)&#123; if(si==s.length&amp;&amp;pi==p.length) return true; if(si!=s.length&amp;&amp;pi==p.length) return false; if(pi&lt;p.length-1&amp;&amp;p[pi+1]=='*')&#123; if((si != s.length &amp;&amp; p[pi] == s[si]) || (p[pi] == '.' &amp;&amp; si != s.length)) return match(s,si+1, p,pi+2) || match(s,si+1, p,pi) || match(s,si, p,pi+2); else return match(s,si, p,pi+2); &#125; if((si != s.length &amp;&amp; p[pi] == s[si]) || (p[pi] == '.' &amp;&amp; si != s.length)) return match(s,si+1, p,pi+1); return false;&#125;]]></content>
+      <categories>
+        <category>剑指offer</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Java</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[数字在排序数组中出现的次数]]></title>
     <url>%2Fposts%2F32844%2F</url>
     <content type="text"><![CDATA[数字在排序数组中出现的次数题目描述统计一个数字在排序数组中出现的次数。 注意：输入的数组是有序的。 思路分析对于这个题目，最简单的思路就是顺序扫描整个数组，当找到这个数字时，让相应的计数变量自增。这样的话，算法的时间复杂度为O(n)。但是千万忘了该数组是有序的，因此可以考虑是否可以用上二分搜索。最简单的一种想法就是利用二分搜索找到它第一次出现的位置，再找到它最后一次出现的位置，两个相减既是该数字出现的次数。该算法时间复杂度为O(log n)。 Java实现123456789101112131415161718192021222324252627282930313233343536373839404142434445464748public int GetNumberOfK(int [] nums , int k) &#123; int len = nums.length; if(len==0) return 0; int start = getStartK(nums,k,0,nums.length-1); int end = getEndK(nums,k,0,nums.length-1); if(start!=-1&amp;&amp;end!=-1) return end - start + 1; return 0;&#125;private int getStartK(int[] nums,int k,int l,int r)&#123; if(l&gt;r) return -1; int mid = l + (r-l)/2; if(nums[mid]==k)&#123; if(mid&gt;0&amp;&amp;nums[mid-1]!=k||mid==0) return mid; else r = mid-1; &#125;else if(nums[mid]&gt;k)&#123; r = mid - 1; &#125;else&#123; l = mid + 1; &#125; return getStartK(nums,k,l,r);&#125; private int getEndK(int[] nums,int k,int l,int r)&#123; if(l&gt;r) return -1; int mid = l + (r-l)/2; if(nums[mid]==k)&#123; if(mid&lt;nums.length-1&amp;&amp;nums[mid+1]!=k||mid==nums.length-1) return mid; else l = mid + 1; &#125;else if(nums[mid]&gt;k)&#123; r = mid - 1; &#125;else&#123; l = mid + 1; &#125; return getEndK(nums,k,l,r);&#125;]]></content>
