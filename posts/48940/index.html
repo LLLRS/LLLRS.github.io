@@ -137,18 +137,18 @@
 
 
 
-<meta name="description" content="旋转数组的最小数字题目要求把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 解题思路采用二分法解答这个问题，mid = l + (r - l)/2需要考虑三种情况：(1)nu">
+<meta name="description" content="题目要求把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 解题思路采用二分法解答这个问题，mid = l + (r - l)/2需要考虑三种情况：(1)nums[mid] &amp;">
 <meta name="keywords" content="Java,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="旋转数组的最小数字">
 <meta property="og:url" content="https://9191rs.me/posts/48940/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="旋转数组的最小数字题目要求把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 解题思路采用二分法解答这个问题，mid = l + (r - l)/2需要考虑三种情况：(1)nu">
+<meta property="og:description" content="题目要求把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 解题思路采用二分法解答这个问题，mid = l + (r - l)/2需要考虑三种情况：(1)nums[mid] &amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-01T11:12:25.886Z">
+<meta property="og:updated_time" content="2018-08-03T09:50:37.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="旋转数组的最小数字">
-<meta name="twitter:description" content="旋转数组的最小数字题目要求把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 解题思路采用二分法解答这个问题，mid = l + (r - l)/2需要考虑三种情况：(1)nu">
+<meta name="twitter:description" content="题目要求把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。 解题思路采用二分法解答这个问题，mid = l + (r - l)/2需要考虑三种情况：(1)nums[mid] &amp;">
 
 
 
@@ -457,7 +457,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  365
+                  356
                 </span>
               
 
@@ -482,10 +482,10 @@
       
 
       
-        <h2 id="旋转数组的最小数字"><a href="#旋转数组的最小数字" class="headerlink" title="旋转数组的最小数字"></a>旋转数组的最小数字</h2><h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，<br>输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。<br>NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>采用二分法解答这个问题，<br>mid = l + (r - l)/2<br>需要考虑三种情况：<br>(1)nums[mid] &gt; nums[r]:<br>&#8195;出现这种情况的nums类似[3,4,5,6,0,1,2]，此时最小数字一定在mid的右边。</p>
+        <h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，<br>输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。<br>NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>采用二分法解答这个问题，<br>mid = l + (r - l)/2<br>需要考虑三种情况：<br>(1)nums[mid] &gt; nums[r]:<br>&#8195;出现这种情况的nums类似[3,4,5,6,0,1,2]，此时最小数字一定在mid的右边。</p>
 <p>(2)nums[mid] == nums[r]:<br>&#8195;出现这种情况的nums类似 [1,0,1,1,1] 或者[1,1,1,0,1]，此时最小数字不好判断在mid左边<br>还是右边,这时只好一个一个试 。<br>(3)nums[mid] &lt; nums[r]:<br>&#8195;出现这种情况的nums类似[2,2,3,4,5,6,6],此时最小数字一定就是nums[mid]或者在mid的左边。<br>因为右边必然都是递增的。</p>
-<h3 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h3><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> minNumberInRotatenums(<span class="built_in">int</span> [] nums) &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">int</span> <span class="built_in">len</span> = nums.length;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">len</span>==<span class="number">0</span>) return <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">int</span> l = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">int</span> r = <span class="built_in">len</span><span class="number">-1</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">		<span class="built_in">int</span> <span class="built_in">mid</span> = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(nums[<span class="built_in">mid</span>]&gt;nums[r])</span><br><span class="line">			l = <span class="built_in">mid</span> + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nums[<span class="built_in">mid</span>]==nums[r])</span><br><span class="line">			r--;</span><br><span class="line">		<span class="keyword">else</span> </span><br><span class="line">			r = <span class="built_in">mid</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return nums[l];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h2><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> minNumberInRotatenums(<span class="built_in">int</span> [] nums) &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">int</span> <span class="built_in">len</span> = nums.length;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">len</span>==<span class="number">0</span>) return <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">int</span> l = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">int</span> r = <span class="built_in">len</span><span class="number">-1</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">		<span class="built_in">int</span> <span class="built_in">mid</span> = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(nums[<span class="built_in">mid</span>]&gt;nums[r])</span><br><span class="line">			l = <span class="built_in">mid</span> + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nums[<span class="built_in">mid</span>]==nums[r])</span><br><span class="line">			r--;</span><br><span class="line">		<span class="keyword">else</span> </span><br><span class="line">			r = <span class="built_in">mid</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return nums[l];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -670,7 +670,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -681,7 +681,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -692,7 +692,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -793,7 +793,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#旋转数组的最小数字"><span class="nav-number">1.</span> <span class="nav-text">旋转数组的最小数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目要求"><span class="nav-number">1.1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java实现"><span class="nav-number">1.3.</span> <span class="nav-text">Java实现</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目要求"><span class="nav-number">1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java实现"><span class="nav-number">3.</span> <span class="nav-text">Java实现</span></a></li></ol></div>
             
 
           </div>

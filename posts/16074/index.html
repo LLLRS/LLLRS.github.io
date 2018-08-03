@@ -137,18 +137,18 @@
 
 
 
-<meta name="description" content="正则表达式匹配题目描述请实现一个函数用来匹配包括’.’和’  ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’  ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”abaca”匹配，但是与”aa.a”和”ab*a”均不匹配 思路分析要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析：">
+<meta name="description" content="题目描述请实现一个函数用来匹配包括’.’和’  ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’  ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”abaca”匹配，但是与”aa.a”和”ab*a”均不匹配 思路分析要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析： ‘ . ‘比较">
 <meta name="keywords" content="算法,Java,剑指offer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则表达式匹配">
 <meta property="og:url" content="https://9191rs.me/posts/16074/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="正则表达式匹配题目描述请实现一个函数用来匹配包括’.’和’  ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’  ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”abaca”匹配，但是与”aa.a”和”ab*a”均不匹配 思路分析要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析：">
+<meta property="og:description" content="题目描述请实现一个函数用来匹配包括’.’和’  ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’  ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”abaca”匹配，但是与”aa.a”和”ab*a”均不匹配 思路分析要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析： ‘ . ‘比较">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-02T02:59:33.790Z">
+<meta property="og:updated_time" content="2018-08-03T09:50:26.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式匹配">
-<meta name="twitter:description" content="正则表达式匹配题目描述请实现一个函数用来匹配包括’.’和’  ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’  ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”abaca”匹配，但是与”aa.a”和”ab*a”均不匹配 思路分析要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析：">
+<meta name="twitter:description" content="题目描述请实现一个函数用来匹配包括’.’和’  ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’  ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”abaca”匹配，但是与”aa.a”和”ab*a”均不匹配 思路分析要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析： ‘ . ‘比较">
 
 
 
@@ -457,7 +457,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  461
+                  454
                 </span>
               
 
@@ -482,11 +482,11 @@
       
 
       
-        <h2 id="正则表达式匹配"><a href="#正则表达式匹配" class="headerlink" title="正则表达式匹配"></a>正则表达式匹配</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来匹配包括’.’和’ <em> ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’ </em> ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”ab<em>ac</em>a”匹配，但是与”aa.a”和”ab*a”均不匹配</p>
-<h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><p>要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析：</p>
+        <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>请实现一个函数用来匹配包括’.’和’ <em> ‘的正则表达式。模式中的字符’ . ‘表示任意一个字符，而’ </em> ‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”ab<em>ac</em>a”匹配，但是与”aa.a”和”ab*a”均不匹配</p>
+<h2 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h2><p>要判断是否匹配，首先对’ . ‘  和 ‘ * ‘的作用进行分析：</p>
 <p>‘ . ‘比较简单，就是可以指代任意字符，切不可忽略。</p>
 <p>‘ <em> ‘一般出现在一个字符的后面，表示它前面的字符可以出现0次或者多次。<br>如果字符串第一个字符跟模式第一个字符不匹配，则模式后移2个字符，继续匹配。<br>如果字符串第一个字符跟模式第一个字符匹配，可以有3种匹配方式：<br>1、模式后移2字符，相当于x</em>被忽略<br>2、字符串后移1字符，模式后移2字符，即只匹配一次<br>3、字符串后移1字符，模式不变，即继续匹配字符下一位</p>
-<h3 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public boolean <span class="built_in">match</span>(<span class="built_in">char</span>[] s, <span class="built_in">char</span>[] p)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(s==null||p==null)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">match</span>(s,<span class="number">0</span>, p,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private boolean <span class="built_in">match</span>(<span class="built_in">char</span>[] s,int si,<span class="built_in">char</span>[] p,int <span class="built_in">pi</span>)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(si==s.length&amp;&amp;<span class="built_in">pi</span>==p.length)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span>(si!=s.length&amp;&amp;<span class="built_in">pi</span>==p.length)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">pi</span>&lt;p.length<span class="number">-1</span>&amp;&amp;p[<span class="built_in">pi</span>+<span class="number">1</span>]==<span class="string">'*'</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>((si != s.length &amp;&amp; p[<span class="built_in">pi</span>] == s[si]) || (p[<span class="built_in">pi</span>] == <span class="string">'.'</span> &amp;&amp; si != s.length))</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">match</span>(s,si+<span class="number">1</span>, p,<span class="built_in">pi</span>+<span class="number">2</span>)</span><br><span class="line">                || <span class="built_in">match</span>(s,si+<span class="number">1</span>, p,<span class="built_in">pi</span>)</span><br><span class="line">                || <span class="built_in">match</span>(s,si, p,<span class="built_in">pi</span>+<span class="number">2</span>);</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">match</span>(s,si, p,<span class="built_in">pi</span>+<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>((si != s.length &amp;&amp; p[<span class="built_in">pi</span>] == s[si]) || (p[<span class="built_in">pi</span>] == <span class="string">'.'</span> &amp;&amp; si != s.length))</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">match</span>(s,si+<span class="number">1</span>, p,<span class="built_in">pi</span>+<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public boolean <span class="built_in">match</span>(<span class="built_in">char</span>[] s, <span class="built_in">char</span>[] p)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(s==null||p==null)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">match</span>(s,<span class="number">0</span>, p,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private boolean <span class="built_in">match</span>(<span class="built_in">char</span>[] s,int si,<span class="built_in">char</span>[] p,int <span class="built_in">pi</span>)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(si==s.length&amp;&amp;<span class="built_in">pi</span>==p.length)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span>(si!=s.length&amp;&amp;<span class="built_in">pi</span>==p.length)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">pi</span>&lt;p.length<span class="number">-1</span>&amp;&amp;p[<span class="built_in">pi</span>+<span class="number">1</span>]==<span class="string">'*'</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>((si != s.length &amp;&amp; p[<span class="built_in">pi</span>] == s[si]) || (p[<span class="built_in">pi</span>] == <span class="string">'.'</span> &amp;&amp; si != s.length))</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">match</span>(s,si+<span class="number">1</span>, p,<span class="built_in">pi</span>+<span class="number">2</span>)</span><br><span class="line">                || <span class="built_in">match</span>(s,si+<span class="number">1</span>, p,<span class="built_in">pi</span>)</span><br><span class="line">                || <span class="built_in">match</span>(s,si, p,<span class="built_in">pi</span>+<span class="number">2</span>);</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">match</span>(s,si, p,<span class="built_in">pi</span>+<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>((si != s.length &amp;&amp; p[<span class="built_in">pi</span>] == s[si]) || (p[<span class="built_in">pi</span>] == <span class="string">'.'</span> &amp;&amp; si != s.length))</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">match</span>(s,si+<span class="number">1</span>, p,<span class="built_in">pi</span>+<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -674,7 +674,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -685,7 +685,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -696,7 +696,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -797,7 +797,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式匹配"><span class="nav-number">1.</span> <span class="nav-text">正则表达式匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路分析"><span class="nav-number">1.2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java实现"><span class="nav-number">1.3.</span> <span class="nav-text">Java实现</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路分析"><span class="nav-number">2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java实现"><span class="nav-number">3.</span> <span class="nav-text">Java实现</span></a></li></ol></div>
             
 
           </div>
