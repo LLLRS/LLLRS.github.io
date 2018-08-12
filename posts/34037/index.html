@@ -137,20 +137,20 @@
 
 
 
-<meta name="description" content="插入排序的基本介绍插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难直接去到每一">
+<meta name="description" content="插入排序的基本介绍插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：      对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难">
 <meta name="keywords" content="Java,leetcode,数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于链表的插入排序">
 <meta property="og:url" content="https://9191rs.me/posts/34037/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="插入排序的基本介绍插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难直接去到每一">
+<meta property="og:description" content="插入排序的基本介绍插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：      对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img-blog.csdn.net/20180325210411456?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xsMTUzMTEyNTc2MTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:updated_time" content="2018-08-01T11:12:25.883Z">
+<meta property="og:image" content="https://9191rs.me/posts/34037/1.bmp">
+<meta property="og:updated_time" content="2018-08-12T03:31:35.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于链表的插入排序">
-<meta name="twitter:description" content="插入排序的基本介绍插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难直接去到每一">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20180325210411456?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xsMTUzMTEyNTc2MTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta name="twitter:description" content="插入排序的基本介绍插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：      对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难">
+<meta name="twitter:image" content="https://9191rs.me/posts/34037/1.bmp">
 
 
 
@@ -485,8 +485,11 @@
 
       
         <a id="more"></a>
-<h3 id="插入排序的基本介绍"><a href="#插入排序的基本介绍" class="headerlink" title="插入排序的基本介绍"></a>插入排序的基本介绍</h3><p>插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：<br><img src="https://img-blog.csdn.net/20180325210411456?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xsMTUzMTEyNTc2MTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。<br>插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难直接去到每一个元素。结合链表的特点，我们可以设置一个虚拟的头节点，对于每一个节点，都要从该虚拟节点开始，一直到大于这个节点的数为止。</p>
-<h2 id="JAVA-代码实现"><a href="#JAVA-代码实现" class="headerlink" title="JAVA 代码实现"></a>JAVA 代码实现</h2><pre><code>/**
+<h3 id="插入排序的基本介绍"><a href="#插入排序的基本介绍" class="headerlink" title="插入排序的基本介绍"></a>插入排序的基本介绍</h3><p>插入排序的时间复杂度为O(n*n),但是在 给定数据近乎有序的情况下，它的时间复杂度可以接近O(n).它的基本思想是对于当前的节点。不断与该节点前面节点进行比较，直到它前面的数据小于它。如下图所示：  </p>
+<p><img src="/posts/34037/1.bmp" alt="">  </p>
+<p>对元素2进行排序时，只要往前一直找，就可以将它插入合适的位置。<br>插入排序基于数组很容易实现，原因在于我们可以很方便的找到每一个位置上的数据。但是链表不能这么做，原因在于很难直接去到每一个元素。结合链表的特点，我们可以设置一个虚拟的头节点，对于每一个节点，都要从该虚拟节点开始，一直到大于这个节点的数为止。</p>
+<h3 id="JAVA代码实现"><a href="#JAVA代码实现" class="headerlink" title="JAVA代码实现"></a>JAVA代码实现</h3><hr>
+<pre><code>/**
  * Definition for singly-linked list.
  * public class ListNode {
  *     int val;
@@ -826,7 +829,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序的基本介绍"><span class="nav-number">1.</span> <span class="nav-text">插入排序的基本介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVA-代码实现"><span class="nav-number"></span> <span class="nav-text">JAVA 代码实现</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序的基本介绍"><span class="nav-number">1.</span> <span class="nav-text">插入排序的基本介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JAVA代码实现"><span class="nav-number">2.</span> <span class="nav-text">JAVA代码实现</span></a></li></ol></div>
             
 
           </div>
