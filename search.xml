@@ -240,7 +240,7 @@
     <url>%2Fposts%2F4885%2F</url>
     <content type="text"><![CDATA[前言：第235题 和 第236 题都是求解一棵树中两个结点最近公共祖先（LCA）问题，但是不同之处在于235给出的树为一棵二叉搜索树（BST），而236是一颗一般的二叉树，这样的话在235中利用BST的性质可以很方便的解决问题，但是在236中就必须全面考虑。一般而言，找一棵树的LCA可以分为三种情况：俩个结点分别在LCA的不同子树，两个结点中的一个就是LCA。 第235题 Lowest Common Ancestor of a Binary Search Tree思路：考虑到BST树的特殊结构：左子树中所有结点的值都比当前结点的值小，右子树中所有结点的值都比当前结点的值小。所以只要找到第一个结点的值的取值在给定的两个结点之间，这个结点就是要找的LCA。具体来说，就是尽量保证这两个结点在LCA的不同子树。 JAVA代码实现 class Solution { public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) { if(root==null) return null; if(p.val&lt;root.val&amp;&amp;q.val&lt;root.val) return lowestCommonAncestor(root.left, p, q); if(p.val&gt;root.val&amp;&amp;q.val&gt;root.val) return lowestCommonAncestor(root.right, p, q); return root; } } 第236题思路：对于一般的二叉树说，给定的两个结点出现的次数，出现的位置，都是不确定的甚至给定两个结点的值都可能是一样的。考虑到LCA出现的三种情况，当我们在递归的过程中，从根节点开始，只要遇到节点为空，结点为给定结点中的一个，就返回比较，如果在左子树和右子树中返回的结点都不为空，就返回当前结点，负责就返回不为空的那个。 JAVA代码实现 class Solution { public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) { if(root == null||root == q||root == p) return root; TreeNode l = lowestCommonAncestor(root.left, p, q); TreeNode r = lowestCommonAncestor(root.right, p, q); if(l!=null&amp;&amp;r!=null) return root; return l!=null?l:r; } } 注意：这两个题都有一个隐含条件：就是要查找的两个结点已经在树中包含，负责在查找之前，我们还要判断这两个结点是否在树中。]]></content>
       <categories>
-        <category>leetcode 数据结构</category>
+        <category>leetcode</category>
       </categories>
       <tags>
         <tag>Java</tag>
