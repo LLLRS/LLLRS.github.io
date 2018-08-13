@@ -148,7 +148,7 @@
 <meta property="og:image" content="https://9191rs.me/posts/40484/1.jpg">
 <meta property="og:image" content="https://9191rs.me/posts/40484/2.jpg">
 <meta property="og:image" content="https://9191rs.me/posts/40484/3.jpg">
-<meta property="og:updated_time" content="2018-08-07T13:35:02.755Z">
+<meta property="og:updated_time" content="2018-08-13T12:55:41.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虚拟机类加载机制">
 <meta name="twitter:description" content="概述&amp;#8195;&amp;#8195;虚拟机的类加载机制就是虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。在Java语言里面，类型的加载、连 接和初始化过程都是在程序运行期间完成的，这种策略虽然会令类加载时稍微增加一些 性能开销，但是会为Java应用程序提供高度的灵活性，Java里天生可以动态扩展的语言 特性就是依赖运行期">
@@ -461,7 +461,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5,626
+                  5,631
                 </span>
               
 
@@ -578,7 +578,11 @@
 <p>  使用双亲委派模型来组织类加载器之间的关系，有一个很明显的好处，就是Java类随着它的类加载器（说白了，就是它所在的目录）一起具备了一种带有优先级的层次关系，这对于保证Java程序的稳定运作很重要。例如，类java.lang.Object类存放在JDK\jre\lib下的rt.jar之中，因此无论是哪个类加载器要加载此类，最终都会委派给启动类加载器进行加载，这边保证了Object类在程序中的各种类加载器中都是同一个类。</p>
 <p>此外，类加载器全盘负责机制：当一个类加载器加载一个Class的时候，这个Class所依赖的和引用的所有Class也由这个类加载器负责载入，除非是显式的使用另外一个类加载器载入。</p>
 <hr>
-<p>详情请参见深入理解Java虚拟机第二版<br><a href="https://blog.csdn.net/ns_code/article/details/17881581" target="_blank" rel="noopener">https://blog.csdn.net/ns_code/article/details/17881581</a></p>
+<p>详情请参见</p>
+<ul>
+<li>深入理解Java虚拟机第二版</li>
+<li><a href="https://blog.csdn.net/ns_code/article/details/17881581" target="_blank" rel="noopener">【深入Java虚拟机】之四：类加载机制</a></li>
+</ul>
 
       
     </div>
@@ -762,7 +766,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -784,7 +788,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
