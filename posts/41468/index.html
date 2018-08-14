@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+  <meta name="keywords" content="数据库," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="爱生活,爱柒柒" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="事务概述事务的概念来自于两个独立的需求：并发数据库访问，系统错误恢复。一个事务是可以被看作一个单元的一系列SQL语句的集合。事务通常指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。   事务的特性（ACID） 原子性（Atomicity）：事务被视为不可分割的最小单元，事务的所有操作要么全部提交成功，要么全部失败回滚。回滚可以用日">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库系统原理">
+<meta property="og:url" content="https://9191rs.me/posts/41468/index.html">
+<meta property="og:site_name" content="爱生活,爱柒柒">
+<meta property="og:description" content="事务概述事务的概念来自于两个独立的需求：并发数据库访问，系统错误恢复。一个事务是可以被看作一个单元的一系列SQL语句的集合。事务通常指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。   事务的特性（ACID） 原子性（Atomicity）：事务被视为不可分割的最小单元，事务的所有操作要么全部提交成功，要么全部失败回滚。回滚可以用日">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://9191rs.me/posts/41468/1.jpg">
+<meta property="og:image" content="https://9191rs.me/posts/41468/2.jpg">
+<meta property="og:image" content="https://9191rs.me/posts/41468/3.jpg">
+<meta property="og:image" content="https://9191rs.me/posts/41468/4.jpg">
+<meta property="og:image" content="https://9191rs.me/posts/41468/5.jpg">
+<meta property="og:image" content="https://9191rs.me/posts/41468/6.jpg">
+<meta property="og:image" content="https://9191rs.me/posts/41468/7.jpg">
+<meta property="og:updated_time" content="2018-08-14T13:29:03.699Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库系统原理">
+<meta name="twitter:description" content="事务概述事务的概念来自于两个独立的需求：并发数据库访问，系统错误恢复。一个事务是可以被看作一个单元的一系列SQL语句的集合。事务通常指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。   事务的特性（ACID） 原子性（Atomicity）：事务被视为不可分割的最小单元，事务的所有操作要么全部提交成功，要么全部失败回滚。回滚可以用日">
+<meta name="twitter:image" content="https://9191rs.me/posts/41468/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://9191rs.me/posts/41468/"/>
+
+
+
+
+
+  <title>数据库系统原理 | 爱生活,爱柒柒</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">爱生活,爱柒柒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'tLXWKdsstE5UZFCodRRQ','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/41468/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LI Ren">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爱生活,爱柒柒">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库系统原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-14T20:06:43+08:00">
+                2018-08-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/41468/" class="leancloud_visitors" data-flag-title="数据库系统原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,182
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="事务概述"><a href="#事务概述" class="headerlink" title="事务概述"></a>事务概述</h3><p>事务的概念来自于两个独立的需求：并发数据库访问，系统错误恢复。一个事务是可以被看作一个单元的一系列SQL语句的集合。事务通常指的是满足 ACID 特性的一组操作，可以通过 Commit 提交一个事务，也可以使用 Rollback 进行回滚。</p>
+<p><img src="/posts/41468/1.jpg" alt=""> </p>
+<h3 id="事务的特性（ACID）"><a href="#事务的特性（ACID）" class="headerlink" title="事务的特性（ACID）"></a>事务的特性（ACID）</h3><ul>
+<li><strong>原子性（Atomicity）</strong>：事务被视为不可分割的最小单元，事务的所有操作要么全部提交成功，要么全部失败回滚。回滚可以用日志来实现，日志记录着事务所执行的修改操作，在回滚时反向执行这些修改操作即可。</li>
+<li><strong>一致性（Consistency）</strong>：数据库在事务执行前后都保持一致性状态。在一致性状态下，所有事务对一个数据的读取结果都是相同的。</li>
+<li><strong>隔离性（Isolation）</strong>：一个事务所做的修改在最终提交以前，对其它事务是不可见的。</li>
+<li><strong>持久性（Durability）</strong>：一旦事务提交，则其所做的修改将会永远保存到数据库中。即使系统发生崩溃，事务执行的结果也不能丢失。可以通过数据库备份和恢复来实现，在系统发生崩溃时，使用备份的数据库进行数据恢复。</li>
+</ul>
+<p>事务的 ACID 特性概念简单，但不是很好理解，主要是因为这几个特性不是一种平级关系：</p>
+<ul>
+<li>只有满足一致性，事务的执行结果才是正确的。</li>
+<li>在无并发的情况下，事务串行执行，隔离性一定能够满足。此时只要能满足原子性，就一定能满足一致性。</li>
+<li>在并发的情况下，多个事务并发执行，事务不仅要满足原子性，还需要满足隔离性，才能满足一致性。</li>
+<li>事务满足持久化是为了能应对数据库崩溃的情况。</li>
+</ul>
+<p><img src="/posts/41468/2.jpg" alt=""> </p>
+<h3 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h3><p>如果不对数据库进行并发控制，可能会产生异常情况：</p>
+<ol>
+<li><p><strong>脏读(Dirty Read)：</strong><br>当一个事务读取另一个事务尚未提交的修改时，产生脏读。同一事务内不是脏读。<br>一个事务开始读取了某行数据，但是另外一个事务已经更新了此数据但没有能够及时提交。这是相当危险的，因为很可能所有的操作都被回滚，也就是说读取出的数据其实是错误的。如T1 修改一个数据，T2 随后读取这个数据。如果 T1 撤销了这次修改，那么 T2 读取的数据是脏数据。</p>
+<p><img src="/posts/41468/3.jpg" alt=""> </p>
+</li>
+<li><p><strong>不可重复读(Nonrepeatable Read)</strong> ：一个事务对同一行数据重复读取两次，但是却得到了不同的结果。同一查询在同一事务中多次进行，由于其他提交事务所做的修改或删除，每次返回不同的结果集，此时发生非重复读。如T2 读取一个数据，T1 对该数据做了修改。如果 T2 再次读取这个数据，此时读取的结果和第一次读取的结果不同。</p>
+<p><img src="/posts/41468/4.jpg" alt=""> </p>
+</li>
+<li><p><strong>幻读(Phantom Reads)</strong> ：事务在操作过程中进行两次查询，第二次查询的结果包含了第一次查询中未出现的数据（这里并不要求两次查询的SQL语句相同）。这是因为在两次查询过程中有另外一个事务插入数据造成的。当对某行执行插入或删除操作，而该行属于某个事务正在读取的行的范围时，会发生幻像读问题。如T1 读取某个范围的数据，T2 在这个范围内插入新的数据，T1 再次读取这个范围的数据，此时读取的结果和和第一次读取的结果不同</p>
+<p><img src="/posts/41468/5.jpg" alt=""> </p>
+</li>
+<li><p><strong>丢失修改(Lost Update)：</strong><br>第一类：当两个事务更新相同的数据源，如果第一个事务被提交，第二个却被撤销，那么连同第一个事务做的更新也被撤销。<br>第二类：有两个并发事务同时读取同一行数据，然后其中一个对它进行修改提交，而另一个也进行了修改提交。这就会造成第一次写操作失效。如T1 和 T2 两个事务都对一个数据进行修改，T1 先修改，T2 随后修改，T2 的修改覆盖了 T1 的修改。</p>
+<p><img src="/posts/41468/6.jpg" alt=""> </p>
+</li>
+</ol>
+<p>为了兼顾并发效率和异常控制，在标准SQL规范中，定义了4个事务隔离级别，（ Oracle 和 SQL Server 对标准隔离级别有不同的实现 ）。</p>
+<ol>
+<li><p><strong>未提交读(Read Uncommitted)</strong><br>直译就是”读未提交”，意思就是即使一个更新语句没有提交，但是别的事务可以读到这个改变。<br>Read Uncommitted允许脏读。</p>
+</li>
+<li><p><strong>已提交读(Read Committed)</strong><br>直译就是”读提交”，意思就是语句提交以后，即执行了 Commit 以后别的事务就能读到这个改变，只能读取到已经提交的数据。Oracle等多数数据库默认都是该级别。<br>Read Commited 不允许脏读，但会出现非重复读。</p>
+</li>
+<li><p><strong>可重复读(Repeatable Read)：</strong><br>直译就是”可以重复读”，这是说在同一个事务里面先后执行同一个查询语句的时候，得到的结果是一样的。<br>Repeatable Read 不允许脏读，不允许非重复读，但是会出现幻象读。</p>
+</li>
+<li><p><strong>串行读(Serializable)</strong><br>直译就是”序列化”，意思是说这个事务执行的时候不允许别的事务并发执行。完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。<br>Serializable 不允许不一致现象的出现。</p>
+</li>
+</ol>
+<h3 id="事务隔离的实现——锁"><a href="#事务隔离的实现——锁" class="headerlink" title="事务隔离的实现——锁"></a>事务隔离的实现——锁</h3><p>MySQL 中提供了两种封锁粒度：行级锁以及表级锁。</p>
+<p>应该尽量只锁定需要修改的那部分数据，而不是所有的资源。锁定的数据量越少，发生锁争用的可能就越小，系统的并发程度就越高。</p>
+<p>但是加锁需要消耗资源，锁的各种操作（包括获取锁、释放锁、以及检查锁状态）都会增加系统开销。因此封锁粒度越小，系统开销就越大。在选择封锁粒度时，需要在锁开销和并发程度之间做一个权衡。</p>
+<h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><ul>
+<li><p><strong>排它锁（Exclusive）</strong>: 简写为 X 锁，又称写锁。一次只能有一个独占锁用在一个资源上，并且阻止其他所有的锁包括共享缩。写是独占锁，可以有效的防止“脏读”。</p>
+</li>
+<li><p><strong>共享锁（Shared）</strong>: 简写为 S 锁，又称读锁。用于只读操作(SELECT)，锁定共享的资源。共享锁不会阻止其他用户读，但是阻止其他的用户写和修改。</p>
+</li>
+</ul>
+<p>有以下两个规定：</p>
+<ul>
+<li>一个事务对数据对象 A 加了 X 锁，就可以对 A 进行读取和更新。加锁期间其它事务不能对 A 加任何锁。</li>
+<li>一个事务对数据对象 A 加了 S 锁，可以对 A 进行读取操作，但是不能进行更新操作。加锁期间其它事务能对 A 加 S 锁，</li>
+</ul>
+<p><strong>Read Uncommited</strong> : 如果一个事务已经开始写数据，则另外一个数据则不允许同时进行写操作，但允许其他事务读此行数据。该隔离级别可以通过“排他写锁”实现。</p>
+<p><strong>Read Committed</strong> : 读取数据的事务允许其他事务继续访问该行数据，但是未提交的写事务将会禁止其他事务访问该行。可以通过“瞬间共享读锁”和“排他写锁”实现。</p>
+<p><strong>Repeatable Read:</strong> 读取数据的事务将会禁止写事务（但允许读事务），写事务则禁止任何其他事务。可以通过“共享读锁”和“排他写锁”实现。</p>
+<p><strong>Serializable</strong>: 读加共享锁，写加排他锁，读写互斥。</p>
+<h4 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h4><p>使用意向锁（Intention Locks）可以更容易地支持多粒度封锁。<br>在MySQL存储引擎InnoDB中，意向锁是表级锁。</p>
+<ul>
+<li><strong>意向共享锁（IS）：</strong>在对一个数据行<strong>加共享锁前</strong>必须取得该表的IS锁。</li>
+<li><strong>意向排他锁（IX）：</strong>在对一个数据行<strong>加排他锁前</strong>必须取得该表的IX锁。</li>
+</ul>
+<p>通过引入意向锁，事务 T 想要对表 A 加 X 锁，只需要先检测是否有其它事务对表 A 加了 X/IX/S/IS 锁，如果加了就表示有其它事务正在使用这个表或者表中某一行的锁，因此事务 T 加 X 锁失败。</p>
+<h3 id="MySQL-的-InnoDB-存储引擎提供的锁"><a href="#MySQL-的-InnoDB-存储引擎提供的锁" class="headerlink" title="MySQL 的 InnoDB 存储引擎提供的锁"></a>MySQL 的 InnoDB 存储引擎提供的锁</h3><h4 id="单行记录锁（Record-Locks）"><a href="#单行记录锁（Record-Locks）" class="headerlink" title="单行记录锁（Record Locks）"></a>单行记录锁（Record Locks）</h4><p>锁定一个记录上的<strong>索引</strong>，而不是记录本身。<br>如果表没有设置索引，InnoDB 会自动在主键上创建隐藏的聚集索引，因此 Record Locks 依然可以使用。</p>
+<h4 id="间隙锁（Gap-Locks）"><a href="#间隙锁（Gap-Locks）" class="headerlink" title="间隙锁（Gap Locks）"></a>间隙锁（Gap Locks）</h4><p>锁定索引之间的间隙，但是不包含索引本身。例如当一个事务执行以下语句，其它事务就不能在 t.c 中插入 15。</p>
+<blockquote>
+<p>SELECT c FROM t WHERE c BETWEEN 10 and 20 FOR UPDATE;</p>
+</blockquote>
+<h4 id="Next-Key-Locks"><a href="#Next-Key-Locks" class="headerlink" title="Next-Key Locks"></a>Next-Key Locks</h4><p>它是 Record Locks 和 Gap Locks 的结合，不仅锁定一个记录上的索引，也锁定范围内的索引.</p>
+<h3 id="数据库范式"><a href="#数据库范式" class="headerlink" title="数据库范式"></a>数据库范式</h3><p>范式理论是为了解决数据库操作中的异常：</p>
+<ul>
+<li>冗余数据：例如一行数据出现了两次。</li>
+<li>修改异常：修改了一个记录中的信息，但是另一个记录中相同的信息却没有被修改。</li>
+<li>删除异常：删除一个信息，那么也会丢失其它信息。</li>
+<li>插入异常</li>
+</ul>
+<p>高级别范式的依赖于低级别的范式，1NF 是最低级别的范式。<br> <img src="/posts/41468/7.jpg" alt=""> </p>
+<h4 id="第一范式（1NF）"><a href="#第一范式（1NF）" class="headerlink" title="第一范式（1NF）"></a>第一范式（1NF）</h4><p>在任何一个关系数据库中，第一范式（1NF）是对关系模式的基本要求，不满足第一范式（1NF）的数据库就不是关系数据库。<br>所谓第一范式（1NF）是指数据库表的每一列都是不可分割的基本数据项，同一列中不能有多个值，即实体中的某个属性不能有多个值或者不能有重复的属性。如果出现重复的属性，就可能需要定义一个新的实体，新的实体由重复的属性构成，新实体与原实体之间为一对多关系。在第一范式（1NF）中表的每一行只包含一个实例的信息。<strong>简而言之，第一范式就是无重复的列。</strong></p>
+<h4 id="第二范式（2NF）"><a href="#第二范式（2NF）" class="headerlink" title="第二范式（2NF）"></a>第二范式（2NF）</h4><p>第二范式（2NF）是在第一范式（1NF）的基础上建立起来的，即满足第二范式（2NF）必须先满足第一范式（1NF）。第二范式（2NF）要求数据库表中的每个实例或行必须可以被惟一地区分。为实现区分通常需要为表加上一个列，以存储各个实例的惟一标识。这个惟一属性列被称为主关键字或主键、主码。<br>第二范式（2NF）要求实体的属性完全依赖于主关键字。所谓完全依赖是指不能存在仅依赖主关键字一部分的属性，如果存在，那么这个属性和主关键字的这一部分应该分离出来形成一个新的实体，新实体与原实体之间是一对多的关系。为实现区分通常需要为表加上一个列，以存储各个实例的惟一标识。<strong>简而言之，第二范式就是非主属性非部分依赖于主关键字。</strong></p>
+<h4 id="第三范式（3NF）"><a href="#第三范式（3NF）" class="headerlink" title="第三范式（3NF）"></a>第三范式（3NF）</h4><p>满足第三范式（3NF）必须先满足第二范式（2NF）。简而言之，第三范式（3NF）要求一个数据库表中不包含已在其它表中已包含的非主关键字信息。例如，存在一个部门信息表，其中每个部门有部门编号（dept_id）、部门名称、部门简介等信息。那么在员工信息表中列出部门编号后就不能再将部门名称、部门简介等与部门有关的信息再加入员工信息表中。如果不存在部门信息表，则根据第三范式（3NF）也应该构建它，否则就会有大量的数据冗余。<strong>简而言之，第三范式就是属性不依赖于其它非主属性。</strong></p>
+<hr>
+<p>参考链接</p>
+<ul>
+<li><a href="https://github.com/CyC2018/Interview-Notebook/blob/master/notes/数据库系统原理.md" target="_blank" rel="noopener">CyC2018/Interview-Notebook</a></li>
+<li><a href="https://hit-alibaba.github.io/interview/basic/db/Transaction.html" target="_blank" rel="noopener">事务的概念</a></li>
+<li><a href="https://blog.csdn.net/huangshulang1234/article/details/79523354" target="_blank" rel="noopener">java面试之数据库面试知识点</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+	<div align="center">
+	  
+		<div class="copyright">
+		<p><span>
+		<b>本文地址：</b><a href="/posts/41468/" title="数据库系统原理">https://9191rs.me/posts/41468/</a><br /><b>转载请注明出处，谢谢！</b>
+		</span></p>
+		</div>
+	  
+	</div>
+		
+	
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>欢迎一起进行交流！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="LI Ren 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+		
+		  <div class="post-nav">
+			<div class="post-nav-next post-nav-item">
+
+		      
+			</div>
+
+			<span class="post-nav-divider"></span>
+
+			<div class="post-nav-prev post-nav-item">
+
+		      
+		
+		        <a href="/posts/51855/" rel="next" title="http与https">
+		
+		         http与https <i class="fa fa-chevron-right"></i>
+				</a>
+			  
+			</div>
+		  </div>
+		
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/logo.jpeg"
+                alt="LI Ren" />
+            
+              <p class="site-author-name" itemprop="name">LI Ren</p>
+              <p class="site-description motion-element" itemprop="description">且自前行，莫问归处！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LLLRS" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="15311257617@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://tengj.top/" title="嘟嘟独立博客" target="_blank">嘟嘟独立博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://crossoverjie.top/" title="crossoverjie" target="_blank">crossoverjie</a>
+                  </li>
+                
+              </ul>
+			  <div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/18/2017 12:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+            </div>
+          
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务概述"><span class="nav-number">1.</span> <span class="nav-text">事务概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的特性（ACID）"><span class="nav-number">2.</span> <span class="nav-text">事务的特性（ACID）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的隔离级别"><span class="nav-number">3.</span> <span class="nav-text">事务的隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务隔离的实现——锁"><span class="nav-number">4.</span> <span class="nav-text">事务隔离的实现——锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁"><span class="nav-number">4.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#意向锁"><span class="nav-number">4.2.</span> <span class="nav-text">意向锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-的-InnoDB-存储引擎提供的锁"><span class="nav-number">5.</span> <span class="nav-text">MySQL 的 InnoDB 存储引擎提供的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单行记录锁（Record-Locks）"><span class="nav-number">5.1.</span> <span class="nav-text">单行记录锁（Record Locks）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#间隙锁（Gap-Locks）"><span class="nav-number">5.2.</span> <span class="nav-text">间隙锁（Gap Locks）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Next-Key-Locks"><span class="nav-number">5.3.</span> <span class="nav-text">Next-Key Locks</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库范式"><span class="nav-number">6.</span> <span class="nav-text">数据库范式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一范式（1NF）"><span class="nav-number">6.1.</span> <span class="nav-text">第一范式（1NF）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二范式（2NF）"><span class="nav-number">6.2.</span> <span class="nav-text">第二范式（2NF）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三范式（3NF）"><span class="nav-number">6.3.</span> <span class="nav-text">第三范式（3NF）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LI Ren</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span><br>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("oilMyKSMaPtFHPbgcbiCfJL6-gzGzoHsz", "oUBvV1jEzR3mJ3RvgWoHex8G");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 小红心 -->
+	<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
