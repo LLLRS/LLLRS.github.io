@@ -137,19 +137,19 @@
 
 
 
-<meta name="description" content="概述数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询，更新数据库表中数据。索引是一种数据结构，一个索引是存储的表中一个特定列或者某几个特定列的值数据结构，索引是在列上创建的。 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。 B+ Tree 原理B+ Tree 是Btree(Balance Tree)的变体，也是一种多路平衡的搜索树。B+">
+<meta name="description" content="概述数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询，更新数据库表中数据。索引是一种数据结构，一个索引是存储的表中一个特定列或者某几个特定列的值数据结构，索引是在列上创建的。 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。 MySql的存储引擎MySql的存储引擎主要有两种：MyISAM和InnoDB。 MyISAMMySql5.5之前">
 <meta name="keywords" content="索引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySql中的索引">
 <meta property="og:url" content="https://9191rs.me/posts/64683/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="概述数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询，更新数据库表中数据。索引是一种数据结构，一个索引是存储的表中一个特定列或者某几个特定列的值数据结构，索引是在列上创建的。 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。 B+ Tree 原理B+ Tree 是Btree(Balance Tree)的变体，也是一种多路平衡的搜索树。B+">
+<meta property="og:description" content="概述数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询，更新数据库表中数据。索引是一种数据结构，一个索引是存储的表中一个特定列或者某几个特定列的值数据结构，索引是在列上创建的。 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。 MySql的存储引擎MySql的存储引擎主要有两种：MyISAM和InnoDB。 MyISAMMySql5.5之前">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://9191rs.me/posts/64683/1.png">
-<meta property="og:updated_time" content="2018-08-14T12:13:20.455Z">
+<meta property="og:updated_time" content="2018-08-31T12:39:54.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySql中的索引">
-<meta name="twitter:description" content="概述数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询，更新数据库表中数据。索引是一种数据结构，一个索引是存储的表中一个特定列或者某几个特定列的值数据结构，索引是在列上创建的。 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。 B+ Tree 原理B+ Tree 是Btree(Balance Tree)的变体，也是一种多路平衡的搜索树。B+">
+<meta name="twitter:description" content="概述数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询，更新数据库表中数据。索引是一种数据结构，一个索引是存储的表中一个特定列或者某几个特定列的值数据结构，索引是在列上创建的。 索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。 MySql的存储引擎MySql的存储引擎主要有两种：MyISAM和InnoDB。 MyISAMMySql5.5之前">
 <meta name="twitter:image" content="https://9191rs.me/posts/64683/1.png">
 
 
@@ -459,7 +459,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,275
+                  2,768
                 </span>
               
 
@@ -486,6 +486,28 @@
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询，更新数据库表中数据。索引是一种数据结构，一个索引是存储的表中一个特定列或者某几个特定列的值数据结构，索引是在列上创建的。</p>
 <p>索引是在存储引擎层实现的，而不是在服务器层实现的，所以不同存储引擎具有不同的索引类型和实现。</p>
+<h3 id="MySql的存储引擎"><a href="#MySql的存储引擎" class="headerlink" title="MySql的存储引擎"></a>MySql的存储引擎</h3><p>MySql的存储引擎主要有两种：MyISAM和InnoDB。</p>
+<h4 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h4><p>MySql5.5之前的默认引擎，特点如下：</p>
+<ul>
+<li>不支持行锁，读取是需要对读到的所有表加锁，写入时则对表加排他锁。</li>
+<li>不支持事务和外键。</li>
+<li>不支持崩溃后的安全恢复。</li>
+<li>在表有读取查询的同时，支持往表中插入新纪录。</li>
+<li>支持BLOB和TEXT的前600个字符索引，支持全文索引。</li>
+<li>支持延迟更新索引，极大的提升了写入性能。</li>
+<li>对于不会进行修改的表，支持压缩表，减少了磁盘空间占用。</li>
+</ul>
+<h4 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h4><p>MySql5.5之后的默认引擎，特点如下：</p>
+<ul>
+<li>支持行锁，采用MVCC来支持高并发，可能死锁。</li>
+<li>支持事务和外键。</li>
+<li>支持崩溃后的安全恢复。</li>
+<li>不支持全文索引。</li>
+</ul>
+<p>总而言之，MyISAM适合读密集的表，而InnoDB适合写密集的表。</p>
+<p>MyISAM和InnoDB都可以采用B+ Tree作为索引，但是其实现方式是不同的。</p>
+<p><strong>MylSAM：</strong> B+Tree叶节点的data域存放的是数据记录的地址。检索时，首先 ，按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址读取相应的数据记录。这被称非聚簇索引。</p>
+<p><strong>InnoDB:</strong>其数据文件本身就是就是索引文件，树的叶子节点的data域保存了完整的数据记录。如果这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引，这被称为聚簇索引。而其余的索引都被称为辅助索引，辅助索引的data域记录相应的主键的值。根据主索引搜索时，直接到key所在的节点索引，即可取出数据。再根据辅助索引查找时，则需要先取出主键的值，再走一遍主索引。</p>
 <h2 id="B-Tree-原理"><a href="#B-Tree-原理" class="headerlink" title="B+ Tree 原理"></a>B+ Tree 原理</h2><p>B+ Tree 是Btree(Balance Tree)的变体，也是一种多路平衡的搜索树。B+树所有的叶子结点中包含了全部关键字的信息，及指向含有这些关键字记录的指针，且叶子结点本身依关键字的大小自小而大的顺序链接，所有的非终端结点可以看成是索引部分，结点中仅含有其子树根结点中最大（或最小）关键字。</p>
 <p><img src="/posts/64683/1.png" alt=""> </p>
 <h3 id="B-Tree的查找和删除"><a href="#B-Tree的查找和删除" class="headerlink" title="B+ Tree的查找和删除"></a>B+ Tree的查找和删除</h3><p>进行查找操作时，首先在根节点进行二分查找，找到一个 key 所在的指针，然后递归地在指针所指向的节点进行查找。直到查找到叶子节点，然后在叶子节点上进行二分查找，找出 key 所对应的 data。</p>
@@ -853,7 +875,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-Tree-原理"><span class="nav-number">2.</span> <span class="nav-text">B+ Tree 原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-Tree的查找和删除"><span class="nav-number">2.1.</span> <span class="nav-text">B+ Tree的查找和删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么是B-Tree"><span class="nav-number">2.2.</span> <span class="nav-text">为什么是B+ Tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引分类"><span class="nav-number">3.</span> <span class="nav-text">索引分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-Tree-索引"><span class="nav-number">3.1.</span> <span class="nav-text">B+Tree 索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希索引"><span class="nav-number">3.2.</span> <span class="nav-text">哈希索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全文索引"><span class="nav-number">3.3.</span> <span class="nav-text">全文索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空间数据索引（R-Tree）"><span class="nav-number">3.4.</span> <span class="nav-text">空间数据索引（R-Tree）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的优点"><span class="nav-number">4.1.</span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引选择原则"><span class="nav-number">4.2.</span> <span class="nav-text">索引选择原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引选择注意事项"><span class="nav-number">4.3.</span> <span class="nav-text">索引选择注意事项</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySql的存储引擎"><span class="nav-number">1.1.</span> <span class="nav-text">MySql的存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MyISAM"><span class="nav-number">1.1.1.</span> <span class="nav-text">MyISAM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InnoDB"><span class="nav-number">1.1.2.</span> <span class="nav-text">InnoDB</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-Tree-原理"><span class="nav-number">2.</span> <span class="nav-text">B+ Tree 原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-Tree的查找和删除"><span class="nav-number">2.1.</span> <span class="nav-text">B+ Tree的查找和删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么是B-Tree"><span class="nav-number">2.2.</span> <span class="nav-text">为什么是B+ Tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引分类"><span class="nav-number">3.</span> <span class="nav-text">索引分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-Tree-索引"><span class="nav-number">3.1.</span> <span class="nav-text">B+Tree 索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希索引"><span class="nav-number">3.2.</span> <span class="nav-text">哈希索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全文索引"><span class="nav-number">3.3.</span> <span class="nav-text">全文索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空间数据索引（R-Tree）"><span class="nav-number">3.4.</span> <span class="nav-text">空间数据索引（R-Tree）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的优点"><span class="nav-number">4.1.</span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引选择原则"><span class="nav-number">4.2.</span> <span class="nav-text">索引选择原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引选择注意事项"><span class="nav-number">4.3.</span> <span class="nav-text">索引选择注意事项</span></a></li></ol></li></ol></div>
             
 
           </div>
