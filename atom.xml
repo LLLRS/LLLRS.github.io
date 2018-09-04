@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://9191rs.me/"/>
-  <updated>2018-08-31T12:23:30.451Z</updated>
+  <updated>2018-09-04T08:36:52.691Z</updated>
   <id>https://9191rs.me/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>leetcode 第60题 Permutation Sequence</title>
+    <link href="https://9191rs.me/posts/56083/"/>
+    <id>https://9191rs.me/posts/56083/</id>
+    <published>2018-09-04T07:43:56.000Z</published>
+    <updated>2018-09-04T08:36:52.691Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>将1-n按照从小到大的顺序进行全排列，求解第k个排列结果。<br>如n=3,它的全排列顺序如下：</p><p><img src="/posts/56083/1.jpg" alt=""></p><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>首先想到的肯定是求出整个全排列，然后返回第K个即可，这种做法当然可行，但是对于本题来书并不是最优解。leetcode上有一种十分<a href="https://leetcode.com/problems/permutation-sequence/discuss/22507/%22Explain-like-I&#39;m-five%22-Java-Solution-in-O(n" target="_blank" rel="noopener">巧妙的解法</a>)，它的思路如下(以n=4,k=16举例)：</p><p>当n = 4时，全排列序列可以看作以下几种情况的组合：<br>&#8195;&#8195; 1 + (permutations of 2, 3, 4)<br>&#8195;&#8195;2 + (permutations of 1, 3, 4)<br>&#8195;&#8195;3 + (permutations of 1, 2, 4)<br>&#8195;&#8195;4 + (permutations of 1, 2, 3)</p><p>对于每一个子排列来说，有6种可能。也就是说，在这个特殊的情况下总共会有24个排列。因此，当k＝14时，所要求的排列将在 3 + (permutations of 1, 2, 4) 这个子排列中。这里求第几个会有一个公式：</p><blockquote><p>index = k/(n-1)! = 13/(4-1)! = 13/3! = 13/6 = 2</p></blockquote><p>然后相当于实在求 permutations of {1, 2, 4} 中的一个子序列,新的k可以通过下述公式计算：</p><blockquote><p> k = k - (index from previous) <em> (n-1)! = k - 2</em>(n-1)! = 13 - 2*(3)! = 1</p></blockquote><p>第二步中的全排列序列：<br>&#8195;&#8195;1 + (permutations of 2, 4)<br>&#8195;&#8195;2 + (permutations of 1, 4)<br>&#8195;&#8195;4 + (permutations of 1, 2)<br>根据公式求出新的index = k / (n - 2)! = 1 / (4-2)! = 1 / 2! = 0，</p><p>这样的话下一步应该在1 + (permutations of 2, 4)中，<br>&#8195;&#8195;2 + (permutations of  4)<br>&#8195;&#8195;4 + (permutations of 2)<br> 再次根据公式计算k的值为1，index的值为1。</p><p>最后一步的子序列为(permutations of 2)，也可以计算的k的值为0，index的值为0(走个流程，最后结果都是这个)。</p><p>综上: index的自每一步中取值分别为：2 0 1 0，结合每一次的去安排列序列，可以得出最终的结果为： 3142 ！！ </p><h3 id="Java参考代码"><a href="#Java参考代码" class="headerlink" title="Java参考代码"></a>Java参考代码</h3><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">String</span> getPermutation(<span class="built_in">int</span> n, <span class="built_in">int</span> k) &#123;</span><br><span class="line">        </span><br><span class="line">        List&lt;Integer&gt; nums = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">        <span class="built_in">int</span>[] fn = <span class="keyword">new</span> <span class="built_in">int</span>[n+<span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">            nums.<span class="built_in">add</span>(i);</span><br><span class="line">        </span><br><span class="line">        fn[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">int</span> sum = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            sum *= i;</span><br><span class="line">            fn[i] = sum;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        k--;  <span class="comment">//减去1，因为总是计数是从0开始</span></span><br><span class="line">        </span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="built_in">int</span> idx = k/fn[n-i];</span><br><span class="line">            sb.<span class="built_in">append</span>(<span class="keyword">String</span>.valueOf(nums.<span class="built_in">get</span>(idx)));</span><br><span class="line">            nums.remove(idx);</span><br><span class="line">            k = k - idx*fn[n-i];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;题目要求&quot;&gt;&lt;a href=&quot;#题目要求&quot; class=&quot;headerlink&quot; title=&quot;题目要求&quot;&gt;&lt;/a&gt;题目要求&lt;/h3&gt;&lt;p&gt;将1-n按照从小到大的顺序进行全排列，求解第k个排列结果。&lt;br&gt;如n=3,它的全排列顺序如下：&lt;/p&gt;
+&lt;p&gt;&lt;img s
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
+    
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title>数据库系统原理</title>
@@ -245,9 +275,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -274,9 +304,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -304,9 +334,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -333,9 +363,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -362,9 +392,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -446,9 +476,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -500,9 +530,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -531,9 +561,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -562,9 +592,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -592,9 +622,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -623,9 +653,9 @@
       <category term="二叉树" scheme="https://9191rs.me/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="BST" scheme="https://9191rs.me/tags/BST/"/>
     
@@ -653,9 +683,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -683,9 +713,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -774,9 +804,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -809,9 +839,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -840,9 +870,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -876,9 +906,9 @@
       <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
