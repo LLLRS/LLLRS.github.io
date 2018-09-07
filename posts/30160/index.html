@@ -124,7 +124,7 @@
 
 
 
-  <meta name="keywords" content="Java,leetcode,数据结构," />
+  <meta name="keywords" content="Java,leetcode,剑指offer," />
 
 
 
@@ -137,21 +137,18 @@
 
 
 
-<meta name="description" content="判断链表成环，且找出环的起点。 判断链表成环 找出环的起点 Java代码实现   1. 判断链表是否成环 Floyd环判断法：从同一个起点同时开始以不同速度前进的2个指针最终相遇，那么可以判定存在一个环。  设想：乌龟和兔子在同一个环上赛跑，跑的快的兔子速度为2，跑的慢的乌龟速度为1，则兔子终会赶上乌龟。 理解：如果以乌龟为参考对象，则兔子前进的速度为1，这就意味着，兔子必将赶上乌龟。 所以一个">
-<meta name="keywords" content="Java,leetcode,数据结构">
+<meta name="description" content="&amp;#8195;&amp;#8195; 前言加减乘除是在写程序过程中，经常会遇到的。如果不能使用四则运算符号（+ - / * ）做运算，那么我们只能考虑用位运算。且由于减法和乘法一般可用加法推出，所以现在只介绍用位运算实现加法和除法。 加法思路首先看十进制是如何做的： 5+7=12，三步走第一步：相加各位的值，不算进位，得到2。第二步：计算进位值，得到10. 如果这一步的进位值为0，那么第一步得到的值就">
+<meta name="keywords" content="Java,leetcode,剑指offer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="判断链表成环，且找出环的起点">
-<meta property="og:url" content="https://9191rs.me/posts/36499/index.html">
+<meta property="og:title" content="不用四则运算符号做加减乘除">
+<meta property="og:url" content="https://9191rs.me/posts/30160/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="判断链表成环，且找出环的起点。 判断链表成环 找出环的起点 Java代码实现   1. 判断链表是否成环 Floyd环判断法：从同一个起点同时开始以不同速度前进的2个指针最终相遇，那么可以判定存在一个环。  设想：乌龟和兔子在同一个环上赛跑，跑的快的兔子速度为2，跑的慢的乌龟速度为1，则兔子终会赶上乌龟。 理解：如果以乌龟为参考对象，则兔子前进的速度为1，这就意味着，兔子必将赶上乌龟。 所以一个">
+<meta property="og:description" content="&amp;#8195;&amp;#8195; 前言加减乘除是在写程序过程中，经常会遇到的。如果不能使用四则运算符号（+ - / * ）做运算，那么我们只能考虑用位运算。且由于减法和乘法一般可用加法推出，所以现在只介绍用位运算实现加法和除法。 加法思路首先看十进制是如何做的： 5+7=12，三步走第一步：相加各位的值，不算进位，得到2。第二步：计算进位值，得到10. 如果这一步的进位值为0，那么第一步得到的值就">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://9191rs.me/posts/36499/1.jpg">
-<meta property="og:image" content="https://9191rs.me/posts/36499/2.jpg">
-<meta property="og:updated_time" content="2018-08-01T11:12:25.882Z">
+<meta property="og:updated_time" content="2018-09-07T04:21:40.839Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="判断链表成环，且找出环的起点">
-<meta name="twitter:description" content="判断链表成环，且找出环的起点。 判断链表成环 找出环的起点 Java代码实现   1. 判断链表是否成环 Floyd环判断法：从同一个起点同时开始以不同速度前进的2个指针最终相遇，那么可以判定存在一个环。  设想：乌龟和兔子在同一个环上赛跑，跑的快的兔子速度为2，跑的慢的乌龟速度为1，则兔子终会赶上乌龟。 理解：如果以乌龟为参考对象，则兔子前进的速度为1，这就意味着，兔子必将赶上乌龟。 所以一个">
-<meta name="twitter:image" content="https://9191rs.me/posts/36499/1.jpg">
+<meta name="twitter:title" content="不用四则运算符号做加减乘除">
+<meta name="twitter:description" content="&amp;#8195;&amp;#8195; 前言加减乘除是在写程序过程中，经常会遇到的。如果不能使用四则运算符号（+ - / * ）做运算，那么我们只能考虑用位运算。且由于减法和乘法一般可用加法推出，所以现在只介绍用位运算实现加法和除法。 加法思路首先看十进制是如何做的： 5+7=12，三步走第一步：相加各位的值，不算进位，得到2。第二步：计算进位值，得到10. 如果这一步的进位值为0，那么第一步得到的值就">
 
 
 
@@ -181,13 +178,13 @@
 
 
 
-  <link rel="canonical" href="https://9191rs.me/posts/36499/"/>
+  <link rel="canonical" href="https://9191rs.me/posts/30160/"/>
 
 
 
 
 
-  <title>判断链表成环，且找出环的起点 | 爱生活,爱柒柒</title>
+  <title>不用四则运算符号做加减乘除 | 爱生活,爱柒柒</title>
   
 
 
@@ -364,7 +361,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/36499/">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/30160/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LI Ren">
@@ -381,7 +378,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">判断链表成环，且找出环的起点</h1>
+          <h1 class="post-title" itemprop="name headline">不用四则运算符号做加减乘除</h1>
         
 
         <div class="post-meta">
@@ -393,8 +390,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T21:14:00+08:00">
-                2017-11-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T11:53:36+08:00">
+                2018-09-07
               </time>
             
 
@@ -416,8 +413,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/链表/" itemprop="url" rel="index">
-                    <span itemprop="name">链表</span>
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
                   </a>
                 </span>
 
@@ -433,7 +430,7 @@
 
           
           
-             <span id="/posts/36499/" class="leancloud_visitors" data-flag-title="判断链表成环，且找出环的起点">
+             <span id="/posts/30160/" class="leancloud_visitors" data-flag-title="不用四则运算符号做加减乘除">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -460,7 +457,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  627
+                  817
                 </span>
               
 
@@ -485,70 +482,25 @@
       
 
       
-        <a id="more"></a>
-<h1 id="判断链表成环，且找出环的起点。"><a href="#判断链表成环，且找出环的起点。" class="headerlink" title="判断链表成环，且找出环的起点。"></a>判断链表成环，且找出环的起点。</h1><ul>
-<li><strong>判断链表成环</strong></li>
-<li><strong>找出环的起点</strong></li>
-<li><strong>Java代码实现</strong></li>
-</ul>
+        <p> <br> <br><br>&#8195;&#8195;</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>加减乘除是在写程序过程中，经常会遇到的。如果不能使用四则运算符号（+ - / * ）做运算，那么我们只能考虑用位运算。且由于减法和乘法一般可用加法推出，所以现在只介绍用位运算实现加法和除法。</p>
+<h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>首先看十进制是如何做的： 5+7=12，三步走<br>第一步：相加各位的值，不算进位，得到2。<br>第二步：计算进位值，得到10. 如果这一步的进位值为0，那么第一步得到的值就是最终结果。</p>
+<p>第三步：重复上述两步，只是相加的值变成上述两步的得到的结果2和10，得到12。</p>
+<p>同样我们可以用三步走的方式计算二进制值相加： 5-101，7-111 第一步：相加各位的值，不算进位，得到010，二进制每位相加就相当于各位做异或操作，101^111。</p>
+<p>第二步：计算进位值，得到1010，相当于各位做与操作得到101，再向左移一位得到1010，(101&amp;111)&lt;&lt;1。</p>
+<p>第三步重复上述两步， 各位相加 010^1010=1000，进位值为100=(010&amp;1010)&lt;&lt;1。<br>     继续重复上述两步：1000^100 = 1100，进位值为0，跳出循环，1100为最终结果。</p>
+<h4 id="Java代码实现"><a href="#Java代码实现" class="headerlink" title="Java代码实现"></a>Java代码实现</h4><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> Add(<span class="built_in">int</span> num1,<span class="built_in">int</span> num2) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">sum</span>,carry;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        <span class="built_in">sum</span> = num1 ^ num2;</span><br><span class="line">        carry = (num1&amp;num2)&lt;&lt;<span class="number">1</span>;</span><br><span class="line">        num1 = <span class="built_in">sum</span>;</span><br><span class="line">        num2 = carry;</span><br><span class="line">    &#125;<span class="keyword">while</span>(num2<span class="comment">!=0);</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> num1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h3><h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>用将15除以3举例，先将3向左移动1位（相当于乘以2），得到新除数6。15大于6，再次使得除数左移一位变为12。15大于12，再次使得除数左移一位变为24。15小于24，则用（15-12）重新开始这一个过程。在求解过程中用一个数记录循环的次数就可以得到解。</p>
+<h4 id="Java代码实现-1"><a href="#Java代码实现-1" class="headerlink" title="Java代码实现"></a>Java代码实现</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public int <span class="keyword">divide(int </span><span class="keyword">dividend, </span>int <span class="keyword">divisor) </span>&#123;</span><br><span class="line">     </span><br><span class="line">     if(<span class="keyword">divisor==0 </span><span class="title">||</span> (<span class="keyword">dividend </span>== Integer.MIN_VALUE&amp;&amp; <span class="keyword">divisor==-1))</span></span><br><span class="line"><span class="keyword"> </span>        return Integer.MAX_VALUE<span class="comment">;</span></span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">     int sign = (<span class="keyword">dividend </span>&lt; <span class="number">0</span>) ^ (<span class="keyword">divisor </span>&lt; <span class="number">0</span>) ? -<span class="number">1</span> : <span class="number">1</span><span class="comment">;</span></span><br><span class="line">     long dvd = Math.abs((long) <span class="keyword">dividend);</span></span><br><span class="line"><span class="keyword"> </span>    long dvs = Math.abs((long) <span class="keyword">divisor);</span></span><br><span class="line"><span class="keyword"> </span>    int res = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">     </span><br><span class="line">     while(dvd &gt;= dvs)&#123;</span><br><span class="line">         long temp = dvs, <span class="keyword">mul </span>= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">         while(dvd &gt;= (temp&lt;&lt; <span class="number">1</span>))&#123;</span><br><span class="line">             temp &lt;&lt;= <span class="number">1</span><span class="comment">;</span></span><br><span class="line">             <span class="keyword">mul </span>&lt;&lt;= <span class="number">1</span><span class="comment">;  //翻倍</span></span><br><span class="line">         &#125;</span><br><span class="line">         dvd -= temp<span class="comment">;</span></span><br><span class="line">         res += <span class="keyword">mul;</span></span><br><span class="line"><span class="keyword"> </span>    &#125;</span><br><span class="line">     </span><br><span class="line">     return sign == <span class="number">1</span> ? res : -res<span class="comment">;</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Multiply-Strings"><a href="#Multiply-Strings" class="headerlink" title="Multiply Strings"></a>Multiply Strings</h3><h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>先按照元素规则计算出每一位的和，最后在考虑进位问题。</p>
+<h4 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h4><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">multiply</span>(<span class="params">String num1, String num2</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(num1==<span class="literal">null</span>||num2==<span class="literal">null</span>) <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">if</span>(num1.<span class="keyword">equals</span>(<span class="string">""</span>)||num2.<span class="keyword">equals</span>(<span class="string">""</span>)) <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">if</span>(num1.<span class="keyword">equals</span>(<span class="string">"0"</span>)||num2.<span class="keyword">equals</span>(<span class="string">"0"</span>)) <span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> len1 = num1.length();</span><br><span class="line">    <span class="keyword">int</span> len2 = num2.length();</span><br><span class="line">    <span class="keyword">if</span>(len1==<span class="number">0</span>||len2==<span class="number">0</span>)  <span class="keyword">return</span>  <span class="string">"0"</span>;</span><br><span class="line">    <span class="keyword">if</span>(len1&gt;len2)  <span class="comment">//确num1是较短那个短</span></span><br><span class="line">        <span class="keyword">return</span> multiply(num2,num1);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[len1 + len2 - <span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len1;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> t1 = num1.charAt(i) - <span class="string">'0'</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;len2;j++)&#123;</span><br><span class="line">            <span class="keyword">int</span> t2 = num2.charAt(j) - <span class="string">'0'</span>;</span><br><span class="line">            res[i+j] = res[i+j] + t1 * t2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">int</span> du = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=res.length<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        res[i] = res[i] + du;</span><br><span class="line">        </span><br><span class="line">        du = res[i] / <span class="number">10</span>;</span><br><span class="line">        res[i] = res[i] % <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(du!=<span class="number">0</span>) sb.append(du);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;res.length;i++)</span><br><span class="line">        sb.append(res[i]);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> sb.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="1-判断链表是否成环"><a href="#1-判断链表是否成环" class="headerlink" title="1. 判断链表是否成环"></a>1. 判断链表是否成环</h2><blockquote>
-<p>Floyd环判断法：从同一个起点同时开始以不同速度前进的2个指针最终相遇，那么可以判定存在一个环。</p>
-</blockquote>
-<p>设想：乌龟和兔子在同一个环上赛跑，跑的快的兔子速度为2，跑的慢的乌龟速度为1，则兔子终会赶上乌龟。</p>
-<pre><code>理解：如果以乌龟为参考对象，则兔子前进的速度为1，这就意味着，兔子必将赶上乌龟。
-</code></pre><p>所以一个判断成环的方法是：先舍子两个指针都指向表头，其中p1每次前进一个节点，p2每次前进两个节点，且p1和p2同时走，当p2指向的地址为null，就证明链表没有环。如果在某个时刻，p1和p2指向的地址相同，那么链表就是有环的。</p>
-<h2 id="2-找出环的起点"><a href="#2-找出环的起点" class="headerlink" title="2.找出环的起点"></a>2.找出环的起点</h2><p><img src="/posts/36499/1.jpg" alt="这里写图片描述"><br>同时可以进一步考虑：K1是等于零的，也就是p1在进入环后，走了不到一圈就在交点处和p2重合。因为p1在进入环的时候，p2和p1之间的距离（沿着行走方向）至多为 d2-1，不可能超过d2-1，因为环的大小也才只有d2 。p2追赶p1，最多只需要走d2-1步，因为每走一步，p1和p2的相对距离减小1，那么p1最多只走了d2-1步，就是最多只经过了d2-1个节点，不可能走完一圈。<br><img src="/posts/36499/2.jpg" alt="这里写图片描述"><br>最后推出的式子的含义可以理解为：d1的长度 = 环长度的整数倍 + 交点与环入口的距离<br>所以我们可以得出：当p1和p2相遇后，让p1回到原点，p2在相遇点，且两者每次都前进一个节点，当两者再次相遇时，就是环的起点。</p>
-<h2 id="3-Java代码实现"><a href="#3-Java代码实现" class="headerlink" title="3. Java代码实现"></a>3. Java代码实现</h2><pre><code>int FindBeginLoop(ListNode head){
-    ListNode p1 = head, p2 = head;
-    boolean loopExists = false;
-    if(head == null)
-        return false;
-    //判断环是否存在
-    while(p2.getNext()!=null&amp;&amp;p2.getNext().getNext()!=null){
-        p1 = p1.getNext();
-        p2 = p2.getNext().getNext();
-        if(p1==p2)
-            loopExists = true;
-            break;
-    }
-    //如果环存在，寻找环的起点
-    if(loopExists){
-        p1 = head;
-        while(p1!=p2){
-            p1 = p1.getNext();
-            p2 = p2.getNext();
-        }
-        return p1;
-    }
-    return null; //不存在
-}
-//附：定义的LitNode类
-public class ListNode {
-    private int data;
-    private ListNode next;
-
-    public ListNode(int data) {
-        this.data = data;
-    }
-
-    public int getData() {
-        return data;
-    }
-
-    public void setData(int data) {
-        this.data = data;
-    }
-
-    public SingleListNode getNext() {
-        return next;
-    }
-
-    public void setNext(SingleListNode next) {
-        this.next = next;
-    }
-}
-</code></pre><h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="http://www.cnblogs.com/snake-hand/p/3148328.html" target="_blank" rel="noopener">http://www.cnblogs.com/snake-hand/p/3148328.html</a></p>
+<p>参考链接</p>
+<ul>
+<li><a href="https://leetcode.com/problems/divide-two-integers/description/" target="_blank" rel="noopener"> leetcode – Divide Two Integers</a></li>
+<li><a href="https://www.nowcoder.com/practice/59ac416b4b944300b617d4f7f111b215?tpId=13&amp;tqId=11201&amp;tPage=3&amp;rp=3&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">牛客网 – 不用加减乘除做加法</a></li>
+<li><a href="https://leetcode.com/problems/multiply-strings/description/" target="_blank" rel="noopener">leetcode – Multiply Strings</a></li>
+</ul>
 
       
     </div>
@@ -559,7 +511,7 @@ public class ListNode {
 	  
 		<div class="copyright">
 		<p><span>
-		<b>本文地址：</b><a href="/posts/36499/" title="判断链表成环，且找出环的起点">https://9191rs.me/posts/36499/</a><br /><b>转载请注明出处，谢谢！</b>
+		<b>本文地址：</b><a href="/posts/30160/" title="不用四则运算符号做加减乘除">https://9191rs.me/posts/30160/</a><br /><b>转载请注明出处，谢谢！</b>
 		</span></p>
 		</div>
 	  
@@ -604,7 +556,7 @@ public class ListNode {
           
             <a href="/tags/leetcode/" rel="tag"># leetcode</a>
           
-            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+            <a href="/tags/剑指offer/" rel="tag"># 剑指offer</a>
           
         </div>
       
@@ -633,12 +585,6 @@ public class ListNode {
 			<div class="post-nav-next post-nav-item">
 
 		      
-
-		       <a href="/posts/8713/" rel="prev" title="算法中时间复杂度分析">
-
-		          <i class="fa fa-chevron-left"></i> 算法中时间复杂度分析
-				</a>
-			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -647,9 +593,9 @@ public class ListNode {
 
 		      
 		
-		        <a href="/posts/7251/" rel="next" title="Hello Hexo">
+		        <a href="/posts/56083/" rel="next" title="leetcode 第60题 Permutation Sequence">
 		
-		         Hello Hexo <i class="fa fa-chevron-right"></i>
+		         leetcode 第60题 Permutation Sequence <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -859,7 +805,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#判断链表成环，且找出环的起点。"><span class="nav-number">1.</span> <span class="nav-text">判断链表成环，且找出环的起点。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-判断链表是否成环"><span class="nav-number">1.1.</span> <span class="nav-text">1. 判断链表是否成环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-找出环的起点"><span class="nav-number">1.2.</span> <span class="nav-text">2.找出环的起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Java代码实现"><span class="nav-number">1.3.</span> <span class="nav-text">3. Java代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#参考"><span class="nav-number">1.3.0.0.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加法"><span class="nav-number">2.</span> <span class="nav-text">加法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">2.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java代码实现"><span class="nav-number">2.2.</span> <span class="nav-text">Java代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#除法"><span class="nav-number">3.</span> <span class="nav-text">除法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">3.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java代码实现-1"><span class="nav-number">3.2.</span> <span class="nav-text">Java代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiply-Strings"><span class="nav-number">4.</span> <span class="nav-text">Multiply Strings</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-2"><span class="nav-number">4.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java代码"><span class="nav-number">4.2.</span> <span class="nav-text">Java代码</span></a></li></ol></li></ol></div>
             
 
           </div>
