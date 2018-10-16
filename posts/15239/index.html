@@ -137,13 +137,13 @@
 
 
 
-<meta name="description" content="前言Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。 整体说明本次开发采用了前后端分离的想法，前端通过向后端发送AjAx请求获取相应的信息。在部署到服务">
+<meta name="description" content="前言Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。WebSocket是一种基于Http协议开发的一种支持浏览器和服务端进行全双工通信的协议。它的特点是">
 <meta name="keywords" content="Netty,FastDFS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot&amp;Netty实现仿微信网页版">
 <meta property="og:url" content="https://9191rs.me/posts/15239/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="前言Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。 整体说明本次开发采用了前后端分离的想法，前端通过向后端发送AjAx请求获取相应的信息。在部署到服务">
+<meta property="og:description" content="前言Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。WebSocket是一种基于Http协议开发的一种支持浏览器和服务端进行全双工通信的协议。它的特点是">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://9191rs.me/posts/15239/1.jpg">
 <meta property="og:image" content="https://9191rs.me/posts/15239/2.jpg">
@@ -151,10 +151,10 @@
 <meta property="og:image" content="https://9191rs.me/posts/15239/3.jpg">
 <meta property="og:image" content="https://9191rs.me/posts/15239/4.jpg">
 <meta property="og:image" content="https://9191rs.me/posts/15239/5.jpg">
-<meta property="og:updated_time" content="2018-10-10T09:03:29.717Z">
+<meta property="og:updated_time" content="2018-10-16T02:25:52.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot&amp;Netty实现仿微信网页版">
-<meta name="twitter:description" content="前言Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。 整体说明本次开发采用了前后端分离的想法，前端通过向后端发送AjAx请求获取相应的信息。在部署到服务">
+<meta name="twitter:description" content="前言Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。WebSocket是一种基于Http协议开发的一种支持浏览器和服务端进行全双工通信的协议。它的特点是">
 <meta name="twitter:image" content="https://9191rs.me/posts/15239/1.jpg">
 
 
@@ -453,7 +453,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,853
+                  1,969
                 </span>
               
 
@@ -478,7 +478,7 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。<br>WebSocket是一种基于Http协议开发的一种支持浏览器和服务端进行全双工通信的协议。它的特点是支持服务端的主动推送和通信的开销比较小（长连接，首部信息量小）。但是由于是基于Http开发，所以只能由客户端发起连接请求，在建立Http连接之后，会有一次额外的握手操作，将Http协议转为WebSocket协议。</p>
 <h2 id="整体说明"><a href="#整体说明" class="headerlink" title="整体说明"></a>整体说明</h2><p>本次开发采用了前后端分离的想法，前端通过向后端发送AjAx请求获取相应的信息。在部署到服务器的时候，前端页面放到了Tomcat之下实现访问，后端的工程通过Maven打成了jar包，利用SpringBoot提供的内置Tomcat运行。</p>
 <p>SpringBoot和MyBatis构成了后端的主要架构。主要用来处理用户的相关请求，比如登录、获取好友列表、获取聊天记录等等。而SprngBoot整合的Netty WebSockt服务主要处理用户消息通信的WebSocket类型请求，用户通过浏览器登录后，根据用户id建立一条WebSocket连接并保存在后端以便进行实时通信。当一个用户向另一用户发起通信，服务器会根据消息内容中的对话方用户id，找到保存的WebSocket连接，通过该连接发送消息，对方就能够收到即时收到消息。当用户注销或退出时，释放WebSocket连接。</p>
 <p>同时利用用户和服务器之间的 WebSockt连接实现了心跳检测功能，当用户登录后，前端会定时向后端发送心跳请求，如果在约定的时间没有收到，就释放该WebSockt连接。</p>
@@ -868,7 +868,7 @@ show_date_time();
 
 <div class="powered-by">
 <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-  本站访客数:<span id="busuanzi_value_site_pv"></span><br>
+  本站访客数:<span id="busuanzi_value_site_uv"></span><br>
 </span>
 </div>
 
