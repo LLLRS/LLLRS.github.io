@@ -137,18 +137,20 @@
 
 
 
-<meta name="description" content="Two Sum I Two Sum II - Input array is sorted   第1题 Two Sum I题目要求:  给定一个整数数组，返回这两个数字的索引，使它们合计成一个特定的目标。限定条件：返回值为这两个数字的索引，索引从0开始假定每个输入都只有一个解，且不能使用相同的元素两次  解决思路由于数组有序，故采用对撞指针的方法。设置两个指针分别指向数组的头尾，当两个数的和大于">
+<meta name="description" content="题目描述问题：直方图是由排列在同一基线上的一系列矩形组成的多边形。为了简单起见，假设这些矩形的宽度相等但高度可能不同。  一种解题思路这个问题有多种解法，包含枚举、动态规划、分治等等。现在采用一种巧妙的方法，使用堆栈，将复杂度降到最低。 算法思想：  新建一个空栈，栈中存放数组的下标。 A[i] 与栈顶元素比较。如果A[i] 大与等于栈顶元素，那么将i其入栈。如果A[i]小于当前栈顶元素，说明已经">
 <meta name="keywords" content="Java,算法,leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode Two Sum问题">
-<meta property="og:url" content="https://9191rs.me/posts/56041/index.html">
+<meta property="og:title" content="leetcode 第84题 Largest Rectangle in Histogram">
+<meta property="og:url" content="https://9191rs.me/posts/44614/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="Two Sum I Two Sum II - Input array is sorted   第1题 Two Sum I题目要求:  给定一个整数数组，返回这两个数字的索引，使它们合计成一个特定的目标。限定条件：返回值为这两个数字的索引，索引从0开始假定每个输入都只有一个解，且不能使用相同的元素两次  解决思路由于数组有序，故采用对撞指针的方法。设置两个指针分别指向数组的头尾，当两个数的和大于">
+<meta property="og:description" content="题目描述问题：直方图是由排列在同一基线上的一系列矩形组成的多边形。为了简单起见，假设这些矩形的宽度相等但高度可能不同。  一种解题思路这个问题有多种解法，包含枚举、动态规划、分治等等。现在采用一种巧妙的方法，使用堆栈，将复杂度降到最低。 算法思想：  新建一个空栈，栈中存放数组的下标。 A[i] 与栈顶元素比较。如果A[i] 大与等于栈顶元素，那么将i其入栈。如果A[i]小于当前栈顶元素，说明已经">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-01T11:12:25.868Z">
+<meta property="og:image" content="https://9191rs.me/posts/44614/1.jpg">
+<meta property="og:updated_time" content="2018-10-31T09:18:02.495Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode Two Sum问题">
-<meta name="twitter:description" content="Two Sum I Two Sum II - Input array is sorted   第1题 Two Sum I题目要求:  给定一个整数数组，返回这两个数字的索引，使它们合计成一个特定的目标。限定条件：返回值为这两个数字的索引，索引从0开始假定每个输入都只有一个解，且不能使用相同的元素两次  解决思路由于数组有序，故采用对撞指针的方法。设置两个指针分别指向数组的头尾，当两个数的和大于">
+<meta name="twitter:title" content="leetcode 第84题 Largest Rectangle in Histogram">
+<meta name="twitter:description" content="题目描述问题：直方图是由排列在同一基线上的一系列矩形组成的多边形。为了简单起见，假设这些矩形的宽度相等但高度可能不同。  一种解题思路这个问题有多种解法，包含枚举、动态规划、分治等等。现在采用一种巧妙的方法，使用堆栈，将复杂度降到最低。 算法思想：  新建一个空栈，栈中存放数组的下标。 A[i] 与栈顶元素比较。如果A[i] 大与等于栈顶元素，那么将i其入栈。如果A[i]小于当前栈顶元素，说明已经">
+<meta name="twitter:image" content="https://9191rs.me/posts/44614/1.jpg">
 
 
 
@@ -178,13 +180,13 @@
 
 
 
-  <link rel="canonical" href="https://9191rs.me/posts/56041/"/>
+  <link rel="canonical" href="https://9191rs.me/posts/44614/"/>
 
 
 
 
 
-  <title>leetcode Two Sum问题 | 爱生活,爱柒柒</title>
+  <title>leetcode 第84题 Largest Rectangle in Histogram | 爱生活,爱柒柒</title>
   
 
 
@@ -361,7 +363,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/56041/">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/44614/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LI Ren">
@@ -378,7 +380,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode Two Sum问题</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode 第84题 Largest Rectangle in Histogram</h1>
         
 
         <div class="post-meta">
@@ -390,8 +392,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T20:19:36+08:00">
-                2018-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-31T16:58:12+08:00">
+                2018-10-31
               </time>
             
 
@@ -446,7 +448,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  535
+                  477
                 </span>
               
 
@@ -471,57 +473,30 @@
       
 
       
-        <a id="more"></a>
-<ul>
-<li><strong>Two Sum I</strong></li>
-<li><strong>Two Sum II - Input array is sorted</strong></li>
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>问题：直方图是由排列在同一基线上的一系列矩形组成的多边形。为了简单起见，假设这些矩形的宽度相等但高度可能不同。</p>
+<p><img src="/posts/44614/1.jpg" alt=""></p>
+<h3 id="一种解题思路"><a href="#一种解题思路" class="headerlink" title="一种解题思路"></a>一种解题思路</h3><p>这个问题有多种解法，包含枚举、动态规划、分治等等。现在采用一种巧妙的方法，使用堆栈，将复杂度降到最低。</p>
+<p><strong>算法思想：</strong></p>
+<ol>
+<li>新建一个空栈，栈中存放数组的下标。</li>
+<li>A[i] 与栈顶元素比较。如果A[i] 大与等于栈顶元素，那么将i其入栈。如果A[i]小于当前栈顶元素，说明已经找到第一个位于栈顶右边的比它小的值（此时这个较小的元素还未入栈），在它的左边（在栈内就是它脚下的元素）即为第一个左边比它小的值。此时需要这样做：<ul>
+<li>以栈顶元素为最小高度计算最大矩形面积，并更新现在的最大面积，宽度为左边界到右边界。</li>
+<li>弹出栈顶元素。</li>
+<li>重复第2步。</li>
 </ul>
+</li>
+</ol>
+<p>3.扫描完后，一般会剩下一个单调递增的堆栈，那么一个一个出栈计算面积就可以了。</p>
+<ul>
+<li>时间复杂度：O（n） （高效率）</li>
+<li>空间复杂度：O（n） （栈开销）</li>
+</ul>
+<h3 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> largestRectangleArea(<span class="keyword">int</span>[] hs) &#123;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(hs==<span class="keyword">null</span> || hs.length == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    <span class="keyword">int</span> n = hs.length;</span><br><span class="line">    Stack&lt;Integer&gt; sk = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    sk.<span class="keyword">push</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    	<span class="keyword">if</span>(i&lt;n&amp;&amp;hs[i] &gt;= hs[sk.peek()])&#123;</span><br><span class="line">    		sk.<span class="keyword">push</span>(i);</span><br><span class="line">    	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    		<span class="keyword">while</span>(!sk.isEmpty())&#123;</span><br><span class="line">    			<span class="keyword">if</span>(i&lt;n&amp;&amp;hs[sk.peek()] &lt;= hs[i])</span><br><span class="line">    				<span class="keyword">break</span>;</span><br><span class="line">    			</span><br><span class="line">    			<span class="keyword">int</span> cur = sk.<span class="keyword">pop</span>();</span><br><span class="line">    			<span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">    			<span class="keyword">if</span>(!sk.isEmpty()) l = sk.peek() + <span class="number">1</span>;</span><br><span class="line">    			</span><br><span class="line">    			<span class="keyword">int</span> r = i - <span class="number">1</span>;</span><br><span class="line">    			res = Math.max(res, hs[cur] * (r-l+<span class="number">1</span>));</span><br><span class="line">    		&#125;</span><br><span class="line">    		sk.<span class="keyword">push</span>(i);</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">           </span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="第1题-Two-Sum-I"><a href="#第1题-Two-Sum-I" class="headerlink" title="第1题 Two Sum I"></a>第1题 Two Sum I</h2><p><strong>题目要求:</strong></p>
-<blockquote>
-<p>给定一个整数数组，返回这两个数字的索引，使它们合计成一个特定的目标。<br>限定条件：<br>返回值为这两个数字的索引，索引从0开始<br>假定每个输入都只有一个解，且不能使用相同的元素两次</p>
-</blockquote>
-<h4 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h4><p>由于数组有序，故采用对撞指针的方法。设置两个指针分别指向数组的头尾，当两个数的和大于给定的值时，右指针左移，小于时，左指针右移。这里需要注意的时，左指针必须小于右指针。</p>
-<h3 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h3><pre><code>public int[] twoSum(int[] nums, int target) {
-    int [] res = new int[2];
-
-    HashMap&lt;Integer,Integer&gt; tm = new HashMap&lt;&gt;();
-
-    for(int i =0;i&lt;nums.length;i++){
-        if(tm.containsKey(target - nums[i])){
-            res[0]=tm.get(target-nums[i]);
-            res[1]=i;
-
-        }else{
-            tm.put(nums[i],i);
-        }
-    } 
-        return res;
-}
-</code></pre><h2 id="第167题Two-Sum-II"><a href="#第167题Two-Sum-II" class="headerlink" title="第167题Two Sum II"></a>第167题Two Sum II</h2><p><strong>题目要求:</strong></p>
-<blockquote>
-<p>给定已按升序排序的整数数组，找到两个数字，使它们合计为特定的目标数字。</p>
-</blockquote>
-<p><strong>限定条件</strong></p>
-<p>返回值为这两个数字的索引，且该索引是从1开始</p>
-<p>假定每个输入都只有一个解，且不能使用相同的元素两次</p>
-<h4 id="解决思路-1"><a href="#解决思路-1" class="headerlink" title="解决思路"></a>解决思路</h4><p>由于数组可能无序，且要返回的是元素的索引。所以我想到的办法是利用Set集合建立一个查找表，遍历整个数组，每次放入一个新元素时，在表中查找是否有target - nums[i]，如果存在则返回相应的索引，反之则继续遍历。</p>
-<h3 id="Java代码-1"><a href="#Java代码-1" class="headerlink" title="Java代码"></a>Java代码</h3><pre><code>public  int[] twoSum(int[] numbers, int target) {
-    int[] arr = new int[2];
-
-   int l = 0,r = numbers.length-1;
-   while(l&lt;r){
-    if(numbers[l]+numbers[r]&gt;target) r--;
-    else if(numbers[l]+numbers[r]&lt;target) l++;
-    else{
-        arr[0] = l+1;
-        arr[1] = r+1;
-        break;
-    }
-   }
-   return arr;
-}
-</code></pre><h3 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h3><p>对比上述两个题目可以看出，需要解决的问题几乎一致，但是由于给定条件不一样，数组是否有序，导致解决问题的思路也不一样，一般来说，上述两种方法也是比较常见的。</p>
+<p>参考链接</p>
+<ul>
+<li><a href="https://blog.csdn.net/u012534831/article/details/74356851" target="_blank" rel="noopener">算法-直方图中的最大矩形</a></li>
+</ul>
 
       
     </div>
@@ -532,7 +507,7 @@
 	  
 		<div class="copyright">
 		<p><span>
-		<b>本文地址：</b><a href="/posts/56041/" title="leetcode Two Sum问题">https://9191rs.me/posts/56041/</a><br /><b>转载请注明出处，谢谢！</b>
+		<b>本文地址：</b><a href="/posts/44614/" title="leetcode 第84题 Largest Rectangle in Histogram">https://9191rs.me/posts/44614/</a><br /><b>转载请注明出处，谢谢！</b>
 		</span></p>
 		</div>
 	  
@@ -606,12 +581,6 @@
 			<div class="post-nav-next post-nav-item">
 
 		      
-
-		       <a href="/posts/33753/" rel="prev" title="leetcode 第149题  Max Points on a Line">
-
-		          <i class="fa fa-chevron-left"></i> leetcode 第149题  Max Points on a Line
-				</a>
-			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -620,9 +589,9 @@
 
 		      
 		
-		        <a href="/posts/45681/" rel="next" title="leetcode76题 Minimum Window Substring">
+		        <a href="/posts/13533/" rel="next" title="一致性Hash算法">
 		
-		         leetcode76题 Minimum Window Substring <i class="fa fa-chevron-right"></i>
+		         一致性Hash算法 <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -832,7 +801,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第1题-Two-Sum-I"><span class="nav-number">1.</span> <span class="nav-text">第1题 Two Sum I</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解决思路"><span class="nav-number">1.0.1.</span> <span class="nav-text">解决思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java代码"><span class="nav-number">1.1.</span> <span class="nav-text">Java代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第167题Two-Sum-II"><span class="nav-number">2.</span> <span class="nav-text">第167题Two Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解决思路-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">解决思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java代码-1"><span class="nav-number">2.1.</span> <span class="nav-text">Java代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些思考"><span class="nav-number">2.2.</span> <span class="nav-text">一些思考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一种解题思路"><span class="nav-number">2.</span> <span class="nav-text">一种解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java代码"><span class="nav-number">3.</span> <span class="nav-text">Java代码</span></a></li></ol></div>
             
 
           </div>
