@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[leetcode 第179题 Largest Number]]></title>
+    <url>%2Fposts%2F26752%2F</url>
+    <content type="text"><![CDATA[题目描述输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。 解题思路这道题的暴力解法是先求出这个数组中所有数字的全排列，然后把每个排列拼接起来，最后求出拼起来的数字的最大值。但是如果能找到一个排序规则，使得根据这个规则排出来的数组能排成一个最大的数字。要确定排序规则，就得比较两个数字，也就是给出两个数字m和n，我们需要确定一个规则m和n哪个更大，而不是仅仅只是比较这两个数字的数值哪个更大。根据题目的要求，两个数字m和n能够拼接成数字mn和nm。如果mn &lt; nm,则应该打印nm。也就是n应该在m前面。反之，m应该在n前面。同时应该注意两个数字的拼接过程中可能会出现溢出，而一个解决大数问题的思路就是把数字转换为字符串。同时mn和nm的长度相等，按照字符串大小的比较规则就可以。 Java实现123456789101112131415161718192021222324252627282930 public String largestNumber(int[] nums) &#123; ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(); StringBuilder sb = new StringBuilder(); int z = 0; for(int t : nums)&#123; list.add(t); if(t == 0) z++; &#125; if(z==nums.length) return "0"; Collections.sort(list,new Comparator&lt;Integer&gt;() &#123; @Override public int compare(Integer t1, Integer t2) &#123; String s1 = t1.toString() + t2.toString(); String s2 = t2.toString() + t1.toString(); return s2.compareTo(s1); &#125;&#125;); for(int t : list) sb.append(t); return sb.toString(); &#125; 详情请参见剑指offer第二版面试题45]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Java</tag>
+        <tag>leetcode</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[leetcode 第84题 Largest Rectangle in Histogram]]></title>
     <url>%2Fposts%2F44614%2F</url>
     <content type="text"><![CDATA[题目描述直方图是由排列在同一基线上的一系列矩形组成的多边形。为了简单起见，假设这些矩形的宽度相等但高度可能不同。 一种解题思路这个问题有多种解法，包含枚举、动态规划、分治等等。现在采用一种巧妙的方法，使用堆栈，将复杂度降到最低。 算法思想： 新建一个空栈，栈中存放数组的下标。 hs[i] 与栈顶元素比较。如果hs[i] 大与等于栈顶元素，那么将i其入栈。如果A[i]小于当前栈顶元素，说明已经找到第一个位于栈顶右边的比它小的值（此时这个较小的元素还未入栈），在它的左边（在栈内就是它脚下的元素）即为第一个左边比它小的值。此时需要这样做： 以栈顶元素为最小高度计算最大矩形面积，并更新现在的最大面积，宽度为左边界到右边界。 弹出栈顶元素。 重复第2步。 3.扫描完后，一般会剩下一个单调递增的堆栈，那么一个一个出栈计算面积就可以了。 时间复杂度：O(n)(高效率) 空间复杂度：O(n)(栈开销) Java代码12345678910111213141516171819202122232425262728public static int largestRectangleArea(int[] hs) &#123; int res = 0; if(hs==null || hs.length == 0) return res; int n = hs.length; Stack&lt;Integer&gt; sk = new Stack&lt;&gt;(); sk.push(0); for(int i=1;i&lt;=n;i++)&#123; if(i&lt;n&amp;&amp;hs[i] &gt;= hs[sk.peek()])&#123; sk.push(i); &#125;else &#123; while(!sk.isEmpty())&#123; if(i&lt;n&amp;&amp;hs[sk.peek()] &lt;= hs[i]) break; int cur = sk.pop(); int l = 0; if(!sk.isEmpty()) l = sk.peek() + 1; int r = i - 1; res = Math.max(res, hs[cur] * (r-l+1)); &#125; sk.push(i); &#125; &#125; return res;&#125; 参考链接 算法-直方图中的最大矩形]]></content>
@@ -8,8 +22,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -32,8 +46,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -50,19 +64,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[leetcode 第10题 Regular Expression Matching]]></title>
-    <url>%2Fposts%2F36828%2F</url>
-    <content type="text"><![CDATA[题目要求 回溯法思路回溯法是一种暴力解法，把“*”的所有可能性都测试一遍看是否有满足的。从后往前匹配,用两个指针 si, pi来表明当前s和p的字符。 如果pi对应的字符是”*”，根据s[i] 和 p[j-1]是否相同，分两种情况： 如果相同，则先尝试匹配掉s的这个字符，继续尝试匹配 不管相同不相同，不匹配s的这个字符，继续尝试匹配 如果pi对应的字符不是是”*”，直接看s[i]和p[j]是否相等 边界条件 如果si和pi都小于0，说明匹配。 如果pi小于0，si大于零，说明不能匹配 参考代码123456789101112131415161718192021222324252627public boolean isMatch(String s, String p) &#123; if(s==null || p == null) return false; return isMatch(s.toCharArray(),s.length() - 1,p.toCharArray(),p.length() - 1);&#125;private boolean isMatch(char[] s,int si,char[] p,int pi)&#123; if(si &lt; 0 &amp;&amp; pi &lt; 0) return true; if(pi &lt; 0) return false; if(p[pi] == '*')&#123; if(si &gt;= 0 &amp;&amp;( p[pi - 1] == s[si] || p[pi - 1] == '.' ) &amp;&amp; isMatch(s,si-1,p,pi)) return true; return isMatch(s,si,p,pi-2); &#125; if(si &gt;= 0 &amp;&amp; (p[pi] == s[si] || p[pi] == '.' )) return isMatch(s,si-1,p,pi-1); return false;&#125; DP解法思路dp[i][j]的含义是s[0-i] 与 s[0-j]是否匹配 若s[i] == p[j] 或者p[j] == ‘ . ‘,则dp[i][j] = dp[i-1][j-1] 若p[j] == ‘ * ‘,则需要分情况讨论 s[i] != p[j-1]， 则 dp[i][j] = dp[i][j-2] –&gt;忽略掉 p[j-1] 和* s[i] == p[j-1] 或者p[j] == ‘ . ‘ dp[i][j] = dp[i-1][j] –&gt; p[j-1] 和* 匹配多次 dp[i][j] = dp[i][j-1] –&gt; p[j-1] 和*匹配一次 dp[i][j] = dp[i][j-2] –&gt; 忽略掉 p[j-1] 和* 参考代码123456789101112131415161718192021222324252627public boolean isMatch(String st, String pt) &#123; if(st==null || pt == null) return false; int m = st.length(); int n = pt.length(); char[] s = st.toCharArray(); char[] p = pt.toCharArray(); boolean[][] dp = new boolean[m+1][n+1]; //dp[i][j]的含义是s[0-i] 与 s[0-j]是否匹配 dp[0][0] = true; ////初始化第0行,除了[0][0]全为false //初始化第0列，只有X*能匹配空串，如果有*，它的真值一定和p[0][j-2]的相同（略过它之前的符号） for (int j = 1; j &lt;= n; j++) dp[0][j] = j &gt; 1 &amp;&amp; '*' == p[j - 1] &amp;&amp; dp[0][j - 2]; for(int i = 1;i &lt;= m;i++)&#123; for(int j = 1;j &lt;= n;j++)&#123; if(p[j-1] == '*') dp[i][j] = dp[i][j - 2] || (s[i - 1] == p[j - 2] || p[j - 2] == '.') &amp;&amp; dp[i - 1][j]; else dp[i][j] = (s[i - 1] == p[j - 1] || p[j - 1] == '.') &amp;&amp; dp[i - 1][j - 1]; &#125; &#125; return dp[m][n];&#125; 参考链接 《LeetBook》leetcode题解(10): Regular Expression Matching——DP解决正则匹配]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>算法</tag>
-        <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[leetcode 第72题 Edit Distance]]></title>
     <url>%2Fposts%2F43664%2F</url>
     <content type="text"><![CDATA[题目要求求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。 两个字符串的编辑距离越小，说明两个字符串越相似！ DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离 如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1] 如果word1[i]和word2[j]不相等相等，则要分情况讨论 添加： 也就是在word1[i]后加一个字符x使得word1[0…i] + x和word2[0…j]相等，则dp[i][j] = dp[i][j-1] + 1 删除：也就是在word1[i]后删除第i处字符x使得word1[0…i-1] 和word2[0…j]相等，则dp[i][j] = dp[i-1][j] + 1 修改：也就是在word1[i]后修改第i处的字符使得word1[0…i] 和word2[0…j]相等，则dp[i][j] = dp[i-1][j-1] + 1 参考代码123456789101112131415161718192021222324public int minDistance(String w1, String w2) &#123; int r = w1.length(); int c = w2.length(); int[][] dp = new int[r+1][c+1]; for(int i=0;i&lt;=c;i++) dp[0][i] = i; //dp[i][0]就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空 for(int i=1;i&lt;=r;i++)&#123; dp[i][0] = i; //dp[0][j]就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2 for(int j=1;j&lt;=c;j++)&#123; if(w1.charAt(i-1)==w2.charAt(j-1)) dp[i][j] = dp[i-1][j-1]; else dp[i][j] = Math.min(dp[i-1][j-1],Math.min(dp[i-1][j], dp[i][j-1])) + 1; &#125; &#125; return dp[r][c]; &#125; 基于上述代码的一种改进1234567891011121314151617181920212223242526public int minDistance(String w1, String w2) &#123; int r = w1.length(); int c = w2.length(); int[] dp = new int[c+1]; for(int i=0;i&lt;=c;i++) dp[i] = i; for(int i=1;i&lt;=r;i++)&#123; int[] temp = new int[c+1]; temp[0] = i; for(int j=1;j&lt;=c;j++)&#123; if(w1.charAt(i-1)==w2.charAt(j-1)) temp[j] = dp[j-1]; else temp[j] = Math.min(temp[j-1],Math.min(dp[j-1], dp[j])) + 1; // temp[j-1] 添加 dp[j-1] 修改 dp[j] 删除 &#125; dp = temp; &#125; return dp[c]; &#125; 参考链接 EditDistance,求两个字符串最小编辑距离，动态规划]]></content>
@@ -70,8 +71,21 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[leetcode 第10题 Regular Expression Matching]]></title>
+    <url>%2Fposts%2F36828%2F</url>
+    <content type="text"><![CDATA[题目要求 回溯法思路回溯法是一种暴力解法，把“*”的所有可能性都测试一遍看是否有满足的。从后往前匹配,用两个指针 si, pi来表明当前s和p的字符。 如果pi对应的字符是”*”，根据s[i] 和 p[j-1]是否相同，分两种情况： 如果相同，则先尝试匹配掉s的这个字符，继续尝试匹配 不管相同不相同，不匹配s的这个字符，继续尝试匹配 如果pi对应的字符不是是”*”，直接看s[i]和p[j]是否相等 边界条件 如果si和pi都小于0，说明匹配。 如果pi小于0，si大于零，说明不能匹配 参考代码123456789101112131415161718192021222324252627public boolean isMatch(String s, String p) &#123; if(s==null || p == null) return false; return isMatch(s.toCharArray(),s.length() - 1,p.toCharArray(),p.length() - 1);&#125;private boolean isMatch(char[] s,int si,char[] p,int pi)&#123; if(si &lt; 0 &amp;&amp; pi &lt; 0) return true; if(pi &lt; 0) return false; if(p[pi] == '*')&#123; if(si &gt;= 0 &amp;&amp;( p[pi - 1] == s[si] || p[pi - 1] == '.' ) &amp;&amp; isMatch(s,si-1,p,pi)) return true; return isMatch(s,si,p,pi-2); &#125; if(si &gt;= 0 &amp;&amp; (p[pi] == s[si] || p[pi] == '.' )) return isMatch(s,si-1,p,pi-1); return false;&#125; DP解法思路dp[i][j]的含义是s[0-i] 与 s[0-j]是否匹配 若s[i] == p[j] 或者p[j] == ‘ . ‘,则dp[i][j] = dp[i-1][j-1] 若p[j] == ‘ * ‘,则需要分情况讨论 s[i] != p[j-1]， 则 dp[i][j] = dp[i][j-2] –&gt;忽略掉 p[j-1] 和* s[i] == p[j-1] 或者p[j] == ‘ . ‘ dp[i][j] = dp[i-1][j] –&gt; p[j-1] 和* 匹配多次 dp[i][j] = dp[i][j-1] –&gt; p[j-1] 和*匹配一次 dp[i][j] = dp[i][j-2] –&gt; 忽略掉 p[j-1] 和* 参考代码123456789101112131415161718192021222324252627public boolean isMatch(String st, String pt) &#123; if(st==null || pt == null) return false; int m = st.length(); int n = pt.length(); char[] s = st.toCharArray(); char[] p = pt.toCharArray(); boolean[][] dp = new boolean[m+1][n+1]; //dp[i][j]的含义是s[0-i] 与 s[0-j]是否匹配 dp[0][0] = true; ////初始化第0行,除了[0][0]全为false //初始化第0列，只有X*能匹配空串，如果有*，它的真值一定和p[0][j-2]的相同（略过它之前的符号） for (int j = 1; j &lt;= n; j++) dp[0][j] = j &gt; 1 &amp;&amp; '*' == p[j - 1] &amp;&amp; dp[0][j - 2]; for(int i = 1;i &lt;= m;i++)&#123; for(int j = 1;j &lt;= n;j++)&#123; if(p[j-1] == '*') dp[i][j] = dp[i][j - 2] || (s[i - 1] == p[j - 2] || p[j - 2] == '.') &amp;&amp; dp[i - 1][j]; else dp[i][j] = (s[i - 1] == p[j - 1] || p[j - 1] == '.') &amp;&amp; dp[i - 1][j - 1]; &#125; &#125; return dp[m][n];&#125; 参考链接 《LeetBook》leetcode题解(10): Regular Expression Matching——DP解决正则匹配]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -83,8 +97,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -96,8 +110,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -122,8 +136,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -225,8 +239,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -238,8 +252,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -251,8 +265,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -264,8 +278,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -277,8 +291,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -314,8 +328,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -339,8 +353,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -352,8 +366,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -365,8 +379,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -378,8 +392,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -391,8 +405,8 @@
         <category>二叉树</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>BST</tag>
       </tags>
   </entry>
@@ -404,8 +418,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -417,8 +431,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -456,8 +470,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -469,8 +483,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -482,8 +496,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -495,8 +509,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>

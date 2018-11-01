@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://9191rs.me/"/>
-  <updated>2018-10-31T09:30:23.814Z</updated>
+  <updated>2018-11-01T09:20:40.315Z</updated>
   <id>https://9191rs.me/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>leetcode 第179题 Largest Number</title>
+    <link href="https://9191rs.me/posts/26752/"/>
+    <id>https://9191rs.me/posts/26752/</id>
+    <published>2018-11-01T09:00:57.000Z</published>
+    <updated>2018-11-01T09:20:40.315Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。</p><p><div align="center"><img src="/posts/26752/1.jpg" alt=""></div></p><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>这道题的暴力解法是先求出这个数组中所有数字的全排列，然后把每个排列拼接起来，最后求出拼起来的数字的最大值。<br>但是如果能找到一个排序规则，使得根据这个规则排出来的数组能排成一个最大的数字。要确定排序规则，就得比较两个数字，也就是给出两个数字m和n，我们需要确定一个规则m和n哪个更大，而不是仅仅只是比较这两个数字的数值哪个更大。<br>根据题目的要求，两个数字m和n能够拼接成数字mn和nm。如果mn &lt; nm,则应该打印nm。也就是n应该在m前面。反之，m应该在n前面。<br>同时应该注意两个数字的拼接过程中可能会出现溢出，而一个解决大数问题的思路就是把数字转换为字符串。同时mn和nm的长度相等，按照字符串大小的比较规则就可以。</p><h3 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">  public  String largestNumber(int[] nums) &#123;</span><br><span class="line">      </span><br><span class="line">  ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;()<span class="comment">;</span></span><br><span class="line">  StringBuilder <span class="keyword">sb </span>= new StringBuilder()<span class="comment">;</span></span><br><span class="line">  </span><br><span class="line">  int z = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">  for(int t : nums)&#123;</span><br><span class="line">  list.<span class="keyword">add(t);</span></span><br><span class="line"><span class="keyword"> </span> if(t == <span class="number">0</span>)</span><br><span class="line">  z++<span class="comment">;</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">      if(z==nums.length)</span><br><span class="line">  return <span class="string">"0"</span><span class="comment">;</span></span><br><span class="line">      </span><br><span class="line">  Collections.sort(list,new Comparator&lt;Integer&gt;() &#123;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public int <span class="built_in">compare</span>(Integer <span class="built_in">t1</span>, Integer <span class="built_in">t2</span>) &#123;</span><br><span class="line">String <span class="built_in">s1</span> = <span class="built_in">t1</span>.toString() + <span class="built_in">t2</span>.toString()<span class="comment">;</span></span><br><span class="line">String <span class="built_in">s2</span> = <span class="built_in">t2</span>.toString() + <span class="built_in">t1</span>.toString()<span class="comment">;</span></span><br><span class="line">return <span class="built_in">s2</span>.compareTo(<span class="built_in">s1</span>)<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;)<span class="comment">;</span></span><br><span class="line">  </span><br><span class="line">  for(int t : list)</span><br><span class="line">  <span class="keyword">sb.append(t);</span></span><br><span class="line"><span class="keyword"> </span> </span><br><span class="line">  return <span class="keyword">sb.toString();</span></span><br><span class="line"><span class="keyword"> </span> &#125;</span><br></pre></td></tr></table></figure><hr><ul><li><strong>详情请参见剑指offer第二版面试题45</strong></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h3&gt;&lt;p&gt;输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。&lt;/p&gt;
+&lt;p&gt;&lt;div align
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
+    
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
+    
+      <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
+    
+  </entry>
   
   <entry>
     <title>leetcode 第84题 Largest Rectangle in Histogram</title>
@@ -38,9 +70,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -92,9 +124,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -128,6 +160,35 @@
   </entry>
   
   <entry>
+    <title>leetcode 第72题 Edit Distance</title>
+    <link href="https://9191rs.me/posts/43664/"/>
+    <id>https://9191rs.me/posts/43664/</id>
+    <published>2018-09-20T11:17:04.000Z</published>
+    <updated>2018-09-20T12:49:26.286Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。<br><img src="/posts/43664/1.jpg" alt=""></p><p><strong>两个字符串的编辑距离越小，说明两个字符串越相似！</strong></p><h3 id="DP解法"><a href="#DP解法" class="headerlink" title="DP解法"></a>DP解法</h3><p>dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离</p><ul><li><p>如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]</p></li><li><p>如果word1[i]和word2[j]不相等相等，则要分情况讨论</p><ul><li>添加： 也就是在word1[i]后加一个字符x使得word1[0…i] + x和word2[0…j]相等，则dp[i][j]  =  dp[i][j-1] + 1</li><li>删除：也就是在word1[i]后删除第i处字符x使得word1[0…i-1] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j] + 1</li><li>修改：也就是在word1[i]后修改第i处的字符使得word1[0…i] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j-1] + 1</li></ul></li></ul><h3 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public  int minDistance(String w1, String w2) &#123;</span><br><span class="line"></span><br><span class="line">     int r = w1.length();</span><br><span class="line">     int c = w2.length();</span><br><span class="line"></span><br><span class="line">     int<span class="string">[]</span><span class="string">[]</span> dp = new int<span class="string">[r+1]</span><span class="string">[c+1]</span>;</span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">         dp<span class="string">[0]</span><span class="string">[i]</span> = i; //dp<span class="string">[i]</span><span class="string">[0]</span>就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">         dp<span class="string">[i]</span><span class="string">[0]</span> = i;  //dp<span class="string">[0]</span><span class="string">[j]</span>就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2</span><br><span class="line">         for(int j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">             if(w1.charAt(i-<span class="number">1</span>)==w2.charAt(j-<span class="number">1</span>))</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j-1]</span>;</span><br><span class="line">             else</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = Math.min(dp<span class="string">[i-1]</span><span class="string">[j-1]</span>,Math.min(dp<span class="string">[i-1]</span><span class="string">[j]</span>, dp<span class="string">[i]</span><span class="string">[j-1]</span>)) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     return dp<span class="string">[r]</span><span class="string">[c]</span>;         </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><h3 id="基于上述代码的一种改进"><a href="#基于上述代码的一种改进" class="headerlink" title="基于上述代码的一种改进"></a>基于上述代码的一种改进</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="keyword">int</span> minDistance(<span class="keyword">String</span> w1, <span class="keyword">String</span> w2) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> r = w1.length();</span><br><span class="line"> <span class="keyword">int</span> c = w2.length();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];         </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line"> dp[i] = i;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line"> <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];</span><br><span class="line"> temp[<span class="number">0</span>] = i;</span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line"> <span class="built_in">if</span>(w1.charAt(i<span class="number">-1</span>)==w2.charAt(j<span class="number">-1</span>))</span><br><span class="line"> temp[j] = dp[j<span class="number">-1</span>];</span><br><span class="line"> <span class="built_in">else</span></span><br><span class="line"> temp[j] = Math.<span class="built_in">min</span>(temp[j<span class="number">-1</span>],Math.<span class="built_in">min</span>(dp[j<span class="number">-1</span>], dp[j])) + <span class="number">1</span>;</span><br><span class="line"> <span class="comment">// temp[j-1] 添加  dp[j-1] 修改   dp[j] 删除</span></span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> dp = temp;</span><br><span class="line"> &#125;</span><br><span class="line">   </span><br><span class="line"> <span class="built_in">return</span> dp[c];         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>参考链接</p><ul><li><a href="https://www.cnblogs.com/masterlibin/p/5785092.html" target="_blank" rel="noopener">EditDistance,求两个字符串最小编辑距离，动态规划</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;题目要求&quot;&gt;&lt;a href=&quot;#题目要求&quot; class=&quot;headerlink&quot; title=&quot;题目要求&quot;&gt;&lt;/a&gt;题目要求&lt;/h3&gt;&lt;p&gt;求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。&lt;br&gt;&lt;img
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
+    
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
+    
+  </entry>
+  
+  <entry>
     <title>leetcode 第10题 Regular Expression Matching</title>
     <link href="https://9191rs.me/posts/36828/"/>
     <id>https://9191rs.me/posts/36828/</id>
@@ -149,38 +210,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>leetcode 第72题 Edit Distance</title>
-    <link href="https://9191rs.me/posts/43664/"/>
-    <id>https://9191rs.me/posts/43664/</id>
-    <published>2018-09-20T11:17:04.000Z</published>
-    <updated>2018-09-20T12:49:26.286Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。<br><img src="/posts/43664/1.jpg" alt=""></p><p><strong>两个字符串的编辑距离越小，说明两个字符串越相似！</strong></p><h3 id="DP解法"><a href="#DP解法" class="headerlink" title="DP解法"></a>DP解法</h3><p>dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离</p><ul><li><p>如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]</p></li><li><p>如果word1[i]和word2[j]不相等相等，则要分情况讨论</p><ul><li>添加： 也就是在word1[i]后加一个字符x使得word1[0…i] + x和word2[0…j]相等，则dp[i][j]  =  dp[i][j-1] + 1</li><li>删除：也就是在word1[i]后删除第i处字符x使得word1[0…i-1] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j] + 1</li><li>修改：也就是在word1[i]后修改第i处的字符使得word1[0…i] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j-1] + 1</li></ul></li></ul><h3 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public  int minDistance(String w1, String w2) &#123;</span><br><span class="line"></span><br><span class="line">     int r = w1.length();</span><br><span class="line">     int c = w2.length();</span><br><span class="line"></span><br><span class="line">     int<span class="string">[]</span><span class="string">[]</span> dp = new int<span class="string">[r+1]</span><span class="string">[c+1]</span>;</span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">         dp<span class="string">[0]</span><span class="string">[i]</span> = i; //dp<span class="string">[i]</span><span class="string">[0]</span>就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">         dp<span class="string">[i]</span><span class="string">[0]</span> = i;  //dp<span class="string">[0]</span><span class="string">[j]</span>就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2</span><br><span class="line">         for(int j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">             if(w1.charAt(i-<span class="number">1</span>)==w2.charAt(j-<span class="number">1</span>))</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j-1]</span>;</span><br><span class="line">             else</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = Math.min(dp<span class="string">[i-1]</span><span class="string">[j-1]</span>,Math.min(dp<span class="string">[i-1]</span><span class="string">[j]</span>, dp<span class="string">[i]</span><span class="string">[j-1]</span>)) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     return dp<span class="string">[r]</span><span class="string">[c]</span>;         </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><h3 id="基于上述代码的一种改进"><a href="#基于上述代码的一种改进" class="headerlink" title="基于上述代码的一种改进"></a>基于上述代码的一种改进</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="keyword">int</span> minDistance(<span class="keyword">String</span> w1, <span class="keyword">String</span> w2) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> r = w1.length();</span><br><span class="line"> <span class="keyword">int</span> c = w2.length();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];         </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line"> dp[i] = i;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line"> <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];</span><br><span class="line"> temp[<span class="number">0</span>] = i;</span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line"> <span class="built_in">if</span>(w1.charAt(i<span class="number">-1</span>)==w2.charAt(j<span class="number">-1</span>))</span><br><span class="line"> temp[j] = dp[j<span class="number">-1</span>];</span><br><span class="line"> <span class="built_in">else</span></span><br><span class="line"> temp[j] = Math.<span class="built_in">min</span>(temp[j<span class="number">-1</span>],Math.<span class="built_in">min</span>(dp[j<span class="number">-1</span>], dp[j])) + <span class="number">1</span>;</span><br><span class="line"> <span class="comment">// temp[j-1] 添加  dp[j-1] 修改   dp[j] 删除</span></span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> dp = temp;</span><br><span class="line"> &#125;</span><br><span class="line">   </span><br><span class="line"> <span class="built_in">return</span> dp[c];         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>参考链接</p><ul><li><a href="https://www.cnblogs.com/masterlibin/p/5785092.html" target="_blank" rel="noopener">EditDistance,求两个字符串最小编辑距离，动态规划</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;题目要求&quot;&gt;&lt;a href=&quot;#题目要求&quot; class=&quot;headerlink&quot; title=&quot;题目要求&quot;&gt;&lt;/a&gt;题目要求&lt;/h3&gt;&lt;p&gt;求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。&lt;br&gt;&lt;img
-      
-    
-    </summary>
-    
-      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
-    
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -208,9 +240,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -237,9 +269,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -296,9 +328,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -533,9 +565,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -562,9 +594,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -592,9 +624,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -621,9 +653,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -650,9 +682,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -734,9 +766,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -788,9 +820,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -819,9 +851,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -850,9 +882,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -880,9 +912,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -911,9 +943,9 @@
       <category term="二叉树" scheme="https://9191rs.me/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="BST" scheme="https://9191rs.me/tags/BST/"/>
     
@@ -941,9 +973,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -971,9 +1003,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1062,9 +1094,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1097,9 +1129,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1128,9 +1160,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1164,9 +1196,9 @@
       <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
   </entry>
   
