@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[leetcode Insert Delete GetRandom O(1)]]></title>
+    <url>%2Fposts%2F38306%2F</url>
+    <content type="text"><![CDATA[leetcode第380题 Insert Delete GetRandom O(1)题目描述 解题思路用HashMap和ArrayList组合来模拟三个操作： insert： 如果val已经存在与HashMap中，则直接返回false。反之，则以val为键，以val在ArrayList中的索引为值作为键值对插入到HashMap中，返回true。 remove：根据val的键进行定位。如果不存在，则返回false。然后取出对应的值，这个值代表了其在ArrayList的位置，如果不是最后一个，则将其和ArrayList中的最后一个进行交换。 getRandom：利用nextInt( )函数随机生成一个[0,list.size()-1]之间的数，并返回在ArrayList中对应的值。 Java代码12345678910111213141516171819202122232425262728293031323334353637383940414243class RandomizedSet &#123; HashMap&lt;Integer, Integer&gt; hs = null; ArrayList&lt;Integer&gt; list = null; Random rand = new Random(); public RandomizedSet() &#123; hs = new HashMap&lt;&gt;(); list = new ArrayList&lt;&gt;(); &#125; public boolean insert(int val) &#123; if(hs.containsKey(val)) return false; hs.put(val, list.size()); list.add(val); return true; &#125; public boolean remove(int val) &#123; if(!hs.containsKey(val)) return false; int t = hs.get(val); if(t &lt; list.size()-1)&#123; int l = list.get(list.size()-1); hs.put(l, t); list.set(t, l); &#125; hs.remove(val); list.remove(list.size()-1); return true; &#125; public int getRandom() &#123; return list.get(rand.nextInt(list.size())); &#125;&#125; leetcode第381题 Insert Delete GetRandom O(1) - Duplicates allowed题目描述 解题思路用HashMap和ArrayList以及LinkedList组合来模拟三个操作： insert： 如果val已经存在与HashMap中，则取出对应的LinkedList，将其在ArrayList中的索引值放在尾部，更新对应的记录，并返回false。反之，则以val为键，新建一个LinkedList，将其在ArrayList中的索引值放在尾部，插入对应的记录，并返回true。 remove：根据val的键进行定位。如果不存在，则返回false。然后取出对应的LinkedList尾部的值，这个值代表了其在ArrayList的位置，如果不是最后一个，则需要取出ArrayList中的最后一个元素对应的LinkedList，并用这个LinkedList的首部和其进行交换。如果val对应的LinkedList的size为1，则移除这条记录。 getRandom：利用nextInt( )函数随机生成一个[0,list.size()-1]之间的数，并返回在ArrayList中对应的值。 Java代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556class RandomizedCollection &#123; HashMap&lt;Integer, LinkedList&lt;Integer&gt;&gt; hs = null; ArrayList&lt;Integer&gt; list = null; Random rand = new Random(); public RandomizedCollection() &#123; hs = new HashMap&lt;&gt;(); list = new ArrayList&lt;&gt;(); &#125; public boolean insert(int val) &#123; LinkedList&lt;Integer&gt; t = hs.getOrDefault(val, new LinkedList&lt;&gt;()); t.add(list.size()); hs.put(val, t); list.add(val); return t.size() == 1; &#125; public boolean remove(int val) &#123; if(!hs.containsKey(val)) return false; LinkedList&lt;Integer&gt; t = hs.get(val); int p = t.get(t.size()-1); if(p &lt; list.size() -1)&#123; int l = list.get(list.size()-1); LinkedList&lt;Integer&gt; tl = hs.get(l); tl.removeFirst(); tl.add(p); hs.put(l, tl); list.set(p, l); &#125; list.remove(list.size()-1); if(t.size() == 1) hs.remove(val); else&#123; t.remove(t.size()-1); hs.put(val, t); &#125; return true; &#125; public int getRandom() &#123; return list.get(rand.nextInt(list.size())); &#125;&#125;]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>算法</tag>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[leetcode 第179题 Largest Number]]></title>
     <url>%2Fposts%2F26752%2F</url>
     <content type="text"><![CDATA[题目描述输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。 解题思路这道题的暴力解法是先求出这个数组中所有数字的全排列，然后把每个排列拼接起来，最后求出拼起来的数字的最大值。但是如果能找到一个排序规则，使得根据这个规则排出来的数组能排成一个最大的数字。要确定排序规则，就得比较两个数字，也就是给出两个数字m和n，我们需要确定一个规则m和n哪个更大，而不是仅仅只是比较这两个数字的数值哪个更大。根据题目的要求，两个数字m和n能够拼接成数字mn和nm。如果mn &lt; nm,则应该打印nm。也就是n应该在m前面。反之，m应该在n前面。同时应该注意两个数字的拼接过程中可能会出现溢出，而一个解决大数问题的思路就是把数字转换为字符串。同时mn和nm的长度相等，按照字符串大小的比较规则就可以。 Java实现123456789101112131415161718192021222324252627282930 public String largestNumber(int[] nums) &#123; ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(); StringBuilder sb = new StringBuilder(); int z = 0; for(int t : nums)&#123; list.add(t); if(t == 0) z++; &#125; if(z==nums.length) return "0"; Collections.sort(list,new Comparator&lt;Integer&gt;() &#123; @Override public int compare(Integer t1, Integer t2) &#123; String s1 = t1.toString() + t2.toString(); String s2 = t2.toString() + t1.toString(); return s2.compareTo(s1); &#125;&#125;); for(int t : list) sb.append(t); return sb.toString(); &#125; 详情请参见剑指offer第二版面试题45]]></content>
@@ -8,8 +21,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
         <tag>剑指offer</tag>
       </tags>
@@ -22,8 +35,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -46,8 +59,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -71,8 +84,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -84,8 +97,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -97,8 +110,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -110,8 +123,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -136,8 +149,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -239,8 +252,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -252,8 +265,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -265,8 +278,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -278,8 +291,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -291,8 +304,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -328,8 +341,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -353,8 +366,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -366,8 +379,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -379,8 +392,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -392,8 +405,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -405,8 +418,8 @@
         <category>二叉树</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>BST</tag>
       </tags>
   </entry>
@@ -418,8 +431,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -431,8 +444,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -470,8 +483,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -483,8 +496,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -496,8 +509,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -509,8 +522,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
