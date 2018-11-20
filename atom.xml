@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://9191rs.me/"/>
-  <updated>2018-11-19T13:12:58.312Z</updated>
+  <updated>2018-11-20T06:53:18.964Z</updated>
   <id>https://9191rs.me/</id>
   
   <author>
@@ -17,13 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>字符串匹配的KMP算法</title>
+    <link href="https://9191rs.me/posts/12689/"/>
+    <id>https://9191rs.me/posts/12689/</id>
+    <published>2018-11-20T02:52:47.000Z</published>
+    <updated>2018-11-20T06:53:18.964Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="KMP算法的引出"><a href="#KMP算法的引出" class="headerlink" title="KMP算法的引出"></a>KMP算法的引出</h3><p>KMP(<a href="https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm" target="_blank" rel="noopener">Knuth-Morris-Pratt</a>)算法经常被用来解决字符串匹配的问题。<br>下面举例来说，有一个字符串”BBC ABCDAB ABCDABCDABDE”，如何判断里面是否包含另一个字符串”ABCDABD”？</p><p><strong>首先</strong>，字符串”BBC ABCDAB ABCDABCDABDE”的第一个字符与搜索词”ABCDABD”的第一个字符，进行比较。因为B与A不匹配，所以搜索词后移一位。</p><p><div align="center"><img src="/posts/12689/1542683196120.png" alt="Alt text"></div></p><p>接下来，因为B与A不匹配，搜索词再往后移。</p><p><div align="center"><img src="/posts/12689/1542683238725.png" alt="Alt text"></div></p><p>就这样，直到字符串有一个字符，与搜索词的第一个字符相同为止。</p><p><div align="center"><img src="/posts/12689/1542683247215.png" alt="Alt text"></div></p><p>接着比较字符串和搜索词的下一个字符，还是相同。</p><p><div align="center"><img src="/posts/12689/1542683334584.png" alt="Alt text"></div></p><p>直到字符串有一个字符，与搜索词对应的字符不相同为止。</p><p><div align="center"><img src="/posts/12689/1542683360690.png" alt="Alt text"></div></p><p><strong>这时，最自然的反应是，将搜索词整个后移一位，再从头逐个比较。这样做虽然可行，但是效率很差，时间复杂度为O( m * n)。因为你要把”搜索位置”移到已经比较过的位置，重比一遍。</strong></p><p><div align="center"><img src="/posts/12689/1542683397329.png" alt="Alt text"></div></p><p>但是，通过观察可以发现，当空格与D不匹配时，其实已经知道了前面六个字符是”ABCDAB”。<strong>KMP算法的想法是，设法利用这个已知信息，不要把”搜索位置”移回已经比较过的位置，继续把它向后移，这样就提高了效率。时间复杂度为O( m *+ n)。</strong></p><h3 id="KMP算法的实现"><a href="#KMP算法的实现" class="headerlink" title="KMP算法的实现"></a>KMP算法的实现</h3><p>KMP算法的实现是先为要搜索的字符串算出一个部分匹配表( Partial Match Table)，当空格与D不匹配时，前面六个字符”ABCDAB”是匹配的。查表可知，最后一个匹配字符B对应的”部分匹配值”为2，因此按照下面的公式算出向后移动的位数：</p><blockquote><p><div align="center"><strong>移动位数 = 已匹配的字符数 - 对应的部分匹配值</strong></div></p></blockquote><p>因为 6 - 2 等于4，所以将搜索词向后移动4位。用这种方法就实现了一次移动k位。</p><p>部分匹配的实质是，字符串头部和尾部会有重复。比如，”ABCDAB”之中有两个”AB”，那么它的”部分匹配值”就是2（”AB”的长度）。搜索词移动的时候，第一个”AB”向后移动4位（字符串长度-部分匹配值），就可以来到第二个”AB”的位置。字符串的”前缀”指除了最后一个字符以外，一个字符串的全部头部组合；”后缀”指除了第一个字符以外，一个字符串的全部尾部组合。下面以”ABCDABD”为例介绍部分匹配表是如何产生的。</p><p><div align="center"> <img src="/posts/12689/1542685565462.png" alt="Alt text"></div></p><h3 id="Java代码的实现过程"><a href="#Java代码的实现过程" class="headerlink" title="Java代码的实现过程"></a>Java代码的实现过程</h3><p><strong>首先贴出完整的代码</strong></p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> KMP &#123;</span><br><span class="line">    <span class="comment">//字符串pattern为要匹配的字符串</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> kmp(String origin,String pattern)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> m = origin.length(),n = pattern.length();</span><br><span class="line">        <span class="keyword">if</span>(m &lt; n) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] <span class="keyword">next</span> = getNext(pattern);</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">while</span>(k &gt; <span class="number">0</span> &amp;&amp;pattern.charAt(k) != origin.charAt(i))</span><br><span class="line">                k = <span class="keyword">next</span>[k-<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(pattern.charAt(k) == origin.charAt(i))</span><br><span class="line">                k++;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(k == n) <span class="comment">// [i-m+1 , i]</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//部分匹配表的实现</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] getNext(String s)&#123;</span><br><span class="line">        <span class="keyword">int</span>[] <span class="keyword">next</span> = <span class="keyword">new</span> <span class="keyword">int</span>[s.length()];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">next</span>[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span>[] p = s.toCharArray();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> q=<span class="number">1</span>;q&lt;p.length;q++)&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span>(k &gt; <span class="number">0</span> &amp;&amp; p[k] != p[q])</span><br><span class="line">                k = <span class="keyword">next</span>[k-<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(p[q] == p[k])</span><br><span class="line">                k++;</span><br><span class="line">            <span class="keyword">next</span>[q] = k;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">next</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</span><br><span class="line">        KMP k = <span class="keyword">new</span> KMP();</span><br><span class="line"></span><br><span class="line">        System.out.<span class="keyword">println</span>(k.kmp(<span class="string">"BBC ABCDAB ABCDABCDABDE"</span>,<span class="string">"ABCDABD"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>接着来看下部分匹配表实现思路(主要是while循环)</strong></p><ol><li>已知前一步计算时最大相同的前后缀长度为k（k&gt;0），即P[0]···P[k-1])。</li><li>此时比较第k项P[k]与P[q],如图1所示:</li><li>如果P[K]等于P[q]，那么很简单跳出while循环。</li><li><strong>如果不相等呢</strong>，此时就以该应该利用已经得到的next[0]···next[k-1]来求P[0]···P[k-1]这个子串中最大相同前后缀。此时，P[k]已经和P[q]失配，但是P[q-k] ··· P[q-1]又与P[0] ···P[k-1]相同，看来P[0]···P[k-1]这么长的子串是用不了了，那么要找的同样也是P[0]打头、P[k-1]结尾的子串即P[0]···P<a href="j==next[k-1]">j-1</a>，看看它的下一项P[j]是否能和P[q]匹配。如果匹配就跳出循环，否则继续查找下一个k。如图2所示。</li></ol><p><div align="center"><img src="/posts/12689/1542685327288.png" alt="Alt text"></div></p><hr><p>参考文章</p><ul><li><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">字符串匹配的KMP算法– 阮一峰</a></li><li><a href="http://www.cnblogs.com/c-cloud/p/3224788.html" target="_blank" rel="noopener"> KMP  深入讲解next数组的求解</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;KMP算法的引出&quot;&gt;&lt;a href=&quot;#KMP算法的引出&quot; class=&quot;headerlink&quot; title=&quot;KMP算法的引出&quot;&gt;&lt;/a&gt;KMP算法的引出&lt;/h3&gt;&lt;p&gt;KMP(&lt;a href=&quot;https://en.wikipedia.org/wiki/Knu
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="KMP" scheme="https://9191rs.me/tags/KMP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>前缀树--Trie</title>
     <link href="https://9191rs.me/posts/16324/"/>
     <id>https://9191rs.me/posts/16324/</id>
     <published>2018-11-19T11:16:27.000Z</published>
-    <updated>2018-11-19T13:12:58.312Z</updated>
+    <updated>2018-11-19T13:27:21.578Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="前缀树–Trie"><a href="#前缀树–Trie" class="headerlink" title="前缀树–Trie"></a>前缀树–Trie</h3><p> Trie树即字典树，又称单词查找树或键树，是一种树形结构，是一种哈希树的变种。典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：最大限度地减少无谓的字符串比较，查询效率比哈希表高。缺点是占用空间比较大。</p><p> Trie的核心思想是空间换时间。利用字符串的公共前缀来降低查询时间的开销以达到提高效率的目的， 它有3个基本性质：</p><ul><li>根节点不包含字符，除根节点外每一个节点都只包含一个字符。</li><li>从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串。</li><li>每个节点的所有子节点包含的字符都不相同。</li></ul><p><div align="center"><img src="/posts/16324/1.jpg" alt=" "></div></p><p>对于有n个字符的单词序列来说，如果使用树结构，查询的时间复杂度是O(log n);如果使用哈希表存储，则有可能 出现大量的哈希冲突；而使用Trie存储，查询每个条目的复杂度和字典中一共有多少条目无关，之和字符串的长度有关。</p><h3 id="Trie的Java实现"><a href="#Trie的Java实现" class="headerlink" title="Trie的Java实现"></a>Trie的Java实现</h3><h4 id="Trie树结点的结构"><a href="#Trie树结点的结构" class="headerlink" title="Trie树结点的结构"></a>Trie树结点的结构</h4><p>用isWord表示是否当前结点是否为一个字符串的结尾。</p><h4 id="Trie树的添加"><a href="#Trie树的添加" class="headerlink" title="Trie树的添加"></a>Trie树的添加</h4><p>基本思想：<br>从根结点开始, 向下依次寻找当前结点的next中, 是否有与关键字key中相应位置的字母相同的next</p><ul><li>如果有，直接到下一层继续寻找</li><li>如果没有，则新建一个node, 插入当前结点的next中,然后到下一层继续寻找</li></ul><p>向下遍历到key的末尾时, 修改该结点的boolean指示值,表示是关键字末尾</p><h4 id="Trie树的单词查找"><a href="#Trie树的单词查找" class="headerlink" title="Trie树的单词查找"></a>Trie树的单词查找</h4><p>从单词的第一个单词开始，沿着Trie树进行查找，如果在某一层中查找不到，则直接返回false，否则，如果到达单词的结尾，判断当前层是否为一个单词的结尾。</p><h4 id="Trie树的前缀查找"><a href="#Trie树的前缀查找" class="headerlink" title="Trie树的前缀查找"></a>Trie树的前缀查找</h4><p>思路和单词查找差不多，只是不用判断是否为单词的结尾。</p><h4 id="辅助操作"><a href="#辅助操作" class="headerlink" title="辅助操作"></a>辅助操作</h4><p>记录Trie树中单词的个数。</p><h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class Trie &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> class Node&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">        <span class="keyword">public</span> TreeMap&lt;Character, Node&gt; next;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> Node(<span class="keyword">boolean</span> isWord)&#123;</span><br><span class="line">            <span class="keyword">this</span>.isWord = isWord;</span><br><span class="line">            next = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> Node()&#123;</span><br><span class="line">            <span class="keyword">this</span>(false);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="built_in">size</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Trie()&#123;</span><br><span class="line">        root = <span class="keyword">new</span> Node();</span><br><span class="line">        <span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获得Trie中存储的单词数量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> getSize()&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> <span class="built_in">size</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 向Trie中添加一个新的单词word</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> add(<span class="keyword">String</span> <span class="keyword">word</span>)&#123;</span><br><span class="line"></span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="keyword">word</span>.length() ; i ++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(i);</span><br><span class="line">            <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">                cur.next.<span class="built_in">put</span>(c, <span class="keyword">new</span> Node());</span><br><span class="line">            cur = cur.next.<span class="built_in">get</span>(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(!cur.isWord)&#123;</span><br><span class="line">            cur.isWord = true;</span><br><span class="line">            <span class="built_in">size</span> ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 递归实现</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">void</span> add(<span class="keyword">String</span> <span class="keyword">word</span>,Node cur,<span class="keyword">int</span> k)&#123;</span><br><span class="line">        <span class="built_in">if</span>(k == <span class="keyword">word</span>.length())&#123;</span><br><span class="line">            cur.isWord = true;</span><br><span class="line">            <span class="built_in">size</span> ++;</span><br><span class="line">            <span class="built_in">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(k);</span><br><span class="line">        <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">            cur.next.<span class="built_in">put</span>(c, <span class="keyword">new</span> Node());</span><br><span class="line"></span><br><span class="line">        add(<span class="keyword">word</span>,cur.next.<span class="built_in">get</span>(c),k++);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询单词word是否在Trie中</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> contains(<span class="keyword">String</span> <span class="keyword">word</span>)&#123;</span><br><span class="line"></span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="keyword">word</span>.length() ; i ++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(i);</span><br><span class="line">            <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">                <span class="built_in">return</span> false;</span><br><span class="line">            cur = cur.next.<span class="built_in">get</span>(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">return</span> cur.isWord;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// //递归实现</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> contains(<span class="keyword">String</span> <span class="keyword">word</span>,Node cur,<span class="keyword">int</span> k)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(<span class="keyword">word</span>.length() == k)</span><br><span class="line">            <span class="built_in">return</span> cur.isWord;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(k);</span><br><span class="line">        <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">            <span class="built_in">return</span> false;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> contains(<span class="keyword">word</span>,cur.next.<span class="built_in">get</span>(c),k);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询是否在Trie中有单词以prefix为前缀</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isPrefix(<span class="keyword">String</span> prefix)&#123;</span><br><span class="line"></span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; prefix.length() ; i ++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = prefix.charAt(i);</span><br><span class="line">            <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">                <span class="built_in">return</span> false;</span><br><span class="line">            cur = cur.next.<span class="built_in">get</span>(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//递归实现</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isPrefix(<span class="keyword">String</span> <span class="keyword">word</span>,Node cur,<span class="keyword">int</span> k)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(<span class="keyword">word</span>.length() == k)</span><br><span class="line">            <span class="built_in">return</span> true;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(k);</span><br><span class="line">        <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">            <span class="built_in">return</span> false;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> contains(<span class="keyword">word</span>,cur.next.<span class="built_in">get</span>(c),k);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="Trie的海量数据中的应用"><a href="#Trie的海量数据中的应用" class="headerlink" title="Trie的海量数据中的应用"></a>Trie的海量数据中的应用</h3><ul><li>有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。</li><li>1000万字符串，其中有些是重复的，需要把重复的全部去掉，保留没有重复的字符串。请怎么设计和实现？</li><li>一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析。</li></ul><h3 id="leetcode中的一些练习题"><a href="#leetcode中的一些练习题" class="headerlink" title="leetcode中的一些练习题"></a>leetcode中的一些练习题</h3><ul><li><a href="https://leetcode.com/problems/implement-trie-prefix-tree/description/" target="_blank" rel="noopener">208. Implement Trie (Prefix Tree)</a></li><li><a href="https://leetcode.com/problems/add-and-search-word-data-structure-design/description/" target="_blank" rel="noopener">211. Add and Search Word - Data structure design</a></li><li><a href="https://leetcode.com/problems/map-sum-pairs/description/" target="_blank" rel="noopener">677. Map Sum Pairs</a></li></ul><hr><p>参考文章</p><ul><li><a href="https://www.cnblogs.com/luosongchao/p/3239521.html" target="_blank" rel="noopener">trie树（前缀树）</a></li><li><a href="https://blog.csdn.net/l947069962/article/details/77650918" target="_blank" rel="noopener">Trie (Prefix Tree) 前缀树</a></li><li><a href="https://blog.csdn.net/v_july_v/article/details/6685962" target="_blank" rel="noopener">海量数据处理面试题集锦</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="前缀树–Trie"><a href="#前缀树–Trie" class="headerlink" title="前缀树–Trie"></a>前缀树–Trie</h3><p> Trie树即字典树，又称单词查找树或键树，是一种树形结构，是一种哈希树的变种。典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：最大限度地减少无谓的字符串比较，查询效率比哈希表高。缺点是占用空间比较大。</p><p> Trie的核心思想是空间换时间。利用字符串的公共前缀来降低查询时间的开销以达到提高效率的目的， 它有3个基本性质：</p><ul><li>根节点不包含字符，除根节点外每一个节点都只包含一个字符。</li><li>从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串。</li><li>每个节点的所有子节点包含的字符都不相同。</li></ul><p><div align="center"><img src="/posts/16324/1.jpg" alt=" "></div></p><p>对于有n个字符的单词序列来说，如果使用树结构，查询的时间复杂度是O(log n);如果使用哈希表存储，则有可能 出现大量的哈希冲突；而使用Trie存储，查询每个条目的复杂度和字典中一共有多少条目无关，之和字符串的长度有关。</p><h3 id="Trie的Java实现"><a href="#Trie的Java实现" class="headerlink" title="Trie的Java实现"></a>Trie的Java实现</h3><h4 id="Trie树结点的结构"><a href="#Trie树结点的结构" class="headerlink" title="Trie树结点的结构"></a>Trie树结点的结构</h4><p>用isWord表示是否当前结点是否为一个字符串的结尾。</p><h4 id="Trie树的添加"><a href="#Trie树的添加" class="headerlink" title="Trie树的添加"></a>Trie树的添加</h4><p>基本思想：<br>从根结点开始, 向下依次寻找当前结点的next中, 是否有与关键字key中相应位置的字母相同的next</p><ul><li>如果有，直接到下一层继续寻找</li><li>如果没有，则新建一个node, 插入当前结点的next中,然后到下一层继续寻找</li></ul><p>向下遍历到key的末尾时, 修改该结点的boolean指示值,表示是关键字末尾</p><h4 id="Trie树的单词查找"><a href="#Trie树的单词查找" class="headerlink" title="Trie树的单词查找"></a>Trie树的单词查找</h4><p>从单词的第一个单词开始，沿着Trie树进行查找，如果在某一层中查找不到，则直接返回false，否则，如果到达单词的结尾，判断当前层是否为一个单词的结尾。</p><h4 id="Trie树的前缀查找"><a href="#Trie树的前缀查找" class="headerlink" title="Trie树的前缀查找"></a>Trie树的前缀查找</h4><p>思路和单词查找差不多，只是不用判断是否为单词的结尾。</p><h4 id="辅助操作"><a href="#辅助操作" class="headerlink" title="辅助操作"></a>辅助操作</h4><p>记录Trie树中单词的个数。</p><h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class Trie &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> class Node&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">        <span class="keyword">public</span> HashMap&lt;Character, Node&gt; next;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> Node(<span class="keyword">boolean</span> isWord)&#123;</span><br><span class="line">            <span class="keyword">this</span>.isWord = isWord;</span><br><span class="line">            next = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> Node()&#123;</span><br><span class="line">            <span class="keyword">this</span>(false);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="built_in">size</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Trie()&#123;</span><br><span class="line">        root = <span class="keyword">new</span> Node();</span><br><span class="line">        <span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获得Trie中存储的单词数量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> getSize()&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> <span class="built_in">size</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 向Trie中添加一个新的单词word</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> add(<span class="keyword">String</span> <span class="keyword">word</span>)&#123;</span><br><span class="line"></span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="keyword">word</span>.length() ; i ++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(i);</span><br><span class="line">            <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">                cur.next.<span class="built_in">put</span>(c, <span class="keyword">new</span> Node());</span><br><span class="line">            cur = cur.next.<span class="built_in">get</span>(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(!cur.isWord)&#123;</span><br><span class="line">            cur.isWord = true;</span><br><span class="line">            <span class="built_in">size</span> ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 递归实现</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">void</span> add(<span class="keyword">String</span> <span class="keyword">word</span>,Node cur,<span class="keyword">int</span> k)&#123;</span><br><span class="line">        <span class="built_in">if</span>(k == <span class="keyword">word</span>.length())&#123;</span><br><span class="line">            cur.isWord = true;</span><br><span class="line">            <span class="built_in">size</span> ++;</span><br><span class="line">            <span class="built_in">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(k);</span><br><span class="line">        <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">            cur.next.<span class="built_in">put</span>(c, <span class="keyword">new</span> Node());</span><br><span class="line"></span><br><span class="line">        add(<span class="keyword">word</span>,cur.next.<span class="built_in">get</span>(c),k++);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询单词word是否在Trie中</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> contains(<span class="keyword">String</span> <span class="keyword">word</span>)&#123;</span><br><span class="line"></span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="keyword">word</span>.length() ; i ++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(i);</span><br><span class="line">            <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">                <span class="built_in">return</span> false;</span><br><span class="line">            cur = cur.next.<span class="built_in">get</span>(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">return</span> cur.isWord;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// //递归实现</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> contains(<span class="keyword">String</span> <span class="keyword">word</span>,Node cur,<span class="keyword">int</span> k)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(<span class="keyword">word</span>.length() == k)</span><br><span class="line">            <span class="built_in">return</span> cur.isWord;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(k);</span><br><span class="line">        <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">            <span class="built_in">return</span> false;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> contains(<span class="keyword">word</span>,cur.next.<span class="built_in">get</span>(c),k);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询是否在Trie中有单词以prefix为前缀</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isPrefix(<span class="keyword">String</span> prefix)&#123;</span><br><span class="line"></span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; prefix.length() ; i ++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = prefix.charAt(i);</span><br><span class="line">            <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">                <span class="built_in">return</span> false;</span><br><span class="line">            cur = cur.next.<span class="built_in">get</span>(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//递归实现</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isPrefix(<span class="keyword">String</span> <span class="keyword">word</span>,Node cur,<span class="keyword">int</span> k)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">if</span>(<span class="keyword">word</span>.length() == k)</span><br><span class="line">            <span class="built_in">return</span> true;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> c = <span class="keyword">word</span>.charAt(k);</span><br><span class="line">        <span class="built_in">if</span>(cur.next.<span class="built_in">get</span>(c) == null)</span><br><span class="line">            <span class="built_in">return</span> false;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> contains(<span class="keyword">word</span>,cur.next.<span class="built_in">get</span>(c),k);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="Trie的海量数据中的应用"><a href="#Trie的海量数据中的应用" class="headerlink" title="Trie的海量数据中的应用"></a>Trie的海量数据中的应用</h3><ul><li>有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。</li><li>1000万字符串，其中有些是重复的，需要把重复的全部去掉，保留没有重复的字符串。请怎么设计和实现？</li><li>一个文本文件，大约有一万行，每行一个词，要求统计出其中最频繁出现的前10个词，请给出思想，给出时间复杂度分析。</li></ul><h3 id="leetcode中的一些练习题"><a href="#leetcode中的一些练习题" class="headerlink" title="leetcode中的一些练习题"></a>leetcode中的一些练习题</h3><ul><li><a href="https://leetcode.com/problems/implement-trie-prefix-tree/description/" target="_blank" rel="noopener">208. Implement Trie (Prefix Tree)</a></li><li><a href="https://leetcode.com/problems/add-and-search-word-data-structure-design/description/" target="_blank" rel="noopener">211. Add and Search Word - Data structure design</a></li><li><a href="https://leetcode.com/problems/map-sum-pairs/description/" target="_blank" rel="noopener">677. Map Sum Pairs</a></li></ul><hr><p>参考文章</p><ul><li><a href="https://www.cnblogs.com/luosongchao/p/3239521.html" target="_blank" rel="noopener">trie树（前缀树）</a></li><li><a href="https://blog.csdn.net/l947069962/article/details/77650918" target="_blank" rel="noopener">Trie (Prefix Tree) 前缀树</a></li><li><a href="https://blog.csdn.net/v_july_v/article/details/6685962" target="_blank" rel="noopener">海量数据处理面试题集锦</a></li></ul>]]></content>
     
     <summary type="html">
     
@@ -66,9 +93,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -95,9 +122,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
   </entry>
   
@@ -122,9 +149,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -152,9 +179,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -184,9 +211,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -238,9 +265,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -274,6 +301,35 @@
   </entry>
   
   <entry>
+    <title>leetcode 第72题 Edit Distance</title>
+    <link href="https://9191rs.me/posts/43664/"/>
+    <id>https://9191rs.me/posts/43664/</id>
+    <published>2018-09-20T11:17:04.000Z</published>
+    <updated>2018-09-20T12:49:26.286Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。<br><img src="/posts/43664/1.jpg" alt=""></p><p><strong>两个字符串的编辑距离越小，说明两个字符串越相似！</strong></p><h3 id="DP解法"><a href="#DP解法" class="headerlink" title="DP解法"></a>DP解法</h3><p>dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离</p><ul><li><p>如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]</p></li><li><p>如果word1[i]和word2[j]不相等相等，则要分情况讨论</p><ul><li>添加： 也就是在word1[i]后加一个字符x使得word1[0…i] + x和word2[0…j]相等，则dp[i][j]  =  dp[i][j-1] + 1</li><li>删除：也就是在word1[i]后删除第i处字符x使得word1[0…i-1] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j] + 1</li><li>修改：也就是在word1[i]后修改第i处的字符使得word1[0…i] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j-1] + 1</li></ul></li></ul><h3 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public  int minDistance(String w1, String w2) &#123;</span><br><span class="line"></span><br><span class="line">     int r = w1.length();</span><br><span class="line">     int c = w2.length();</span><br><span class="line"></span><br><span class="line">     int<span class="string">[]</span><span class="string">[]</span> dp = new int<span class="string">[r+1]</span><span class="string">[c+1]</span>;</span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">         dp<span class="string">[0]</span><span class="string">[i]</span> = i; //dp<span class="string">[i]</span><span class="string">[0]</span>就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">         dp<span class="string">[i]</span><span class="string">[0]</span> = i;  //dp<span class="string">[0]</span><span class="string">[j]</span>就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2</span><br><span class="line">         for(int j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">             if(w1.charAt(i-<span class="number">1</span>)==w2.charAt(j-<span class="number">1</span>))</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j-1]</span>;</span><br><span class="line">             else</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = Math.min(dp<span class="string">[i-1]</span><span class="string">[j-1]</span>,Math.min(dp<span class="string">[i-1]</span><span class="string">[j]</span>, dp<span class="string">[i]</span><span class="string">[j-1]</span>)) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     return dp<span class="string">[r]</span><span class="string">[c]</span>;         </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><h3 id="基于上述代码的一种改进"><a href="#基于上述代码的一种改进" class="headerlink" title="基于上述代码的一种改进"></a>基于上述代码的一种改进</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="keyword">int</span> minDistance(<span class="keyword">String</span> w1, <span class="keyword">String</span> w2) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> r = w1.length();</span><br><span class="line"> <span class="keyword">int</span> c = w2.length();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];         </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line"> dp[i] = i;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line"> <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];</span><br><span class="line"> temp[<span class="number">0</span>] = i;</span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line"> <span class="built_in">if</span>(w1.charAt(i<span class="number">-1</span>)==w2.charAt(j<span class="number">-1</span>))</span><br><span class="line"> temp[j] = dp[j<span class="number">-1</span>];</span><br><span class="line"> <span class="built_in">else</span></span><br><span class="line"> temp[j] = Math.<span class="built_in">min</span>(temp[j<span class="number">-1</span>],Math.<span class="built_in">min</span>(dp[j<span class="number">-1</span>], dp[j])) + <span class="number">1</span>;</span><br><span class="line"> <span class="comment">// temp[j-1] 添加  dp[j-1] 修改   dp[j] 删除</span></span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> dp = temp;</span><br><span class="line"> &#125;</span><br><span class="line">   </span><br><span class="line"> <span class="built_in">return</span> dp[c];         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>参考链接</p><ul><li><a href="https://www.cnblogs.com/masterlibin/p/5785092.html" target="_blank" rel="noopener">EditDistance,求两个字符串最小编辑距离，动态规划</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;题目要求&quot;&gt;&lt;a href=&quot;#题目要求&quot; class=&quot;headerlink&quot; title=&quot;题目要求&quot;&gt;&lt;/a&gt;题目要求&lt;/h3&gt;&lt;p&gt;求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。&lt;br&gt;&lt;img
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
+    
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
+    
+  </entry>
+  
+  <entry>
     <title>leetcode 第10题 Regular Expression Matching</title>
     <link href="https://9191rs.me/posts/36828/"/>
     <id>https://9191rs.me/posts/36828/</id>
@@ -295,38 +351,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>leetcode 第72题 Edit Distance</title>
-    <link href="https://9191rs.me/posts/43664/"/>
-    <id>https://9191rs.me/posts/43664/</id>
-    <published>2018-09-20T11:17:04.000Z</published>
-    <updated>2018-09-20T12:49:26.286Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。<br><img src="/posts/43664/1.jpg" alt=""></p><p><strong>两个字符串的编辑距离越小，说明两个字符串越相似！</strong></p><h3 id="DP解法"><a href="#DP解法" class="headerlink" title="DP解法"></a>DP解法</h3><p>dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离</p><ul><li><p>如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]</p></li><li><p>如果word1[i]和word2[j]不相等相等，则要分情况讨论</p><ul><li>添加： 也就是在word1[i]后加一个字符x使得word1[0…i] + x和word2[0…j]相等，则dp[i][j]  =  dp[i][j-1] + 1</li><li>删除：也就是在word1[i]后删除第i处字符x使得word1[0…i-1] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j] + 1</li><li>修改：也就是在word1[i]后修改第i处的字符使得word1[0…i] 和word2[0…j]相等，则dp[i][j]  =  dp[i-1][j-1] + 1</li></ul></li></ul><h3 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public  int minDistance(String w1, String w2) &#123;</span><br><span class="line"></span><br><span class="line">     int r = w1.length();</span><br><span class="line">     int c = w2.length();</span><br><span class="line"></span><br><span class="line">     int<span class="string">[]</span><span class="string">[]</span> dp = new int<span class="string">[r+1]</span><span class="string">[c+1]</span>;</span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">         dp<span class="string">[0]</span><span class="string">[i]</span> = i; //dp<span class="string">[i]</span><span class="string">[0]</span>就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">         dp<span class="string">[i]</span><span class="string">[0]</span> = i;  //dp<span class="string">[0]</span><span class="string">[j]</span>就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2</span><br><span class="line">         for(int j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">             if(w1.charAt(i-<span class="number">1</span>)==w2.charAt(j-<span class="number">1</span>))</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j-1]</span>;</span><br><span class="line">             else</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = Math.min(dp<span class="string">[i-1]</span><span class="string">[j-1]</span>,Math.min(dp<span class="string">[i-1]</span><span class="string">[j]</span>, dp<span class="string">[i]</span><span class="string">[j-1]</span>)) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     return dp<span class="string">[r]</span><span class="string">[c]</span>;         </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><h3 id="基于上述代码的一种改进"><a href="#基于上述代码的一种改进" class="headerlink" title="基于上述代码的一种改进"></a>基于上述代码的一种改进</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="keyword">int</span> minDistance(<span class="keyword">String</span> w1, <span class="keyword">String</span> w2) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> r = w1.length();</span><br><span class="line"> <span class="keyword">int</span> c = w2.length();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];         </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line"> dp[i] = i;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line"> <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];</span><br><span class="line"> temp[<span class="number">0</span>] = i;</span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line"> <span class="built_in">if</span>(w1.charAt(i<span class="number">-1</span>)==w2.charAt(j<span class="number">-1</span>))</span><br><span class="line"> temp[j] = dp[j<span class="number">-1</span>];</span><br><span class="line"> <span class="built_in">else</span></span><br><span class="line"> temp[j] = Math.<span class="built_in">min</span>(temp[j<span class="number">-1</span>],Math.<span class="built_in">min</span>(dp[j<span class="number">-1</span>], dp[j])) + <span class="number">1</span>;</span><br><span class="line"> <span class="comment">// temp[j-1] 添加  dp[j-1] 修改   dp[j] 删除</span></span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> dp = temp;</span><br><span class="line"> &#125;</span><br><span class="line">   </span><br><span class="line"> <span class="built_in">return</span> dp[c];         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>参考链接</p><ul><li><a href="https://www.cnblogs.com/masterlibin/p/5785092.html" target="_blank" rel="noopener">EditDistance,求两个字符串最小编辑距离，动态规划</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;题目要求&quot;&gt;&lt;a href=&quot;#题目要求&quot; class=&quot;headerlink&quot; title=&quot;题目要求&quot;&gt;&lt;/a&gt;题目要求&lt;/h3&gt;&lt;p&gt;求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。&lt;br&gt;&lt;img
-      
-    
-    </summary>
-    
-      <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
-    
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -354,9 +381,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -383,9 +410,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -442,9 +469,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -679,9 +706,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -708,9 +735,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -738,9 +765,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -767,9 +794,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -796,9 +823,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -880,9 +907,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -934,9 +961,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -965,9 +992,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -996,9 +1023,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1026,9 +1053,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1057,9 +1084,9 @@
       <category term="二叉树" scheme="https://9191rs.me/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="BST" scheme="https://9191rs.me/tags/BST/"/>
     
@@ -1087,9 +1114,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1117,9 +1144,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1208,9 +1235,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1243,9 +1270,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1274,9 +1301,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1310,9 +1337,9 @@
       <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
   </entry>
   
