@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[字符串匹配的Boyer-Moore算法]]></title>
+    <url>%2Fposts%2F21269%2F</url>
+    <content type="text"><![CDATA[Boyer-Moore算法简介在用于查找子字符串的算法当中，BM（Boyer-Moore）算法是目前被认为最高效的字符串搜索算法，它由Bob Boyer和J Strother Moore设计于1977年。 一般情况下，比KMP算法快3-5倍。该算法常用于文本编辑器中的搜索匹配功能。 BM算法的精华就在于BM(text, pattern),也就是BM算法当不匹配的时候一次性可以跳过不止一个字符。即它不需要对被搜索的字符串中的字符进行逐一比较，而会跳过其中某些部分。通常搜索关键字越长，算法速度越快。它的效率来自于这样的事实：对于每一次失败的匹配尝试，算法都能够使用这些信息来排除尽可能多的无法匹配的位置。即它充分利用待搜索字符串的一些特征，加快了搜索的步骤。BM算法实际上包含两个并行的算法（也就是两个启发策略）：坏字符算法（bad-character shift）和好后缀算法（good-suffix shift）。这两种算法的目的就是让模式串每次向右移动尽可能大的距离。 假设文本串text长度为n，模式串pattern长度为m，BM算法的主要特征为： 从右往左进行比较匹配（一般的字符串搜索算法如KMP都是从从左往右进行匹配） 算法分为两个阶段：预处理阶段和搜索阶段 预处理阶段时间和空间复杂度都是是O(m+sigma)，sigma是字符集大小 搜索阶段时间复杂度是O(mn) 当模式串是非周期性的，在最坏的情况下算法需要进行3n次字符比较操作 算法在最好的情况下达到O(n / m)，比如在文本串bn中搜索模式串am-1b ，只需要n/m次比较 BM算法的理论坏字符算法当出现一个坏字符时, BM算法向右移动模式串, 让模式串中最靠右的对应字符与坏字符相对，然后继续匹配。坏字符算法有两种情况。Case1：模式串中有对应的坏字符时，让模式串中最靠右的对应字符与坏字符相对（PS：BM不可能走回头路，因为若是回头路，则移动距离就是负数了，肯定不是最大移动步数了），如下图。 Case2：模式串中不存在坏字符，很好，直接右移整个模式串长度这么大步数，如下图。 好后缀算法如果程序匹配了一个好后缀, 并且在模式中还有另外一个相同的后缀或后缀的部分, 那把下一个后缀或部分移动到当前后缀位置。假如说，pattern的后u个字符和text都已经匹配了，但是接下来的一个字符不匹配，我需要移动才能匹配。如果说后u个字符在pattern其他位置也出现过或部分出现，我们将pattern右移到前面的u个字符或部分和最后的u个字符或部分相同，如果说后u个字符在pattern其他位置完全没有出现，很好，直接右移整个pattern。这样，好后缀算法有三种情况，如下图所示： Case1：模式串中有子串和好后缀完全匹配，则将最靠右的那个子串移动到好后缀的位置继续进行匹配。 Case2：如果不存在和好后缀完全匹配的子串，则在好后缀中找到具有如下特征的最长子串,使得P[m-s…m]=P[0…s]。 Case3：如果完全不存在和好后缀匹配的子串，则右移整个模式串。 移动规则BM算法的移动规则是：按照好后缀算法和坏字符算法计算得到的最大值。shift（好后缀）和shift（坏字符）通过模式串的预处理数组的简单计算得到。 BM算法的实现坏字符的实现BM算法子串比较失配时，按坏字符算法计算pattern需要右移的距离,这里注意的一定是最右的位置。如下图： 好后缀的实现Case1：对应好后缀算法case1，如下图，K是好后缀之前的那个位置。 Case2：对应好后缀算法case2：如下图所示： Case3：对应与好后缀算法case3，bmGs[i] = len（pattern）= m 在上面求的过程中用到了suffix数组，上suffix[i]就是求pattern中以i位置字符为后缀和以最后一个字符为后缀的公共后缀串的长度。 完整的代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100public class BM &#123; private HashMap&lt;Character,Integer&gt; bmBc = null; private int[] bmGs = null; public boolean boyerMoore(String text,String pattern)&#123; int n = text.length(); int m = pattern.length(); // proprocessing preBmBc(pattern, m); preBmGs(pattern, m); // searching int j = 0; int i = 0; int count = 0; while (j &lt;= n - m)&#123; i = m - 1; while(i &gt;= 0 &amp;&amp; pattern.charAt(i) == text.charAt(i + j)) i--; if (i &lt; 0) // [j , j+m-1] return true; else j += Math.max(bmGs[i], getBmBc(text.charAt(i + j), m) - m + 1 + i); &#125; return false; &#125; //计算坏字符 private int getBmBc(char c,int m)&#123; if(bmBc.containsKey(c)) return bmBc.get(c); return m; &#125; private void preBmBc(String pattern,int m)&#123; bmBc = new HashMap&lt;&gt;(); for(int i=m-2;i&gt;=0;i--)&#123; if(!bmBc.containsKey(pattern.charAt(i))) bmBc.put((pattern.charAt(i)),m-i-1); &#125; &#125; //计算好后缀 private void preBmGs(String pattern, int m) &#123; bmGs = new int[m]; int i, j; int[] suffix =suffix(pattern,m); //Case3: 模式串中没有子串匹配上好后缀，也找不到一个最大前缀 for (i = 0; i &lt; m; i++) bmGs[i] = m; //Case2: 模式串中没有子串匹配上好后缀，但找到一个最大前缀 j = 0; for (i = m - 1; i &gt;= 0; i--)&#123; if (suffix[i] == i + 1)&#123; for (; j &lt; m - 1 - i; j++)&#123; if (bmGs[j] == m) bmGs[j] = m- 1 - i; &#125; &#125; &#125; //Case1: 模式串中有子串匹配上好后缀 for (i = 0; i &lt; m - 1; i++) bmGs[m- 1 - suffix[i]] = m - 1 - i; &#125; private int[] suffix(String pattern, int m)&#123; int[] suff = new int[m]; int i, j,k; suff[m - 1] = m; for(i = m - 2; i &gt;= 0; i--)&#123; j = i; while(j &gt;= 0 &amp;&amp; pattern.charAt(j) == pattern.charAt(m - 1 - i + j)) j--; suff[i] = i - j; &#125; return suff; &#125;&#125; 参考链接 grep之字符串搜索算法Boyer-Moore由浅入深（比KMP快3-5倍） 字符串搜索算法Boyer-Moore的Java实现 阮一峰:字符串匹配的Boyer-Moore算法]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Boyer-Moore</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[字符串匹配的KMP算法]]></title>
     <url>%2Fposts%2F12689%2F</url>
     <content type="text"><![CDATA[KMP算法的引出KMP(Knuth-Morris-Pratt)算法经常被用来解决字符串匹配的问题。下面举例来说，有一个字符串”BBC ABCDAB ABCDABCDABDE”，如何判断里面是否包含另一个字符串”ABCDABD”？ 首先，字符串”BBC ABCDAB ABCDABCDABDE”的第一个字符与搜索词”ABCDABD”的第一个字符，进行比较。因为B与A不匹配，所以搜索词后移一位。 接下来，因为B与A不匹配，搜索词再往后移。 就这样，直到字符串有一个字符，与搜索词的第一个字符相同为止。 接着比较字符串和搜索词的下一个字符，还是相同。 直到字符串有一个字符，与搜索词对应的字符不相同为止。 这时，最自然的反应是，将搜索词整个后移一位，再从头逐个比较。这样做虽然可行，但是效率很差，时间复杂度为O( m * n)。因为你要把”搜索位置”移到已经比较过的位置，重比一遍。 但是，通过观察可以发现，当空格与D不匹配时，其实已经知道了前面六个字符是”ABCDAB”。KMP算法的想法是，设法利用这个已知信息，不要把”搜索位置”移回已经比较过的位置，继续把它向后移，这样就提高了效率。时间复杂度为O( m *+ n)。 KMP算法的实现KMP算法的实现是先为要搜索的字符串算出一个部分匹配表( Partial Match Table)，当空格与D不匹配时，前面六个字符”ABCDAB”是匹配的。查表可知，最后一个匹配字符B对应的”部分匹配值”为2，因此按照下面的公式算出向后移动的位数： 移动位数 = 已匹配的字符数 - 对应的部分匹配值 因为 6 - 2 等于4，所以将搜索词向后移动4位。用这种方法就实现了一次移动k位。 部分匹配的实质是，字符串头部和尾部会有重复。比如，”ABCDAB”之中有两个”AB”，那么它的”部分匹配值”就是2（”AB”的长度）。搜索词移动的时候，第一个”AB”向后移动4位（字符串长度-部分匹配值），就可以来到第二个”AB”的位置。字符串的”前缀”指除了最后一个字符以外，一个字符串的全部头部组合；”后缀”指除了第一个字符以外，一个字符串的全部尾部组合。下面以”ABCDABD”为例介绍部分匹配表是如何产生的。 Java代码的实现过程首先贴出完整的代码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849public class KMP &#123; //字符串pattern为要匹配的字符串 public boolean kmp(String origin,String pattern)&#123; int m = origin.length(),n = pattern.length(); if(m &lt; n) return false; int[] next = getNext(pattern); int k = 0; for(int i=0;i&lt;m;i++)&#123; while(k &gt; 0 &amp;&amp;pattern.charAt(k) != origin.charAt(i)) k = next[k-1]; if(pattern.charAt(k) == origin.charAt(i)) k++; if(k == n) // [i-m+1 , i] return true; &#125; return false; &#125; //部分匹配表的实现 private int[] getNext(String s)&#123; int[] next = new int[s.length()]; next[0] = 0; int k = 0; char[] p = s.toCharArray(); for(int q=1;q&lt;p.length;q++)&#123; while(k &gt; 0 &amp;&amp; p[k] != p[q]) k = next[k-1]; if(p[q] == p[k]) k++; next[q] = k; &#125; return next; &#125; public static void main(String[] args) &#123; KMP k = new KMP(); System.out.println(k.kmp("BBC ABCDAB ABCDABCDABDE","ABCDABD")); &#125;&#125; 接着来看下部分匹配表实现思路(主要是while循环) 已知前一步计算时最大相同的前后缀长度为k（k&gt;0），即P[0]···P[k-1])。 此时比较第k项P[k]与P[q],如图1所示: 如果P[K]等于P[q]，那么很简单跳出while循环。 如果不相等呢，此时就以该应该利用已经得到的next[0]···next[k-1]来求P[0]···P[k-1]这个子串中最大相同前后缀。此时，P[k]已经和P[q]失配，但是P[q-k] ··· P[q-1]又与P[0] ···P[k-1]相同，看来P[0]···P[k-1]这么长的子串是用不了了，那么要找的同样也是P[0]打头、P[k-1]结尾的子串即P[0]···Pj-1，看看它的下一项P[j]是否能和P[q]匹配。如果匹配就跳出循环，否则继续查找下一个k。如图2所示。 参考文章 字符串匹配的KMP算法– 阮一峰 KMP 深入讲解next数组的求解]]></content>
@@ -33,8 +45,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -46,8 +58,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -58,8 +70,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -71,8 +83,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
         <tag>剑指offer</tag>
       </tags>
@@ -85,8 +97,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -109,8 +121,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -127,19 +139,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[leetcode 第72题 Edit Distance]]></title>
-    <url>%2Fposts%2F43664%2F</url>
-    <content type="text"><![CDATA[题目要求求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。 两个字符串的编辑距离越小，说明两个字符串越相似！ DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离 如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1] 如果word1[i]和word2[j]不相等相等，则要分情况讨论 添加： 也就是在word1[i]后加一个字符x使得word1[0…i] + x和word2[0…j]相等，则dp[i][j] = dp[i][j-1] + 1 删除：也就是在word1[i]后删除第i处字符x使得word1[0…i-1] 和word2[0…j]相等，则dp[i][j] = dp[i-1][j] + 1 修改：也就是在word1[i]后修改第i处的字符使得word1[0…i] 和word2[0…j]相等，则dp[i][j] = dp[i-1][j-1] + 1 参考代码123456789101112131415161718192021222324public int minDistance(String w1, String w2) &#123; int r = w1.length(); int c = w2.length(); int[][] dp = new int[r+1][c+1]; for(int i=0;i&lt;=c;i++) dp[0][i] = i; //dp[i][0]就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空 for(int i=1;i&lt;=r;i++)&#123; dp[i][0] = i; //dp[0][j]就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2 for(int j=1;j&lt;=c;j++)&#123; if(w1.charAt(i-1)==w2.charAt(j-1)) dp[i][j] = dp[i-1][j-1]; else dp[i][j] = Math.min(dp[i-1][j-1],Math.min(dp[i-1][j], dp[i][j-1])) + 1; &#125; &#125; return dp[r][c]; &#125; 基于上述代码的一种改进1234567891011121314151617181920212223242526public int minDistance(String w1, String w2) &#123; int r = w1.length(); int c = w2.length(); int[] dp = new int[c+1]; for(int i=0;i&lt;=c;i++) dp[i] = i; for(int i=1;i&lt;=r;i++)&#123; int[] temp = new int[c+1]; temp[0] = i; for(int j=1;j&lt;=c;j++)&#123; if(w1.charAt(i-1)==w2.charAt(j-1)) temp[j] = dp[j-1]; else temp[j] = Math.min(temp[j-1],Math.min(dp[j-1], dp[j])) + 1; // temp[j-1] 添加 dp[j-1] 修改 dp[j] 删除 &#125; dp = temp; &#125; return dp[c]; &#125; 参考链接 EditDistance,求两个字符串最小编辑距离，动态规划]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>Java</tag>
-        <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[leetcode 第10题 Regular Expression Matching]]></title>
     <url>%2Fposts%2F36828%2F</url>
     <content type="text"><![CDATA[题目要求 回溯法思路回溯法是一种暴力解法，把“*”的所有可能性都测试一遍看是否有满足的。从后往前匹配,用两个指针 si, pi来表明当前s和p的字符。 如果pi对应的字符是”*”，根据s[i] 和 p[j-1]是否相同，分两种情况： 如果相同，则先尝试匹配掉s的这个字符，继续尝试匹配 不管相同不相同，不匹配s的这个字符，继续尝试匹配 如果pi对应的字符不是是”*”，直接看s[i]和p[j]是否相等 边界条件 如果si和pi都小于0，说明匹配。 如果pi小于0，si大于零，说明不能匹配 参考代码123456789101112131415161718192021222324252627public boolean isMatch(String s, String p) &#123; if(s==null || p == null) return false; return isMatch(s.toCharArray(),s.length() - 1,p.toCharArray(),p.length() - 1);&#125;private boolean isMatch(char[] s,int si,char[] p,int pi)&#123; if(si &lt; 0 &amp;&amp; pi &lt; 0) return true; if(pi &lt; 0) return false; if(p[pi] == '*')&#123; if(si &gt;= 0 &amp;&amp;( p[pi - 1] == s[si] || p[pi - 1] == '.' ) &amp;&amp; isMatch(s,si-1,p,pi)) return true; return isMatch(s,si,p,pi-2); &#125; if(si &gt;= 0 &amp;&amp; (p[pi] == s[si] || p[pi] == '.' )) return isMatch(s,si-1,p,pi-1); return false;&#125; DP解法思路dp[i][j]的含义是s[0-i] 与 s[0-j]是否匹配 若s[i] == p[j] 或者p[j] == ‘ . ‘,则dp[i][j] = dp[i-1][j-1] 若p[j] == ‘ * ‘,则需要分情况讨论 s[i] != p[j-1]， 则 dp[i][j] = dp[i][j-2] –&gt;忽略掉 p[j-1] 和* s[i] == p[j-1] 或者p[j] == ‘ . ‘ dp[i][j] = dp[i-1][j] –&gt; p[j-1] 和* 匹配多次 dp[i][j] = dp[i][j-1] –&gt; p[j-1] 和*匹配一次 dp[i][j] = dp[i][j-2] –&gt; 忽略掉 p[j-1] 和* 参考代码123456789101112131415161718192021222324252627public boolean isMatch(String st, String pt) &#123; if(st==null || pt == null) return false; int m = st.length(); int n = pt.length(); char[] s = st.toCharArray(); char[] p = pt.toCharArray(); boolean[][] dp = new boolean[m+1][n+1]; //dp[i][j]的含义是s[0-i] 与 s[0-j]是否匹配 dp[0][0] = true; ////初始化第0行,除了[0][0]全为false //初始化第0列，只有X*能匹配空串，如果有*，它的真值一定和p[0][j-2]的相同（略过它之前的符号） for (int j = 1; j &lt;= n; j++) dp[0][j] = j &gt; 1 &amp;&amp; '*' == p[j - 1] &amp;&amp; dp[0][j - 2]; for(int i = 1;i &lt;= m;i++)&#123; for(int j = 1;j &lt;= n;j++)&#123; if(p[j-1] == '*') dp[i][j] = dp[i][j - 2] || (s[i - 1] == p[j - 2] || p[j - 2] == '.') &amp;&amp; dp[i - 1][j]; else dp[i][j] = (s[i - 1] == p[j - 1] || p[j - 1] == '.') &amp;&amp; dp[i - 1][j - 1]; &#125; &#125; return dp[m][n];&#125; 参考链接 《LeetBook》leetcode题解(10): Regular Expression Matching——DP解决正则匹配]]></content>
@@ -147,8 +146,21 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[leetcode 第72题 Edit Distance]]></title>
+    <url>%2Fposts%2F43664%2F</url>
+    <content type="text"><![CDATA[题目要求求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。 两个字符串的编辑距离越小，说明两个字符串越相似！ DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离 如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1] 如果word1[i]和word2[j]不相等相等，则要分情况讨论 添加： 也就是在word1[i]后加一个字符x使得word1[0…i] + x和word2[0…j]相等，则dp[i][j] = dp[i][j-1] + 1 删除：也就是在word1[i]后删除第i处字符x使得word1[0…i-1] 和word2[0…j]相等，则dp[i][j] = dp[i-1][j] + 1 修改：也就是在word1[i]后修改第i处的字符使得word1[0…i] 和word2[0…j]相等，则dp[i][j] = dp[i-1][j-1] + 1 参考代码123456789101112131415161718192021222324public int minDistance(String w1, String w2) &#123; int r = w1.length(); int c = w2.length(); int[][] dp = new int[r+1][c+1]; for(int i=0;i&lt;=c;i++) dp[0][i] = i; //dp[i][0]就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空 for(int i=1;i&lt;=r;i++)&#123; dp[i][0] = i; //dp[0][j]就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2 for(int j=1;j&lt;=c;j++)&#123; if(w1.charAt(i-1)==w2.charAt(j-1)) dp[i][j] = dp[i-1][j-1]; else dp[i][j] = Math.min(dp[i-1][j-1],Math.min(dp[i-1][j], dp[i][j-1])) + 1; &#125; &#125; return dp[r][c]; &#125; 基于上述代码的一种改进1234567891011121314151617181920212223242526public int minDistance(String w1, String w2) &#123; int r = w1.length(); int c = w2.length(); int[] dp = new int[c+1]; for(int i=0;i&lt;=c;i++) dp[i] = i; for(int i=1;i&lt;=r;i++)&#123; int[] temp = new int[c+1]; temp[0] = i; for(int j=1;j&lt;=c;j++)&#123; if(w1.charAt(i-1)==w2.charAt(j-1)) temp[j] = dp[j-1]; else temp[j] = Math.min(temp[j-1],Math.min(dp[j-1], dp[j])) + 1; // temp[j-1] 添加 dp[j-1] 修改 dp[j] 删除 &#125; dp = temp; &#125; return dp[c]; &#125; 参考链接 EditDistance,求两个字符串最小编辑距离，动态规划]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -160,8 +172,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -173,8 +185,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -199,8 +211,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -302,8 +314,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -315,8 +327,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -328,8 +340,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -341,8 +353,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -354,8 +366,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -391,8 +403,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -416,8 +428,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -429,8 +441,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -442,8 +454,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -455,8 +467,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -468,8 +480,8 @@
         <category>二叉树</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>BST</tag>
       </tags>
   </entry>
@@ -481,8 +493,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -494,8 +506,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -533,8 +545,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -546,8 +558,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -559,8 +571,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -572,8 +584,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>Java</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
