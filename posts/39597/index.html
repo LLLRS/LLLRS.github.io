@@ -145,7 +145,7 @@
 <meta property="og:site_name" content="爱生活,爱柒柒">
 <meta property="og:description" content="一致性协议之2PC2PC是 Two-Phase Commit的缩写，即两阶段提交 ，主要目的就是为了保证分布式系统数据的一致性。 二阶段提交就是讲事务的提交过程分成了两个阶段来进行处理。流程如下： 阶段一： 提交事务请求事务询问： 协调者向所有的参与者询问，是否准备好了执行事务，并开始等待各参与者的响应。 执行事务：各参与者节点执行事务操作，并将 Undo 和 Redo 信息记入事务日志中。 各参">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-25T11:23:42.799Z">
+<meta property="og:updated_time" content="2018-11-25T11:26:47.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式学习之一致性协议：2PC和3PC">
 <meta name="twitter:description" content="一致性协议之2PC2PC是 Two-Phase Commit的缩写，即两阶段提交 ，主要目的就是为了保证分布式系统数据的一致性。 二阶段提交就是讲事务的提交过程分成了两个阶段来进行处理。流程如下： 阶段一： 提交事务请求事务询问： 协调者向所有的参与者询问，是否准备好了执行事务，并开始等待各参与者的响应。 执行事务：各参与者节点执行事务操作，并将 Undo 和 Redo 信息记入事务日志中。 各参">
@@ -498,8 +498,9 @@
 <p>注意：一旦进入阶段三，可能会出现 2 种故障：</p>
 <ul>
 <li>协调者出现问题</li>
-<li>协调者和参与者之间的网络故障<br>不论出现了任一一种情况，最终都会导致参与者无法收到 doCommit 请求或者 abort 请求，针对这种情况，参与者都会在等待超时之后，继续进行事务提交。</li>
+<li>协调者和参与者之间的网络故障</li>
 </ul>
+<p>不论出现了任一一种情况，最终都会导致参与者无法收到 doCommit 请求或者 abort 请求，针对这种情况，参与者都会在等待超时之后，继续进行事务提交。</p>
 <h3 id="3PC优缺点分析"><a href="#3PC优缺点分析" class="headerlink" title="3PC优缺点分析"></a>3PC优缺点分析</h3><p><strong>优点：</strong>相比较 2PC，最大的优点是减少了参与者的阻塞范围（第一个阶段是不阻塞的），并且能够在单点故障后继续达成一致（2PC 在提交阶段会出现此问题，而 3PC 会根据协调者的状态进行回滚或者提交）。</p>
 <p><strong>缺点：</strong>如果参与者收到了 preCommit 消息后，出现了网络分区，那么参与者等待超时后，都会进行事务的提交，这必然会出现事务不一致的问题。</p>
 <hr>
