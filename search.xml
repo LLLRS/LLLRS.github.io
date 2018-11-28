@@ -3,26 +3,13 @@
   <entry>
     <title><![CDATA[分布式学习之一致性协议：ZAB]]></title>
     <url>%2Fposts%2F34624%2F</url>
-    <content type="text"><![CDATA[&#8195;&#8195; 参考链接 从Paxos到 Zookeeper——分布式一致性原理和实践]]></content>
+    <content type="text"><![CDATA[ZAB算法概述ZAB 协议全称是Zookeeper Atomic Broadcast（Zookeeper 原子广播协议）。ZAB 协议是为分布式协调服务 Zookeeper 专门设计的一种支持 崩溃恢复 和 原子广播 协议。 ZAB 协议包括两种基本的模式，分别是崩溃恢复和消息广播。 当整个服务框架在启动过程中，或是当 Leader 服务器出现网络中断、崩溃退出与重启等异常情况时， ZAB 协议就会进入恢复模式并选举产生新的 Leader 服务器。当选举产生了新的Leader 服务器同时集群中已经有过半的机器与该 Leader 服务器完成了状态同步之后，ZAB 协议就会退出恢复模式。这里的状态同步指的是数据同步，用来保证集群中存在过半的机器和Leader服务器的数据保持一致。 当集群中已经有过半的 Follower 服务器完成了和 Leader 服务器的状态同步，那么整个服务框架就可以进入消息广播模式了。当一台同样遵守 ZAB 协议的服务器启动后加入到集群中时，如果此时集群中已经存在一个 Leader 服务器在负责进行消息广播 ， 那么新加人的服务器就会自觉地进人数据恢复模式：找到 Leader 所在的服务器，并与其进行数据同步，然后一起参与到消息广播流程中去。 消息广播ZAB 协议的消息广播过程使用的是一个原子广播协议，类似一个 二阶段提交过程。对于客户端发送的写请求，全部由 Leader 接收，Leader 将请求封装成一个事务 Proposal，将其发送给所有 Follwer ，然后，根据所有 Follwer 的反馈，如果超过半数成功响应，则执行 commit 操作（先提交自己，再发送 commit 给所有 Follwer）。 在 ZAB 协议的二阶段提交过程中，移除了中断逻辑，所有的 Follower 服务器要么正常反馈 Leader 提出的事务 Proposal ,要么就抛弃Leader 服务器。同时， ZAB 协议将二阶段提交中的中断逻辑移除意味着我们可以在过半的 Follower 服务器已经反馈 Ack 之后就开始提交事务 Proposal 了，而不需要等待集群中所有的 Follower 服务器都反馈响应。这种简化了的二阶段提交模型无法处理 Leader 服务器崩溃退出而带来的数据不一致问题（单点问题），此时采用崩溃恢复模式来解决这个问题。 在整个消息广播过程中， Leader 服务器会为每个事务请求生成对应的 Proposal来进行广播，并且在广播事务 Proposal 之前， Leader 服务器会首先为这个事务 Proposal 分配一个全局单调递增的唯一事务ID (即 ZXID )。 Leader 服务器会为每一个 Follower 服务器都各自分配一个单独的队列，然后将需要广播的事务 Proposal 依次放入这些队列中去，并且根据 FIFO策略进行消息发送。每一个 Follower 服务器在接收到这个事务 Proposal 之后，都会首先将其以事务日志的形式写入到本地磁盘中去，并且在成功写入后反馈给 Leader 服务器一个 Ack 响应。当 Leader 服务器接收到超过半数 Follower 的 Ack 响应后，就会广播一个Commit 消息给所有的 Follower 服务器以通知其进行事务提交，同时 Leader 自身也会完成对事务的提交。 崩溃恢复Leader 服务器出现崩溃，或者说由于网络原因导致 Leader 服务器失去了与过半 Follower 的联系，那么就会进入崩溃恢复模式。Leader 选举算法不仅仅需要让 Leader自己知道其自身已经被选举为 Leader ,同时还需要让集群中的所有其他机器也能够快速地感知到选举产生的新的 Leader 服务器。 ZAB 协议规定了如果一个事务 Proposal 在一台机器上被处理成功，那么应该在所有的机器上都被处理成功，哪怕机器出现故障崩溃。 下面介绍两种崩溃恢复中的场景和zab协议需要保证的特性： ZAB 协议需要确保那些已经在 Leader 服务器上提交的事务最终被所有服务器都提交 假设一个事务在 Leader 服务器上被提交了，并且已经得到过半 Follower 服务器的Ack 反馈，但是在它将 Commit 消息发送给所有 Follower 机器之前， Leader 服务器挂了，针对这种情况， ZAB 协议就需要确保该事务最终能够在所有的服务器上都被提交成功，否则将出现不一致。 ZAB协议需要确保丢弃那些只在 Leader 服务器上被提出的事务 假设初始的 Leader 服务器 在提出了一个事务之后就崩溃退出了，导致集群中的其他服务器都没有收到这个事务，当该服务器恢复过来再次加入到集群中的时候 ，ZAB协议需要确保丢弃这个事务。 针对以上两点需求，zab协议需要设计的选举算法应该满足：确保提交已经被 Leader 提交的事务 Proposal，同时丢弃已经被跳过的事务 Proposal 。 如果让 Leader 选举算法能够保证新选举出来的 Leader 服务器拥有集群中所有机器最高编号（即 ZXID 最大）的事务 Proposal,那么就可以保证这个新选举出来的 Leader —定具有所有已经提交的提案。同时，如果让具有最高编号事务 Proposal 的机器来成为 Leader, 就可以省去 Leader 服务器检查 Proposal 的提交和丢弃工作的这一步操作。 综上，选举阶段必须确保选出的Leader具有最大ZXID，否则在崩溃恢复阶段没法保证数据的一致性。 选举流程： 每个Follower都向其他节点发送选自身为Leader的Vote投票请求，等待回复 Follower接受到的Vote如果比自身的大（ZXID更新）时则投票，并更新自身的Vote，否则拒绝投票 每个Follower中维护着一个投票记录表，当某个节点收到过半的投票时，结束投票并把该Follower选为Leader，投票结束 数据同步当崩溃恢复之后，需要在正式工作之前（接收客户端请求），Leader 服务器首先确认事务是否都已经被过半的 Follwer 提交了，即是否完成了数据同步。目的是为了保持数据一致。 当所有的 Follwer 服务器都成功同步之后，Leader 会将这些服务器加入到可用服务器列表中。 Leader 服务器会为每一个 Follower 服务器都准备一个队列，并将那些没有被各 Follower 服务器同步的事务以 Proposal 消息的形式逐个发送给 Follower 服务器，并在每一个 Proposal 消息后面紧接着再发送一个 Commit 消息，以表示该事务已经被提交。等到 Follower 服务器将所有其尚未同步的事务 Proposal 都从 Leader 服务器上同步过来并成功应用到本地数据库中后， Leader 服务器就会将该 Follower 服务器加入到真正的可用 Follower 列表中，并开始之后的其他流程。 下面来看 ZAB 协议是如何处理那些需要被丢弃的事务 Proposal 的。在 ZAB 协议的事务编号 ZXID 设计中， ZXID 是一个 64 位的数字，低 32 位可以看作是一个简单的单调递增的计数器，针对客户端的每一个事务请求， Leader 服务器在产生一个新的事务 Proposal 的时候，都会对该计数器进行加1操作；高 32 位代表了 Leader 周期 epoch 的编号，每当选举产生一个新的 Leader 服务器，就会从这个 Leader 服务器上取出其本地日志中最大事务 Proposal 的 ZXID ,并从该 ZXID 中解析出对应的 epoch 值，然后再对其进行加1操作，之后就会以此编号作为新的 epoch, 并将低 32 位置0来开始生成新的 ZXID 。 基于这样的策略，当一个包含了上一个 Leader 周期中尚未提交过的事务 Proposal的服务器启动加入到集群中，发现此时集群中已经存在leader，将自身以Follower 角色连接上 Leader 服务器之后， Leader 服务器会根据自己服务器上最后被提交的 Proposal来和 Follower 服务器的 Proposal进行比对，发现follower中有上一个leader周期的事务Proposal时，Leader 会要求 Follower 进行一个回退操作——回退到一个确实已经被集群中过半机器提交的最新的事务 Proposal 。 ZookeeperZooKeeper主要依赖ZAB协议来实现分布式数据一致性。基于该协议,ZooKeeper实现了一种主备模式的系统架构来保持ZooKeeper为高可用。具体如下： 使用一个单一的主进程来接收并处理客户端的所有事务请求，并采用 ZAB 的原子广播协议，将服务器数据的状态变更以事务 Proposal 的形式广播到所有的副本进程上去。 同一时刻集群中只能有一个主进程来广播服务器的变更。 保证一个全局的变更序列被顺序应用。 当前主进程出现异常情况的时候，依旧能够正常工作。 ZAB 协议的核心在于定义了会改变ZooKeeper服务器数据状态的事务请求的处理方式： 所有事务请求必须由一个全局唯一的服务器来协调处理，这样的服务器被称为 Leader服务器，而余下的其他服务器则成为 Follower 服务器。 Leader 服务器负责将一个客户端事务请求转换成一个事务proposal（提议），并将该 Proposal分发给集群中所有的Follower服务器。之后 Leader 服务器需要等待所有Follower 服务器的反馈,一旦超过半数的Follower服务器进行了正确的反馈后，那么 Leader 就会再次向所有的 Follower服务器分发Commit消息，要求其将前一个proposal进行提交。 参考链接 从Paxos到 Zookeeper——分布式一致性原理和实践 ZAB协议]]></content>
       <categories>
         <category>分布式</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
-        <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[分布式学习之一致性算法：Paxos]]></title>
-    <url>%2Fposts%2F35956%2F</url>
-    <content type="text"><![CDATA[&#8195;&#8195; 参考链接 从Paxos到 Zookeeper——分布式一致性原理和实践]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
         <tag>Java</tag>
-        <tag>算法</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -36,6 +23,19 @@
       <tags>
         <tag>算法</tag>
         <tag>Raft</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[分布式学习之一致性算法：Paxos]]></title>
+    <url>%2Fposts%2F35956%2F</url>
+    <content type="text"><![CDATA[&#8195;&#8195; 参考链接 从Paxos到 Zookeeper——分布式一致性原理和实践]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Java</tag>
+        <tag>leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -108,8 +108,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -121,8 +121,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -133,8 +133,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -146,8 +146,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
         <tag>剑指offer</tag>
       </tags>
@@ -160,8 +160,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -184,8 +184,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -209,8 +209,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -222,8 +222,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -235,8 +235,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -248,8 +248,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -274,8 +274,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -377,8 +377,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -390,8 +390,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -403,8 +403,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -416,8 +416,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -429,8 +429,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -466,8 +466,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -491,8 +491,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -504,8 +504,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -517,8 +517,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -530,8 +530,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -543,8 +543,8 @@
         <category>二叉树</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>BST</tag>
       </tags>
   </entry>
@@ -556,8 +556,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -569,8 +569,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -608,8 +608,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -621,8 +621,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -634,8 +634,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -647,8 +647,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>

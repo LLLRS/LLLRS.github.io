@@ -149,7 +149,7 @@
 <meta property="og:image" content="https://9191rs.me/posts/9940/1543284412375.png">
 <meta property="og:image" content="https://9191rs.me/posts/9940/1543284930678.png">
 <meta property="og:image" content="https://9191rs.me/posts/9940/1543285319491.png">
-<meta property="og:updated_time" content="2018-11-27T02:37:00.628Z">
+<meta property="og:updated_time" content="2018-11-28T13:11:59.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式学习之一致性算法：Raft">
 <meta name="twitter:description" content="Raft 算法概述Raft 算法是在复制状态机的背景下提出的，复制状态机通常都是基于复制日志实现的，这个日志可以理解为一个比喻，相当于一个指令。  状态机：多个节点上，从相同的初始状态开始，执行相同的一串命令，产生相同的最终状态。 复制状态机通常都是基于复制日志实现的，保证复制日志相同就是一致性算法的工作了。  Raft 是一种为了管理复制日志的一致性算法。它将一致性问题分解为多个子问题：Lead">
@@ -396,8 +396,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T20:12:00+08:00">
-                2018-11-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-27T20:12:00+08:00">
+                2018-11-27
               </time>
             
 
@@ -488,7 +488,7 @@
 <li>Follower：接受并持久化Leader同步的日志，在Leader告之日志可以提交之后，提交日志。</li>
 <li>Candidate：Leader选举过程中的临时角色。</li>
 </ul>
-<h4 id="Leader选举（Leader-election）"><a href="#Leader选举（Leader-election）" class="headerlink" title="Leader选举（Leader election）"></a>Leader选举（Leader election）</h4><p> Raft算法要求系统在任意时刻最多只有一个Leader，正常工作期间只有Leader和Followers。当所有服务器初始化的时候，都是跟随者，这个时候需要一个领导者，所有人都变成候选者，直到有人成功当选 领导者。 Raft算法角色状态转换如下：</p>
+<h3 id="Leader选举（Leader-election）"><a href="#Leader选举（Leader-election）" class="headerlink" title="Leader选举（Leader election）"></a>Leader选举（Leader election）</h3><p> Raft算法要求系统在任意时刻最多只有一个Leader，正常工作期间只有Leader和Followers。当所有服务器初始化的时候，都是跟随者，这个时候需要一个领导者，所有人都变成候选者，直到有人成功当选 领导者。 Raft算法角色状态转换如下：</p>
 <p><div align="center"><img src="/posts/9940/1543284112135.png" alt="Alt text"></div></p>
 <p>Raft算法将时间分为一个个的任期（term），每一个term的开始都是Leader选举。在成功选举Leader之后，Leader会在整个term内管理整个集群。如果Leader选举失败，该term就会因为没有Leader而结束。</p>
 <p><div align="center"><img src="/posts/9940/1543284412375.png" alt="Alt text"></div></p>
@@ -599,9 +599,9 @@
 
 		      
 
-		       <a href="/posts/35956/" rel="prev" title="分布式学习之一致性算法：Paxos">
+		       <a href="/posts/34624/" rel="prev" title="分布式学习之一致性协议：ZAB">
 
-		          <i class="fa fa-chevron-left"></i> 分布式学习之一致性算法：Paxos
+		          <i class="fa fa-chevron-left"></i> 分布式学习之一致性协议：ZAB
 				</a>
 			  
 			</div>
@@ -612,9 +612,9 @@
 
 		      
 		
-		        <a href="/posts/39597/" rel="next" title="分布式学习之一致性协议：2PC和3PC">
+		        <a href="/posts/35956/" rel="next" title="分布式学习之一致性算法：Paxos">
 		
-		         分布式学习之一致性协议：2PC和3PC <i class="fa fa-chevron-right"></i>
+		         分布式学习之一致性算法：Paxos <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -851,7 +851,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Raft-算法概述"><span class="nav-number">1.</span> <span class="nav-text">Raft 算法概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Leader选举（Leader-election）"><span class="nav-number">1.1.</span> <span class="nav-text">Leader选举（Leader election）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志复制"><span class="nav-number">2.</span> <span class="nav-text">日志复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性"><span class="nav-number">3.</span> <span class="nav-text">安全性</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Raft-算法概述"><span class="nav-number">1.</span> <span class="nav-text">Raft 算法概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leader选举（Leader-election）"><span class="nav-number">2.</span> <span class="nav-text">Leader选举（Leader election）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志复制"><span class="nav-number">3.</span> <span class="nav-text">日志复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性"><span class="nav-number">4.</span> <span class="nav-text">安全性</span></a></li></ol></div>
             
 
           </div>
