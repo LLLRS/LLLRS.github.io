@@ -124,7 +124,7 @@
 
 
 
-  <meta name="keywords" content="算法,Java,leetcode," />
+  <meta name="keywords" content="Java,算法,leetcode," />
 
 
 
@@ -137,20 +137,21 @@
 
 
 
-<meta name="description" content="&amp;#8195;&amp;#8195;   参考链接  从Paxos到 Zookeeper——分布式一致性原理和实践">
-<meta name="keywords" content="算法,Java,leetcode">
+<meta name="description" content="Paxos概述在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效">
+<meta name="keywords" content="Java,算法,leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式学习之一致性算法：Paxos">
 <meta property="og:url" content="https://9191rs.me/posts/35956/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="&amp;#8195;&amp;#8195;   参考链接  从Paxos到 Zookeeper——分布式一致性原理和实践">
+<meta property="og:description" content="Paxos概述在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://9191rs.me/1.jpg">
-<meta property="og:updated_time" content="2018-11-28T13:11:59.373Z">
+<meta property="og:image" content="https://9191rs.me/posts/35956/1543415317261.png">
+<meta property="og:image" content="https://9191rs.me/posts/35956/1543415734852.png">
+<meta property="og:updated_time" content="2018-11-28T14:51:27.788Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式学习之一致性算法：Paxos">
-<meta name="twitter:description" content="&amp;#8195;&amp;#8195;   参考链接  从Paxos到 Zookeeper——分布式一致性原理和实践">
-<meta name="twitter:image" content="https://9191rs.me/1.jpg">
+<meta name="twitter:description" content="Paxos概述在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效">
+<meta name="twitter:image" content="https://9191rs.me/posts/35956/1543415317261.png">
 
 
 
@@ -449,7 +450,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  19
+                  1,201
                 </span>
               
 
@@ -474,12 +475,46 @@
       
 
       
-        <p><br> <br><br>&#8195;&#8195;</p>
-<p><div align="center"><img src="/1.jpg" alt=" "></div></p>
+        <h3 id="Paxos概述"><a href="#Paxos概述" class="headerlink" title="Paxos概述"></a>Paxos概述</h3><p>在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效的算法之一。</p>
+<p><strong>注：这里某个数据的值并不只是狭义上的某个数，它可以是一条日志，也可以是一条命令（command）。根据应用场景不同，某个数据的值有不同的含义。</strong></p>
+<p> <strong>Paxos的三个角色</strong></p>
+<ul>
+<li><strong>Proposer：提议发起者。</strong>Proposer 可以有多个，Proposer 提出议案（value）。所谓 value，可以*是任何操作，比如“设置某个变量的值为value”。不同的 Proposer 可以提出不同的 value，例如某个Proposer 提议“将变量 X 设置为 1”，另一个 Proposer 提议“将变量 X 设置为 2”，但对同一轮 Paxos过程，最多只有一个 value 被批准。</li>
+<li><strong>Acceptor：提议接受者。</strong>Acceptor 有 N 个，Proposer 提出的 value 必须获得超过半数(N/2+1)的 Acceptor批准后才能通过。Acceptor 之间完全对等独立。</li>
+<li><strong>Learner：提议学习者。</strong>上面提到只要超过半数accpetor通过即可获得通过，那么learner角色的目的就是把通过的确定性取值同步给其他未确定的Acceptor。</li>
+</ul>
+<p><div align="center"><img src="/posts/35956/1543415317261.png" alt="Alt text"></div></p>
+<p>Paxos算法<strong>原理推导过程</strong>可以参考 <a href="http://www.cnblogs.com/linbingdong/p/6253479" target="_blank" rel="noopener">这篇文章</a>。</p>
+<h3 id="Paxos算法的流程"><a href="#Paxos算法的流程" class="headerlink" title="Paxos算法的流程"></a>Paxos算法的流程</h3><p>Paxos算法分为两个阶段。具体如下：</p>
+<p><strong>阶段一：</strong></p>
+<ul>
+<li>Proposer选择一个提案编号N，然后向半数以上的Acceptor发送编号为N的Prepare请求。</li>
+<li>如果一个Acceptor收到一个编号为N的Prepare请求，如果小于它已经响应过的请求，则拒绝，不回应或回复error。且N大于该Acceptor已经响应过的所有Prepare请求的编号，那么它就会将它已经接受过的编号最大的提案（如果有的话，如果还没有的accept提案的话返回{pok，null，null}）作为响应反馈给Proposer，<strong>同时该Acceptor承诺不再接受任何编号小于N的提案。</strong></li>
+</ul>
+<p><strong>阶段二：</strong></p>
+<ul>
+<li>如果Proposer收到半数以上Acceptor对其发出的编号为N的Prepare请求的响应，那么它就会发送一个针对[N,V]提案的Accept请求给半数以上的Acceptor。注意：V就是收到的响应中编号最大的提案的value，如果响应中不包含任何提案，那么V就由Proposer自己决定。</li>
+<li>如果Acceptor收到一个针对编号为N的提案的Accept请求，只要该Acceptor没有对编号大于N的Prepare请求做出过响应，它就接受该提案。如果N小于Acceptor以及响应的prepare请求，则拒绝，不回应或回复error（当proposer没有收到过半的回应，那么他会重新进入第一阶段，递增提案号，重新提出prepare请求）。</li>
+</ul>
+<p><strong>上述过程中的关键点：</strong></p>
+<ul>
+<li><strong>阶段一Accpetor的处理流程</strong></li>
+</ul>
+<p>假设Acceptor本地记录的编号为T。如果N小于T，则不响应或者响应error。如果N大于等于T，则会更新本地记录的编号为N，并且返回已经存在的值或者返回null。</p>
+<ul>
+<li><strong>阶段二Proposer的处理流程</strong></li>
+</ul>
+<p>如果Proposer未超过半数Accpetor响应，提议失败。超过半数的Accpetor响应的值<strong>都为空</strong>才提交自身要写入的值，否则选择非空值里版本号最大的值提交，最大的区别在于是提交的值是自身的还是使用以前提交的。</p>
+<h3 id="Paxos算法的活锁问题（保证算法活性）"><a href="#Paxos算法的活锁问题（保证算法活性）" class="headerlink" title="Paxos算法的活锁问题（保证算法活性）"></a>Paxos算法的活锁问题（保证算法活性）</h3><p>Paxos算法运行过程中，可能还会存在一种极端情况，当有两个proposer依次提出一系列编号递增的议案，那么会陷入死循环，无法完成第二阶段，也就是无法选定一个提案。如下图：</p>
+<p><div align="center"><img src="/posts/35956/1543415734852.png" alt="Alt text"></div></p>
+<p>通过选取主Proposer，就可以保证Paxos算法的活性。选择一个主Proposer，并规定只有主Proposer才能提出议案。这样一来，只要主Proposer和过半的Acceptor能够正常进行网络通信，那么肯定会有一个提案被批准（第二阶段的accept），则可以解决死循环导致的活锁问题。</p>
 <hr>
 <p>参考链接</p>
 <ul>
 <li><a href="http://item.jd.com/11622772.html" target="_blank" rel="noopener">从Paxos到 Zookeeper——分布式一致性原理和实践  </a></li>
+<li><a href="http://www.cnblogs.com/linbingdong/p/6253479.html" target="_blank" rel="noopener">Paxos算法原理与推导</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">维基百科–Paxos算法</a></li>
+<li><a href="https://blog.csdn.net/qq_35440678/article/details/78080431" target="_blank" rel="noopener">paxos协议的精髓</a></li>
 </ul>
 
       
@@ -532,9 +567,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
-          
             <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
           
             <a href="/tags/leetcode/" rel="tag"># leetcode</a>
           
@@ -651,8 +686,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -784,6 +828,22 @@ show_date_time();
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Paxos概述"><span class="nav-number">1.</span> <span class="nav-text">Paxos概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Paxos算法的流程"><span class="nav-number">2.</span> <span class="nav-text">Paxos算法的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Paxos算法的活锁问题（保证算法活性）"><span class="nav-number">3.</span> <span class="nav-text">Paxos算法的活锁问题（保证算法活性）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

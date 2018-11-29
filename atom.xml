@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://9191rs.me/"/>
-  <updated>2018-11-28T13:08:37.852Z</updated>
+  <updated>2018-11-28T13:25:09.892Z</updated>
   <id>https://9191rs.me/</id>
   
   <author>
@@ -17,13 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>分布式学习之一致性Hash算法</title>
+    <link href="https://9191rs.me/posts/13533/"/>
+    <id>https://9191rs.me/posts/13533/</id>
+    <published>2018-11-30T08:59:44.000Z</published>
+    <updated>2018-11-28T13:25:09.892Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="算法背景"><a href="#算法背景" class="headerlink" title="算法背景"></a>算法背景</h3><p>在分布式系统中，常常需要使用缓存，而且通常是集群，访问缓存和添加缓存都需要一个 hash 算法来寻找到合适的 Cache 节点。 如何将数据均匀的分散到各个节点中，并且尽量的在加减节点时能使受影响的数据最少。</p><p>一致性哈希算法在1997年由麻省理工学院的Karger等人在解决分布式Cache中提出的，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。</p><h3 id="余数hash"><a href="#余数hash" class="headerlink" title="余数hash"></a>余数hash</h3><p>可以将传入的 Key 按照 index = hash(key) % N 这样来计算出需要存放的节点。其中 hash 函数是一个将字符串转换为正整数的哈希映射方法，N 就是节点的数量。这样可以满足数据的均匀分配，但是这个算法的容错性和扩展性都较差。比如增加或删除了一个节点时，所有的 Key 都需要重新计算，显然这样成本较高，为此需要一个算法满足分布均匀同时也要有良好的容错性和拓展性。</p><p>如果原来有HashCode为0~19的20个数据，那么：<br><img src="/posts/13533/1.jpg" alt=""></p><p>如果扩容到4台，加粗标红的表示命中：<br><img src="/posts/13533/2.jpg" alt=""></p><p>如果扩容到20+的台数，只有前三个HashCode对应的Key是命中的，也就是15%。当然这只是个简单例子，现实情况肯定比这个复杂得多，不过足以说明，使用余数Hash的路由算法，在扩容的时候会造成大量的数据无法正确命中（其实不仅仅是无法命中，那些大量的无法命中的数据还在原缓存中在被移除前占据着内存）。这个结果显然是无法接受的，在网站业务中，大部分的业务数据度操作请求上事实上是通过缓存获取的，只有少量读操作会访问数据库，因此数据库的负载能力是以有缓存为前提而设计的。当大部分被缓存了的数据因为服务器扩容而不能正确读取时，这些数据访问的压力就落在了数据库的身上，这将大大超过数据库的负载能力，严重的可能会导致数据库宕机。</p><h3 id="一致性hash算法"><a href="#一致性hash算法" class="headerlink" title="一致性hash算法"></a>一致性hash算法</h3><p>一致性Hash算法也是使用取模的方法，只是，刚才描述的取模法是对服务器的数量进行取模，而一致性Hash算法是对2^32取模，什么意思呢？简单来说，一致性Hash算法将整个哈希值空间组织成一个虚拟的圆环，如假设某哈希函数H的值空间为0-2^32-1（即哈希值是一个32位无符号整形），整个哈希环如下：<br><img src="/posts/13533/3.jpg" alt=""></p><p>整个空间按<strong>顺时针</strong>方向组织，圆环的正上方的点代表0，0点右侧的第一个点代表1，以此类推，2、3、4、5、6……直到2^32-1，也就是说0点左侧的第一个点代表2^32-1， 0和2^32-1在零点中方向重合，我们把这个由2^32个点组成的圆环称为Hash环。</p><p>下一步将各个服务器使用Hash进行一个哈希，具体可以选择<strong>服务器的IP或主机名</strong>作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置，这里假设将上文中四台服务器使用IP地址哈希后在环空间的位置如下：<br><img src="/posts/13533/4.jpg" alt=""><br>接下来使用如下算法定位数据访问到相应服务器：将数据key使用相同的函数Hash计算出哈希值，并确定此数据在环上的位置，从此位置沿环顺时针“行走”，第一台遇到的服务器就是其应该定位到的服务器！</p><p>例如我们有Object A、Object B、Object C、Object D四个数据对象，经过哈希计算后，在环空间上的位置如下：<br><img src="/posts/13533/5.jpg" alt=""></p><p>根据一致性Hash算法，数据A会被定为到Node A上，B被定为到Node B上，C被定为到Node C上，D被定为到Node D上。</p><h3 id="一致性hash算法深入分析"><a href="#一致性hash算法深入分析" class="headerlink" title="一致性hash算法深入分析"></a>一致性hash算法深入分析</h3><h4 id="一致性Hash算法的容错性和可扩展性"><a href="#一致性Hash算法的容错性和可扩展性" class="headerlink" title="一致性Hash算法的容错性和可扩展性"></a>一致性Hash算法的容错性和可扩展性</h4><p>现假设Node C不幸宕机，可以看到此时对象A、B、D不会受到影响，只有C对象被重定位到Node D。一般的，在一致性Hash算法中，如果一台服务器不可用，则受影响的数据仅仅是此服务器到其环空间中前一台服务器（即沿着逆时针方向行走遇到的第一台服务器）之间数据，其它不会受到影响，如下所示：<br><img src="/posts/13533/6.jpg" alt=""></p><p>下面考虑另外一种情况，如果在系统中增加一台服务器Node X，如下图所示：<br><img src="/posts/13533/7.jpg" alt=""></p><p>此时对象Object A、B、D不受影响，只有对象C需要重定位到新的Node X ！一般的，在一致性Hash算法中，如果增加一台服务器，则受影响的数据仅仅是新服务器到其环空间中前一台服务器（即沿着逆时针方向行走遇到的第一台服务器）之间数据，其它数据也不会受到影响。</p><p><strong>综上所述，一致性Hash算法对于节点的增减都只需重定位环空间中的一小部分数据，具有较好的容错性和可扩展性。</strong></p><h4 id="Hash环的数据倾斜问题"><a href="#Hash环的数据倾斜问题" class="headerlink" title="Hash环的数据倾斜问题"></a>Hash环的数据倾斜问题</h4><p>一致性Hash算法在服务节点太少时，容易因为节点分部不均匀而造成数据倾斜（被缓存的对象大部分集中缓存在某一台服务器上）问题，例如系统中只有两台服务器，其环分布如下： </p><p><img src="/posts/13533/8.jpg" alt=""></p><p>此时必然造成大量数据集中到Node A上，而只有极少量会定位到Node B上。为了解决这种数据倾斜问题，一致性Hash算法引入<strong>了虚拟节点机制</strong>，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为<strong>虚拟节点</strong>。具体做法可以在服务器IP或主机名的后面增加编号来实现。</p><p>例如上面的情况，可以为每台服务器计算三个虚拟节点，于是可以分别计算 “Node A#1”、“Node A#2”、“Node A#3”、“Node B#1”、“Node B#2”、“Node B#3”的哈希值，于是形成六个虚拟节点： </p><p><img src="/posts/13533/9.jpg" alt=""><br>同时数据定位算法不变，<strong>只是多了一步虚拟节点到实际节点的映射</strong>，例如定位到“Node A#1”、“Node A#2”、“Node A#3”三个虚拟节点的数据均定位到Node A上。这样就解决了服务节点少时数据倾斜的问题。在实际应用中，通常将虚拟节点数设置为32甚至更大，因此即使很少的服务节点也能做到相对均匀的数据分布。</p><hr><p>参考链接：</p><ul><li><a href="https://blog.csdn.net/bntX2jSQfEHy7/article/details/79549368" target="_blank" rel="noopener">什么是一致性Hash算法</a></li><li><a href="https://www.cnblogs.com/lpfuture/p/5796398.html" target="_blank" rel="noopener">一致性哈希算法原理</a></li><li><a href="https://www.cnblogs.com/xrq730/p/5186728.html" target="_blank" rel="noopener">对一致性Hash算法，Java代码实现的深入研究</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;算法背景&quot;&gt;&lt;a href=&quot;#算法背景&quot; class=&quot;headerlink&quot; title=&quot;算法背景&quot;&gt;&lt;/a&gt;算法背景&lt;/h3&gt;&lt;p&gt;在分布式系统中，常常需要使用缓存，而且通常是集群，访问缓存和添加缓存都需要一个 hash 算法来寻找到合适的 Cache 节
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>分布式学习之一致性协议：ZAB</title>
     <link href="https://9191rs.me/posts/34624/"/>
     <id>https://9191rs.me/posts/34624/</id>
     <published>2018-11-29T12:12:42.000Z</published>
-    <updated>2018-11-28T13:08:37.852Z</updated>
+    <updated>2018-11-28T13:16:19.331Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="ZAB算法概述"><a href="#ZAB算法概述" class="headerlink" title="ZAB算法概述"></a>ZAB算法概述</h3><p>ZAB 协议全称是Zookeeper Atomic Broadcast（Zookeeper 原子广播协议）。ZAB 协议是为分布式协调服务 Zookeeper 专门设计的一种支持 <strong>崩溃恢复</strong> 和 <strong>原子广播</strong> 协议。</p><p>ZAB 协议包括两种基本的模式，分别是<strong>崩溃恢复</strong>和<strong>消息广播</strong>。</p><ul><li>当整个服务框架在启动过程中，或是当 Leader 服务器出现网络中断、崩溃退出与重启等异常情况时， ZAB 协议就会进入恢复模式并选举产生新的 Leader 服务器。当选举产生了新的Leader 服务器同时集群中已经有过半的机器与该 Leader 服务器完成了状态同步之后，ZAB 协议就会退出恢复模式。<strong>这里的状态同步指的是数据同步，用来保证集群中存在过半的机器和Leader服务器的数据保持一致。</strong></li><li>当集群中已经有过半的 Follower 服务器完成了和 Leader 服务器的状态同步，那么整个服务框架就可以进入消息广播模式了。当一台同样遵守 ZAB 协议的服务器启动后加入到集群中时，如果此时集群中已经存在一个 Leader 服务器在负责进行消息广播 ， 那么新加人的服务器就会自觉地进人数据恢复模式：找到 Leader 所在的服务器，并与其进行数据同步，然后一起参与到消息广播流程中去。</li></ul><h3 id="消息广播"><a href="#消息广播" class="headerlink" title="消息广播"></a>消息广播</h3><p>ZAB 协议的消息广播过程使用的是一个原子广播协议，类似一个 二阶段提交过程。对于客户端发送的写请求，全部由 Leader 接收，Leader 将请求封装成一个事务 Proposal，将其发送给所有 Follwer ，然后，根据所有 Follwer 的反馈，如果超过半数成功响应，则执行 commit 操作（先提交自己，再发送 commit 给所有 Follwer）。</p><p><div align="center"><img src="/posts/34624/1543392456472.png" alt="Alt text"></div></p><p>在 ZAB 协议的二阶段提交过程中，移除了中断逻辑，所有的 Follower 服务器要么正常反馈 Leader 提出的事务 Proposal ,要么就抛弃Leader 服务器。同时， ZAB 协议将二阶段提交中的中断逻辑移除意味着我们可以在过半的 Follower 服务器已经反馈 Ack 之后就开始提交事务 Proposal 了，而不需要等待集群中所有的 Follower 服务器都反馈响应。这种简化了的二阶段提交模型<strong>无法处理</strong> Leader 服务器崩溃退出而带来的数据不一致问题<strong>（单点问题）</strong>，此时采用崩溃恢复模式来解决这个问题。</p><p>在整个消息广播过程中， Leader 服务器会为每个事务请求生成对应的 Proposal来进行广播，并且在广播事务 Proposal 之前， Leader 服务器会首先为这个事务 Proposal 分配一个全局单调递增的唯一事务ID (即 ZXID )。</p><p>Leader 服务器会为每一个 Follower 服务器都各自分配一个单独的队列，然后将需要广播的事务 Proposal 依次放入这些队列中去，并且根据 FIFO策略进行消息发送。每一个 Follower 服务器在接收到这个事务 Proposal 之后，都会首先将其以事务日志的形式写入到本地磁盘中去，并且在成功写入后反馈给 Leader 服务器一个 Ack 响应。当 Leader 服务器接收到超过半数 Follower 的 Ack 响应后，就会广播一个Commit 消息给所有的 Follower 服务器以通知其进行事务提交，同时 Leader 自身也会完成对事务的提交。</p><h3 id="崩溃恢复"><a href="#崩溃恢复" class="headerlink" title="崩溃恢复"></a>崩溃恢复</h3><p>Leader 服务器出现崩溃，或者说由于网络原因导致 Leader 服务器失去了与过半 Follower 的联系，那么就会进入崩溃恢复模式。Leader 选举算法不仅仅需要让 Leader自己知道其自身已经被选举为 Leader ,同时还需要让集群中的所有其他机器也能够快速地感知到选举产生的新的 Leader 服务器。</p><p>ZAB 协议规定了如果一个事务 Proposal 在一台机器上被处理成功，那么应该在所有的机器上都被处理成功，哪怕机器出现故障崩溃。</p><p>下面介绍两种崩溃恢复中的场景和zab协议需要保证的特性：</p><ul><li><strong>ZAB 协议需要确保那些已经在 Leader 服务器上提交的事务最终被所有服务器都提交</strong></li></ul><p>假设一个事务在 Leader 服务器上被提交了，并且已经得到过半 Follower 服务器的Ack 反馈，但是在它将 Commit 消息发送给所有 Follower 机器之前， Leader 服务器挂了，针对这种情况， ZAB 协议就需要确保该事务最终能够在所有的服务器上都被提交成功，否则将出现不一致。</p><ul><li><strong>ZAB协议需要确保丢弃那些只在 Leader 服务器上被提出的事务</strong></li></ul><p>假设初始的 Leader 服务器 在提出了一个事务之后就崩溃退出了，导致集群中的其他服务器都没有收到这个事务，当该服务器恢复过来再次加入到集群中的时候 ，ZAB协议需要确保丢弃这个事务。</p><p>针对以上两点需求，zab协议需要设计的选举算法应该满足：<strong>确保提交已经被 Leader 提交的事务 Proposal，同时丢弃已经被跳过的事务 Proposal 。</strong> 如果让 Leader 选举算法能够保证新选举出来的 Leader 服务器拥有集群中所有机器最高编号（即 ZXID 最大）的事务 Proposal,那么就可以保证这个新选举出来的 Leader —定具有所有已经提交的提案。同时，如果让具有最高编号事务 Proposal 的机器来成为 Leader, 就可以省去 Leader 服务器检查 Proposal 的提交和丢弃工作的这一步操作。</p><p>综上，选举阶段必须确保选出的Leader具有最大ZXID，否则在崩溃恢复阶段没法保证数据的一致性。</p><p><strong>选举流程：</strong></p><ul><li>每个Follower都向其他节点发送选自身为Leader的Vote投票请求，等待回复</li><li>Follower接受到的Vote如果比自身的大（ZXID更新）时则投票，并更新自身的Vote，否则拒绝投票</li><li>每个Follower中维护着一个投票记录表，当某个节点收到过半的投票时，结束投票并把该Follower选为Leader，投票结束</li></ul><h3 id="数据同步"><a href="#数据同步" class="headerlink" title="　数据同步"></a>　数据同步</h3><p>当崩溃恢复之后，需要在正式工作之前（接收客户端请求），Leader 服务器首先确认事务是否都已经被过半的 Follwer 提交了，即是否完成了数据同步。目的是为了保持数据一致。 当所有的 Follwer 服务器都成功同步之后，Leader 会将这些服务器加入到可用服务器列表中。</p><p>Leader 服务器会为每一个 Follower 服务器都准备一个队列，并将那些没有被各 Follower 服务器同步的事务以 Proposal 消息的形式逐个发送给 Follower 服务器，并在每一个 Proposal 消息后面紧接着再发送一个 Commit 消息，以表示该事务已经被提交。等到 Follower 服务器将所有其尚未同步的事务 Proposal 都从 Leader 服务器上同步过来并成功应用到本地数据库中后， Leader 服务器就会将该 Follower 服务器加入到真正的可用 Follower 列表中，并开始之后的其他流程。</p><p>下面来看 ZAB 协议是如何处理那些需要被丢弃的事务 Proposal 的。在 ZAB 协议的事务编号 ZXID 设计中， ZXID 是一个 64 位的数字，低 32 位可以看作是一个简单的单调递增的计数器，针对客户端的每一个事务请求， Leader 服务器在产生一个新的事务 Proposal 的时候，都会对该计数器进行加1操作；高 32 位代表了 Leader 周期 epoch 的编号，每当选举产生一个新的 Leader 服务器，就会从这个 Leader 服务器上取出其本地日志中最大事务 Proposal 的 ZXID ,并从该 ZXID 中解析出对应的 epoch 值，然后再对其进行加1操作，之后就会以此编号作为新的 epoch, 并将低 32 位置0来开始生成新的 ZXID 。</p><p><div align="center"><img src="/posts/34624/1543409008791.png" alt="Alt text"></div></p><p>基于这样的策略，当一个包含了上一个 Leader 周期中尚未提交过的事务 Proposal的服务器启动加入到集群中，发现此时集群中已经存在leader，将自身以Follower 角色连接上 Leader 服务器之后， Leader 服务器会根据自己服务器上最后被提交的 Proposal来和 Follower 服务器的 Proposal进行比对，发现follower中有上一个leader周期的事务Proposal时，Leader 会要求 Follower 进行一个回退操作——回退到一个确实已经被集群中过半机器提交的最新的事务 Proposal 。</p><h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><p>ZooKeeper主要依赖ZAB协议来实现分布式数据一致性。基于该协议,ZooKeeper实现了一种主备模式的系统架构来保持ZooKeeper为高可用。具体如下：</p><ul><li>使用一个单一的主进程来接收并处理客户端的所有事务请求，并采用 ZAB 的原子广播协议，将服务器数据的状态变更以事务 Proposal 的形式广播到所有的副本进程上去。</li><li>同一时刻集群中只能有一个主进程来广播服务器的变更。</li><li>保证一个全局的变更序列被顺序应用。</li><li>当前主进程出现异常情况的时候，依旧能够正常工作。</li></ul><p>ZAB 协议的核心在于定义了会改变ZooKeeper服务器数据状态的事务请求的处理方式：</p><blockquote><p><strong>所有事务请求必须由一个全局唯一的服务器来协调处理，这样的服务器被称为 Leader服务器，而余下的其他服务器则成为 Follower 服务器。 Leader 服务器负责将一个客户端事务请求转换成一个事务proposal（提议），并将该 Proposal分发给集群中所有的Follower服务器。之后 Leader 服务器需要等待所有Follower 服务器的反馈,一旦超过半数的Follower服务器进行了正确的反馈后，那么 Leader 就会再次向所有的 Follower服务器分发Commit消息，要求其将前一个proposal进行提交。</strong></p></blockquote><hr><p>参考链接</p><ul><li><a href="http://item.jd.com/11622772.html" target="_blank" rel="noopener">从Paxos到 Zookeeper——分布式一致性原理和实践  </a></li><li><a href="https://blog.csdn.net/wangyangzhizhou/article/details/52698555" target="_blank" rel="noopener">ZAB协议</a><div align="center"></div></li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="ZAB算法概述"><a href="#ZAB算法概述" class="headerlink" title="ZAB算法概述"></a>ZAB算法概述</h3><p>ZAB 协议全称是Zookeeper Atomic Broadcast（Zookeeper 原子广播协议）。ZAB 协议是为分布式协调服务 Zookeeper 专门设计的一种支持 <strong>崩溃恢复</strong> 和 <strong>原子广播</strong> 协议。</p><p>ZAB 协议包括两种基本的模式，分别是<strong>崩溃恢复</strong>和<strong>消息广播</strong>。</p><ul><li>当整个服务框架在启动过程中，或是当 Leader 服务器出现网络中断、崩溃退出与重启等异常情况时， ZAB 协议就会进入恢复模式并选举产生新的 Leader 服务器。当选举产生了新的Leader 服务器同时集群中已经有过半的机器与该 Leader 服务器完成了状态同步之后，ZAB 协议就会退出恢复模式。<strong>这里的状态同步指的是数据同步，用来保证集群中存在过半的机器和Leader服务器的数据保持一致。</strong></li><li>当集群中已经有过半的 Follower 服务器完成了和 Leader 服务器的状态同步，那么整个服务框架就可以进入消息广播模式了。当一台同样遵守 ZAB 协议的服务器启动后加入到集群中时，如果此时集群中已经存在一个 Leader 服务器在负责进行消息广播 ， 那么新加人的服务器就会自觉地进人数据恢复模式：找到 Leader 所在的服务器，并与其进行数据同步，然后一起参与到消息广播流程中去。</li></ul><h3 id="消息广播"><a href="#消息广播" class="headerlink" title="消息广播"></a>消息广播</h3><p>ZAB 协议的消息广播过程使用的是一个原子广播协议，类似一个 二阶段提交过程。对于客户端发送的写请求，全部由 Leader 接收，Leader 将请求封装成一个事务 Proposal，将其发送给所有 Follwer ，然后，根据所有 Follwer 的反馈，如果超过半数成功响应，则执行 commit 操作（先提交自己，再发送 commit 给所有 Follwer）。</p><p><div align="center"><img src="/posts/34624/1543392456472.png" alt="Alt text"></div></p><p>在 ZAB 协议的二阶段提交过程中，移除了中断逻辑，所有的 Follower 服务器要么正常反馈 Leader 提出的事务 Proposal ,要么就抛弃Leader 服务器。同时， ZAB 协议将二阶段提交中的中断逻辑移除意味着我们可以在过半的 Follower 服务器已经反馈 Ack 之后就开始提交事务 Proposal 了，而不需要等待集群中所有的 Follower 服务器都反馈响应。这种简化了的二阶段提交模型<strong>无法处理</strong> Leader 服务器崩溃退出而带来的数据不一致问题<strong>（单点问题）</strong>，此时采用崩溃恢复模式来解决这个问题。</p><p>在整个消息广播过程中， Leader 服务器会为每个事务请求生成对应的 Proposal来进行广播，并且在广播事务 Proposal 之前， Leader 服务器会首先为这个事务 Proposal 分配一个全局单调递增的唯一事务ID (即 ZXID )。</p><p>Leader 服务器会为每一个 Follower 服务器都各自分配一个单独的队列，然后将需要广播的事务 Proposal 依次放入这些队列中去，并且根据 FIFO策略进行消息发送。每一个 Follower 服务器在接收到这个事务 Proposal 之后，都会首先将其以事务日志的形式写入到本地磁盘中去，并且在成功写入后反馈给 Leader 服务器一个 Ack 响应。当 Leader 服务器接收到超过半数 Follower 的 Ack 响应后，就会广播一个Commit 消息给所有的 Follower 服务器以通知其进行事务提交，同时 Leader 自身也会完成对事务的提交。</p><h3 id="崩溃恢复"><a href="#崩溃恢复" class="headerlink" title="崩溃恢复"></a>崩溃恢复</h3><p>Leader 服务器出现崩溃，或者说由于网络原因导致 Leader 服务器失去了与过半 Follower 的联系，那么就会进入崩溃恢复模式。Leader 选举算法不仅仅需要让 Leader自己知道其自身已经被选举为 Leader ,同时还需要让集群中的所有其他机器也能够快速地感知到选举产生的新的 Leader 服务器。</p><p>ZAB 协议规定了如果一个事务 Proposal 在一台机器上被处理成功，那么应该在所有的机器上都被处理成功，哪怕机器出现故障崩溃。</p><p>下面介绍两种崩溃恢复中的场景和zab协议需要保证的特性：</p><ul><li><strong>ZAB 协议需要确保那些已经在 Leader 服务器上提交的事务最终被所有服务器都提交</strong></li></ul><p>假设一个事务在 Leader 服务器上被提交了，并且已经得到过半 Follower 服务器的Ack 反馈，但是在它将 Commit 消息发送给所有 Follower 机器之前， Leader 服务器挂了，针对这种情况， ZAB 协议就需要确保该事务最终能够在所有的服务器上都被提交成功，否则将出现不一致。</p><ul><li><strong>ZAB协议需要确保丢弃那些只在 Leader 服务器上被提出的事务</strong></li></ul><p>假设初始的 Leader 服务器 在提出了一个事务之后就崩溃退出了，导致集群中的其他服务器都没有收到这个事务，当该服务器恢复过来再次加入到集群中的时候 ，ZAB协议需要确保丢弃这个事务。</p><p>针对以上两点需求，zab协议需要设计的选举算法应该满足：<strong>确保提交已经被 Leader 提交的事务 Proposal，同时丢弃已经被跳过的事务 Proposal 。</strong> 如果让 Leader 选举算法能够保证新选举出来的 Leader 服务器拥有集群中所有机器最高编号（即 ZXID 最大）的事务 Proposal,那么就可以保证这个新选举出来的 Leader —定具有所有已经提交的提案。同时，如果让具有最高编号事务 Proposal 的机器来成为 Leader, 就可以省去 Leader 服务器检查 Proposal 的提交和丢弃工作的这一步操作。</p><p>综上，选举阶段必须确保选出的Leader具有最大ZXID，否则在崩溃恢复阶段没法保证数据的一致性。</p><p><strong>选举流程：</strong></p><ul><li>每个Follower都向其他节点发送选自身为Leader的Vote投票请求，等待回复</li><li>Follower接受到的Vote如果比自身的大（ZXID更新）时则投票，并更新自身的Vote，否则拒绝投票</li><li>每个Follower中维护着一个投票记录表，当某个节点收到过半的投票时，结束投票并把该Follower选为Leader，投票结束</li></ul><h3 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h3><p>当崩溃恢复之后，需要在正式工作之前（接收客户端请求），Leader 服务器首先确认事务是否都已经被过半的 Follwer 提交了，即是否完成了数据同步。目的是为了保持数据一致。 当所有的 Follwer 服务器都成功同步之后，Leader 会将这些服务器加入到可用服务器列表中。</p><p>Leader 服务器会为每一个 Follower 服务器都准备一个队列，并将那些没有被各 Follower 服务器同步的事务以 Proposal 消息的形式逐个发送给 Follower 服务器，并在每一个 Proposal 消息后面紧接着再发送一个 Commit 消息，以表示该事务已经被提交。等到 Follower 服务器将所有其尚未同步的事务 Proposal 都从 Leader 服务器上同步过来并成功应用到本地数据库中后， Leader 服务器就会将该 Follower 服务器加入到真正的可用 Follower 列表中，并开始之后的其他流程。</p><p>下面来看 ZAB 协议是如何处理那些需要被丢弃的事务 Proposal 的。在 ZAB 协议的事务编号 ZXID 设计中， ZXID 是一个 64 位的数字，低 32 位可以看作是一个简单的单调递增的计数器，针对客户端的每一个事务请求， Leader 服务器在产生一个新的事务 Proposal 的时候，都会对该计数器进行加1操作；高 32 位代表了 Leader 周期 epoch 的编号，每当选举产生一个新的 Leader 服务器，就会从这个 Leader 服务器上取出其本地日志中最大事务 Proposal 的 ZXID ,并从该 ZXID 中解析出对应的 epoch 值，然后再对其进行加1操作，之后就会以此编号作为新的 epoch, 并将低 32 位置0来开始生成新的 ZXID 。</p><p><div align="center"><img src="/posts/34624/1543409008791.png" alt="Alt text"></div></p><p>基于这样的策略，当一个包含了上一个 Leader 周期中尚未提交过的事务 Proposal的服务器启动加入到集群中，发现此时集群中已经存在leader，将自身以Follower 角色连接上 Leader 服务器之后， Leader 服务器会根据自己服务器上最后被提交的 Proposal来和 Follower 服务器的 Proposal进行比对，发现follower中有上一个leader周期的事务Proposal时，Leader 会要求 Follower 进行一个回退操作——回退到一个确实已经被集群中过半机器提交的最新的事务 Proposal 。</p><h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><p>ZooKeeper主要依赖ZAB协议来实现分布式数据一致性。基于该协议,ZooKeeper实现了一种主备模式的系统架构来保持ZooKeeper为高可用。具体如下：</p><ul><li>使用一个单一的主进程来接收并处理客户端的所有事务请求，并采用 ZAB 的原子广播协议，将服务器数据的状态变更以事务 Proposal 的形式广播到所有的副本进程上去。</li><li>同一时刻集群中只能有一个主进程来广播服务器的变更。</li><li>保证一个全局的变更序列被顺序应用。</li><li>当前主进程出现异常情况的时候，依旧能够正常工作。</li></ul><p>ZAB 协议的核心在于定义了会改变ZooKeeper服务器数据状态的事务请求的处理方式：</p><blockquote><p><strong>所有事务请求必须由一个全局唯一的服务器来协调处理，这样的服务器被称为 Leader服务器，而余下的其他服务器则成为 Follower 服务器。 Leader 服务器负责将一个客户端事务请求转换成一个事务proposal（提议），并将该 Proposal分发给集群中所有的Follower服务器。之后 Leader 服务器需要等待所有Follower 服务器的反馈,一旦超过半数的Follower服务器进行了正确的反馈后，那么 Leader 就会再次向所有的 Follower服务器分发Commit消息，要求其将前一个proposal进行提交。</strong></p></blockquote><hr><p>参考链接</p><ul><li><a href="http://item.jd.com/11622772.html" target="_blank" rel="noopener">从Paxos到 Zookeeper——分布式一致性原理和实践  </a></li><li><a href="https://blog.csdn.net/wangyangzhizhou/article/details/52698555" target="_blank" rel="noopener">ZAB协议</a><div align="center"></div></li></ul>]]></content>
     
     <summary type="html">
     
@@ -37,9 +62,9 @@
       <category term="分布式" scheme="https://9191rs.me/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -50,7 +75,7 @@
     <link href="https://9191rs.me/posts/9940/"/>
     <id>https://9191rs.me/posts/9940/</id>
     <published>2018-11-27T12:12:00.000Z</published>
-    <updated>2018-11-28T13:11:59.382Z</updated>
+    <updated>2018-11-28T13:12:42.839Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Raft-算法概述"><a href="#Raft-算法概述" class="headerlink" title="Raft 算法概述"></a>Raft 算法概述</h3><p>Raft 算法是在复制状态机的背景下提出的，复制状态机通常都是基于复制日志实现的，这个日志可以理解为一个比喻，相当于一个指令。</p><blockquote><p><strong>状态机：</strong>多个节点上，从相同的初始状态开始，执行相同的一串命令，产生相同的最终状态。 复制状态机通常都是基于复制日志实现的，保证复制日志相同就是一致性算法的工作了。</p></blockquote><p><strong>Raft 是一种为了管理复制日志的一致性算法。</strong>它将一致性问题分解为多个子问题：Leader选举（Leader election）、日志同步（Log replication）、安全性（Safety）、日志压缩（Log compaction）、成员变更（Membership change）。</p><p>Raft算法将系统中的角色分为领导者（Leader）、跟从者（Follower）和候选人（Candidate）：</p><ul><li>Leader：接受客户端请求，并向Follower同步请求日志，当日志同步到大多数节点上后告诉Follower提交日志。</li><li>Follower：接受并持久化Leader同步的日志，在Leader告之日志可以提交之后，提交日志。</li><li>Candidate：Leader选举过程中的临时角色。</li></ul><h3 id="Leader选举（Leader-election）"><a href="#Leader选举（Leader-election）" class="headerlink" title="Leader选举（Leader election）"></a>Leader选举（Leader election）</h3><p> Raft算法要求系统在任意时刻最多只有一个Leader，正常工作期间只有Leader和Followers。当所有服务器初始化的时候，都是跟随者，这个时候需要一个领导者，所有人都变成候选者，直到有人成功当选 领导者。 Raft算法角色状态转换如下：</p><p><div align="center"><img src="/posts/9940/1543284112135.png" alt="Alt text"></div></p><p>Raft算法将时间分为一个个的任期（term），每一个term的开始都是Leader选举。在成功选举Leader之后，Leader会在整个term内管理整个集群。如果Leader选举失败，该term就会因为没有Leader而结束。</p><p><div align="center"><img src="/posts/9940/1543284412375.png" alt="Alt text"></div></p><p>从上图可以看出，整个系统总是在选举和正常运行之间切换<strong>。Leader周期性的</strong>向所有Follower发送心跳包来维持自己的权威。如果一个跟随者在一段时间里没有接收到任何消息，也就是选举超时，那么他就会认为系统中没有可用的Leader,并且发起选举以选出新的领导者。<strong>要开始一次选举过程，</strong>Follower先要增加自己的当前任期号并且转换到 Candidater状态。然后请求其他服务器为自己投票。那么会产生 3 种结果：</p><ul><li>赢得了多数的选票，成功选举为Leader；</li><li>收到了Leader的消息，表示有其它服务器已经抢先当选了Leader；</li><li>没有服务器赢得多数的选票，Leader选举失败，等待选举时间超时后发起下一次选举（term3）</li></ul><blockquote><p>每一个 server 最多在一个任期内投出一张选票（有任期号约束），先到先得。<br>要求最多只能有一个人赢得选票。<br>一旦成功，立即成为领导人，然后广播所有服务器停止投票阻止新得领导产生。<br>如果Leader选举失败， Raft 通过使用随机选举超时时间（例如 150 - 300 毫秒）的方法将服务器打散投票。每个候选人在僵住的时候会随机从一个时间开始重新选举。</p></blockquote><h3 id="日志复制"><a href="#日志复制" class="headerlink" title="日志复制"></a>日志复制</h3><p>Leader选出后，就开始接收客户端的请求。Leader把请求作为日志条目（Log entries）加入到它的日志中，然后并行的向其他服务器发起 AppendEntries RPC复制日志条目。当这条日志被复制到大多数服务器上，Leader将这条日志应用到它的状态机并向客户端返回执行结果。某些Followers可能没有成功的复制日志，Leader会无限的重试 AppendEntries RPC直到所有的Followers最终存储了所有的日志条目。直到第四步骤，整个事务才会达成。中间任何一个步骤发生故障，都不会影响日志一致性。</p><p><div align="center"><img src="/posts/9940/1543284930678.png" alt="Alt text"></div></p><p>日志由有序编号（log index）的日志条目组成。每个日志条目包含它被创建时的任期号（term），和用于状态机执行的命令。如果一个日志条目被复制到大多数服务器上，就被认为可以提交了。</p><p><div align="center"><img src="/posts/9940/1543285319491.png" alt="Alt text"></div></p><p>Raft日志同步保证如下两点：</p><ul><li>如果不同日志中的两个条目有着相同的索引和任期号，则它们所存储的命令是相同的。</li><li>如果不同日志中的两个条目有着相同的索引和任期号，则它们之前的所有条目都是完全一样的。</li></ul><p>第一条特性源于Leader在一个term内在给定的一个log index最多创建一条日志条目，同时该条目在日志中的位置也从来不会改变。</p><p>第二条特性源于 AppendEntries 的一个简单的一致性检查。当发送一个 AppendEntries RPC 时，Leader会把新日志条目紧接着之前的条目的log index和term都包含在里面。如果Follower没有在它的日志中找到log index和term都相同的日志，它就会拒绝新的日志条目。</p><p>一般情况下，Leader和Followers的日志保持一致，因此 AppendEntries 一致性检查通常不会失败。然而，Leader崩溃可能会导致日志不一致：旧的Leader可能没有完全复制完日志中的所有条目。</p><p>如果出现了日志不一致，Leader通过强制Followers复制它的日志来处理日志的不一致，Followers上的不一致的日志会被Leader的日志覆盖。 Leader为了使Followers的日志同自己的一致，Leader需要找到Followers同它的日志一致的地方，然后覆盖Followers在该位置之后的条目。<strong>具体的做法为：</strong>Leader会从后往前试，每次AppendEntries失败后尝试前一个日志条目，直到成功找到每个Follower的日志一致位点，然后向后逐条覆盖Followers在该位置之后的条目。</p><h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>Raft增加了如下两条限制以保证安全性：</p><ul><li>拥有最新的已提交的log entry的Follower才有资格成为Leader。</li></ul><p>这个保证是在RequestVote RPC中做的，Candidate在发送RequestVote RPC时，要带上自己的最后一条日志的term和log index，其他节点收到消息时，如果发现自己的日志比请求中携带的更新，则拒绝投票。日志比较的原则是，如果本地的最后一条log entry的term更大，则term大的更新，如果term一样大，则log index更大的更新。</p><ul><li>Leader只能推进commit index来提交当前term的已经复制到大多数服务器上的日志，旧term日志的提交要等到提交当前term的日志来间接提交（log index 小于 commit index的日志被间接提交）。 之所以要这样，是因为可能会出现已提交的日志又被覆盖的情况。</li></ul><p><strong>以上就是Raft算法的简单描述，更具体的内容还要参考作者的论文。</strong></p><hr><p>参考链接</p><ul><li><a href="https://github.com/maemual/raft-zh_cn/blob/master/raft-zh_cn.md" target="_blank" rel="noopener">Raft论文中文翻译</a></li><li><a href="https://www.cnblogs.com/stateis0/p/9062131.html" target="_blank" rel="noopener">分布式理论(六)——Raft 算法</a></li><li><a href="http://www.cnblogs.com/mindwind/p/5231986.html" target="_blank" rel="noopener">Raft 为什么是更易理解的分布式一致性算法</a></li><li><a href="https://zhuanlan.zhihu.com/p/32052223" target="_blank" rel="noopener">Paxos、Raft分布式一致性最佳实践</a></li></ul>]]></content>
     
@@ -77,20 +102,15 @@
     <link href="https://9191rs.me/posts/35956/"/>
     <id>https://9191rs.me/posts/35956/</id>
     <published>2018-11-26T12:12:25.000Z</published>
-    <updated>2018-11-28T13:11:59.373Z</updated>
+    <updated>2018-11-28T14:51:27.788Z</updated>
     
-    <content type="html"><![CDATA[<p><br> <br><br>&#8195;&#8195;</p><p><div align="center"><img src="/1.jpg" alt=" "></div></p><hr><p>参考链接</p><ul><li><a href="http://item.jd.com/11622772.html" target="_blank" rel="noopener">从Paxos到 Zookeeper——分布式一致性原理和实践  </a></li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="Paxos概述"><a href="#Paxos概述" class="headerlink" title="Paxos概述"></a>Paxos概述</h3><p>在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效的算法之一。</p><p><strong>注：这里某个数据的值并不只是狭义上的某个数，它可以是一条日志，也可以是一条命令（command）。根据应用场景不同，某个数据的值有不同的含义。</strong></p><p> <strong>Paxos的三个角色</strong></p><ul><li><strong>Proposer：提议发起者。</strong>Proposer 可以有多个，Proposer 提出议案（value）。所谓 value，可以*是任何操作，比如“设置某个变量的值为value”。不同的 Proposer 可以提出不同的 value，例如某个Proposer 提议“将变量 X 设置为 1”，另一个 Proposer 提议“将变量 X 设置为 2”，但对同一轮 Paxos过程，最多只有一个 value 被批准。</li><li><strong>Acceptor：提议接受者。</strong>Acceptor 有 N 个，Proposer 提出的 value 必须获得超过半数(N/2+1)的 Acceptor批准后才能通过。Acceptor 之间完全对等独立。</li><li><strong>Learner：提议学习者。</strong>上面提到只要超过半数accpetor通过即可获得通过，那么learner角色的目的就是把通过的确定性取值同步给其他未确定的Acceptor。</li></ul><p><div align="center"><img src="/posts/35956/1543415317261.png" alt="Alt text"></div></p><p>Paxos算法<strong>原理推导过程</strong>可以参考 <a href="http://www.cnblogs.com/linbingdong/p/6253479" target="_blank" rel="noopener">这篇文章</a>。</p><h3 id="Paxos算法的流程"><a href="#Paxos算法的流程" class="headerlink" title="Paxos算法的流程"></a>Paxos算法的流程</h3><p>Paxos算法分为两个阶段。具体如下：</p><p><strong>阶段一：</strong></p><ul><li>Proposer选择一个提案编号N，然后向半数以上的Acceptor发送编号为N的Prepare请求。</li><li>如果一个Acceptor收到一个编号为N的Prepare请求，如果小于它已经响应过的请求，则拒绝，不回应或回复error。且N大于该Acceptor已经响应过的所有Prepare请求的编号，那么它就会将它已经接受过的编号最大的提案（如果有的话，如果还没有的accept提案的话返回{pok，null，null}）作为响应反馈给Proposer，<strong>同时该Acceptor承诺不再接受任何编号小于N的提案。</strong></li></ul><p><strong>阶段二：</strong></p><ul><li>如果Proposer收到半数以上Acceptor对其发出的编号为N的Prepare请求的响应，那么它就会发送一个针对[N,V]提案的Accept请求给半数以上的Acceptor。注意：V就是收到的响应中编号最大的提案的value，如果响应中不包含任何提案，那么V就由Proposer自己决定。</li><li>如果Acceptor收到一个针对编号为N的提案的Accept请求，只要该Acceptor没有对编号大于N的Prepare请求做出过响应，它就接受该提案。如果N小于Acceptor以及响应的prepare请求，则拒绝，不回应或回复error（当proposer没有收到过半的回应，那么他会重新进入第一阶段，递增提案号，重新提出prepare请求）。</li></ul><p><strong>上述过程中的关键点：</strong></p><ul><li><strong>阶段一Accpetor的处理流程</strong></li></ul><p>假设Acceptor本地记录的编号为T。如果N小于T，则不响应或者响应error。如果N大于等于T，则会更新本地记录的编号为N，并且返回已经存在的值或者返回null。</p><ul><li><strong>阶段二Proposer的处理流程</strong></li></ul><p>如果Proposer未超过半数Accpetor响应，提议失败。超过半数的Accpetor响应的值<strong>都为空</strong>才提交自身要写入的值，否则选择非空值里版本号最大的值提交，最大的区别在于是提交的值是自身的还是使用以前提交的。</p><h3 id="Paxos算法的活锁问题（保证算法活性）"><a href="#Paxos算法的活锁问题（保证算法活性）" class="headerlink" title="Paxos算法的活锁问题（保证算法活性）"></a>Paxos算法的活锁问题（保证算法活性）</h3><p>Paxos算法运行过程中，可能还会存在一种极端情况，当有两个proposer依次提出一系列编号递增的议案，那么会陷入死循环，无法完成第二阶段，也就是无法选定一个提案。如下图：</p><p><div align="center"><img src="/posts/35956/1543415734852.png" alt="Alt text"></div></p><p>通过选取主Proposer，就可以保证Paxos算法的活性。选择一个主Proposer，并规定只有主Proposer才能提出议案。这样一来，只要主Proposer和过半的Acceptor能够正常进行网络通信，那么肯定会有一个提案被批准（第二阶段的accept），则可以解决死循环导致的活锁问题。</p><hr><p>参考链接</p><ul><li><a href="http://item.jd.com/11622772.html" target="_blank" rel="noopener">从Paxos到 Zookeeper——分布式一致性原理和实践  </a></li><li><a href="http://www.cnblogs.com/linbingdong/p/6253479.html" target="_blank" rel="noopener">Paxos算法原理与推导</a></li><li><a href="https://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">维基百科–Paxos算法</a></li><li><a href="https://blog.csdn.net/qq_35440678/article/details/78080431" target="_blank" rel="noopener">paxos协议的精髓</a></li></ul>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;br&gt; &lt;br&gt;&lt;br&gt;&amp;#8195;&amp;#8195;&lt;/p&gt;
-&lt;p&gt;&lt;div align=&quot;center&quot;&gt;&lt;img src=&quot;/1.jpg&quot; alt=&quot; &quot;&gt;&lt;/div&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;参考链接&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://ite
+        &lt;h3 id=&quot;Paxos概述&quot;&gt;&lt;a href=&quot;#Paxos概述&quot; class=&quot;headerlink&quot; title=&quot;Paxos概述&quot;&gt;&lt;/a&gt;Paxos概述&lt;/h3&gt;&lt;p&gt;在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区
       
     
     </summary>
@@ -98,9 +118,9 @@
       <category term="分布式" scheme="https://9191rs.me/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -266,9 +286,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -295,9 +315,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
@@ -322,9 +342,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -352,9 +372,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -384,36 +404,11 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
       <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
-    
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一致性Hash算法</title>
-    <link href="https://9191rs.me/posts/13533/"/>
-    <id>https://9191rs.me/posts/13533/</id>
-    <published>2018-10-26T08:59:44.000Z</published>
-    <updated>2018-10-26T09:49:49.229Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="算法背景"><a href="#算法背景" class="headerlink" title="算法背景"></a>算法背景</h3><p>问题的来源：当在做数据库分库分表或者是分布式缓存时，不可避免的都会遇到一个问题: 如何将数据均匀的分散到各个节点中，并且尽量的在加减节点时能使受影响的数据最少。</p><p>一致性哈希算法在1997年由麻省理工学院的Karger等人在解决分布式Cache中提出的，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。</p><h3 id="余数hash"><a href="#余数hash" class="headerlink" title="余数hash"></a>余数hash</h3><p>可以将传入的 Key 按照 index = hash(key) % N 这样来计算出需要存放的节点。其中 hash 函数是一个将字符串转换为正整数的哈希映射方法，N 就是节点的数量。这样可以满足数据的均匀分配，但是这个算法的容错性和扩展性都较差。比如增加或删除了一个节点时，所有的 Key 都需要重新计算，显然这样成本较高，为此需要一个算法满足分布均匀同时也要有良好的容错性和拓展性。</p><p>如果原来有HashCode为0~19的20个数据，那么：<br><img src="/posts/13533/1.jpg" alt=""></p><p>如果扩容到4台，加粗标红的表示命中：<br><img src="/posts/13533/2.jpg" alt=""></p><p>如果扩容到20+的台数，只有前三个HashCode对应的Key是命中的，也就是15%。当然这只是个简单例子，现实情况肯定比这个复杂得多，不过足以说明，使用余数Hash的路由算法，在扩容的时候会造成大量的数据无法正确命中（其实不仅仅是无法命中，那些大量的无法命中的数据还在原缓存中在被移除前占据着内存）。这个结果显然是无法接受的，在网站业务中，大部分的业务数据度操作请求上事实上是通过缓存获取的，只有少量读操作会访问数据库，因此数据库的负载能力是以有缓存为前提而设计的。当大部分被缓存了的数据因为服务器扩容而不能正确读取时，这些数据访问的压力就落在了数据库的身上，这将大大超过数据库的负载能力，严重的可能会导致数据库宕机。</p><h3 id="一致性hash算法"><a href="#一致性hash算法" class="headerlink" title="一致性hash算法"></a>一致性hash算法</h3><p>一致性Hash算法也是使用取模的方法，只是，刚才描述的取模法是对服务器的数量进行取模，而一致性Hash算法是对2^32取模，什么意思呢？简单来说，一致性Hash算法将整个哈希值空间组织成一个虚拟的圆环，如假设某哈希函数H的值空间为0-2^32-1（即哈希值是一个32位无符号整形），整个哈希环如下：<br><img src="/posts/13533/3.jpg" alt=""></p><p>整个空间按<strong>顺时针</strong>方向组织，圆环的正上方的点代表0，0点右侧的第一个点代表1，以此类推，2、3、4、5、6……直到2^32-1，也就是说0点左侧的第一个点代表2^32-1， 0和2^32-1在零点中方向重合，我们把这个由2^32个点组成的圆环称为Hash环。</p><p>下一步将各个服务器使用Hash进行一个哈希，具体可以选择<strong>服务器的IP或主机名</strong>作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置，这里假设将上文中四台服务器使用IP地址哈希后在环空间的位置如下：<br><img src="/posts/13533/4.jpg" alt=""><br>接下来使用如下算法定位数据访问到相应服务器：将数据key使用相同的函数Hash计算出哈希值，并确定此数据在环上的位置，从此位置沿环顺时针“行走”，第一台遇到的服务器就是其应该定位到的服务器！</p><p>例如我们有Object A、Object B、Object C、Object D四个数据对象，经过哈希计算后，在环空间上的位置如下：<br><img src="/posts/13533/5.jpg" alt=""></p><p>根据一致性Hash算法，数据A会被定为到Node A上，B被定为到Node B上，C被定为到Node C上，D被定为到Node D上。</p><h3 id="一致性hash算法深入分析"><a href="#一致性hash算法深入分析" class="headerlink" title="一致性hash算法深入分析"></a>一致性hash算法深入分析</h3><h4 id="一致性Hash算法的容错性和可扩展性"><a href="#一致性Hash算法的容错性和可扩展性" class="headerlink" title="一致性Hash算法的容错性和可扩展性"></a>一致性Hash算法的容错性和可扩展性</h4><p>现假设Node C不幸宕机，可以看到此时对象A、B、D不会受到影响，只有C对象被重定位到Node D。一般的，在一致性Hash算法中，如果一台服务器不可用，则受影响的数据仅仅是此服务器到其环空间中前一台服务器（即沿着逆时针方向行走遇到的第一台服务器）之间数据，其它不会受到影响，如下所示：<br><img src="/posts/13533/6.jpg" alt=""></p><p>下面考虑另外一种情况，如果在系统中增加一台服务器Node X，如下图所示：<br><img src="/posts/13533/7.jpg" alt=""></p><p>此时对象Object A、B、D不受影响，只有对象C需要重定位到新的Node X ！一般的，在一致性Hash算法中，如果增加一台服务器，则受影响的数据仅仅是新服务器到其环空间中前一台服务器（即沿着逆时针方向行走遇到的第一台服务器）之间数据，其它数据也不会受到影响。</p><p><strong>综上所述，一致性Hash算法对于节点的增减都只需重定位环空间中的一小部分数据，具有较好的容错性和可扩展性。</strong></p><h4 id="Hash环的数据倾斜问题"><a href="#Hash环的数据倾斜问题" class="headerlink" title="Hash环的数据倾斜问题"></a>Hash环的数据倾斜问题</h4><p>一致性Hash算法在服务节点太少时，容易因为节点分部不均匀而造成数据倾斜（被缓存的对象大部分集中缓存在某一台服务器上）问题，例如系统中只有两台服务器，其环分布如下： </p><p><img src="/posts/13533/8.jpg" alt=""></p><p>此时必然造成大量数据集中到Node A上，而只有极少量会定位到Node B上。为了解决这种数据倾斜问题，一致性Hash算法引入<strong>了虚拟节点机制</strong>，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为<strong>虚拟节点</strong>。具体做法可以在服务器IP或主机名的后面增加编号来实现。</p><p>例如上面的情况，可以为每台服务器计算三个虚拟节点，于是可以分别计算 “Node A#1”、“Node A#2”、“Node A#3”、“Node B#1”、“Node B#2”、“Node B#3”的哈希值，于是形成六个虚拟节点： </p><p><img src="/posts/13533/9.jpg" alt=""><br>同时数据定位算法不变，<strong>只是多了一步虚拟节点到实际节点的映射</strong>，例如定位到“Node A#1”、“Node A#2”、“Node A#3”三个虚拟节点的数据均定位到Node A上。这样就解决了服务节点少时数据倾斜的问题。在实际应用中，通常将虚拟节点数设置为32甚至更大，因此即使很少的服务节点也能做到相对均匀的数据分布。</p><hr><p>参考链接：</p><ul><li><a href="https://blog.csdn.net/bntX2jSQfEHy7/article/details/79549368" target="_blank" rel="noopener">什么是一致性Hash算法</a></li><li><a href="https://www.cnblogs.com/lpfuture/p/5796398.html" target="_blank" rel="noopener">一致性哈希算法原理</a></li><li><a href="https://www.cnblogs.com/xrq730/p/5186728.html" target="_blank" rel="noopener">对一致性Hash算法，Java代码实现的深入研究</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;算法背景&quot;&gt;&lt;a href=&quot;#算法背景&quot; class=&quot;headerlink&quot; title=&quot;算法背景&quot;&gt;&lt;/a&gt;算法背景&lt;/h3&gt;&lt;p&gt;问题的来源：当在做数据库分库分表或者是分布式缓存时，不可避免的都会遇到一个问题: 如何将数据均匀的分散到各个节点中，并且尽量
-      
-    
-    </summary>
-    
-      <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
     
   </entry>
   
@@ -438,9 +433,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -495,9 +490,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -524,9 +519,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -554,9 +549,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -583,9 +578,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -642,9 +637,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -879,9 +874,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -908,9 +903,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -938,9 +933,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -967,9 +962,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -996,9 +991,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -1080,9 +1075,9 @@
       <category term="剑指offer" scheme="https://9191rs.me/categories/%E5%89%91%E6%8C%87offer/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="剑指offer" scheme="https://9191rs.me/tags/%E5%89%91%E6%8C%87offer/"/>
     
@@ -1134,9 +1129,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1165,9 +1160,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1196,9 +1191,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1226,9 +1221,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1257,9 +1252,9 @@
       <category term="二叉树" scheme="https://9191rs.me/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="BST" scheme="https://9191rs.me/tags/BST/"/>
     
@@ -1287,9 +1282,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1317,9 +1312,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1408,9 +1403,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1443,9 +1438,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1474,9 +1469,9 @@
       <category term="leetcode" scheme="https://9191rs.me/categories/leetcode/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="leetcode" scheme="https://9191rs.me/tags/leetcode/"/>
     
@@ -1510,9 +1505,9 @@
       <category term="算法" scheme="https://9191rs.me/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
