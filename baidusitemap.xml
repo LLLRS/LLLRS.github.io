@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://9191rs.me/posts/9030/</loc>
-    <lastmod>2019-01-07T14:58:47.200Z</lastmod>
+    <lastmod>2019-01-08T13:52:37.133Z</lastmod>
     <data>
         <display>
         <title>Disruptor实例之同一消息被多个消费者重复处理</title>
@@ -18,7 +18,29 @@
          
            
              
-              <breadCrumb title="Disruptorcode" url="https://9191rs.me/categories/Disruptorcode/"/>
+              <breadCrumb title="Disruptor" url="https://9191rs.me/categories/Disruptor/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://9191rs.me/posts/1333/</loc>
+    <lastmod>2019-01-08T13:50:10.210Z</lastmod>
+    <data>
+        <display>
+        <title>Disruptor实例之多个消费者不重复处理生产者发送过来的消息</title>
+        <pubTime>2019-01-08T13:37:17.000Z</pubTime>
+        
+        <tag>Disruptor</tag>
+         
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Disruptor" url="https://9191rs.me/categories/Disruptor/"/>
           
         </display>
     </data>
