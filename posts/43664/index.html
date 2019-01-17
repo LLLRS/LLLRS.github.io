@@ -137,19 +137,19 @@
 
 
 
-<meta name="description" content="题目要求求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。 两个字符串的编辑距离越小，说明两个字符串越相似！ DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离  如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]  如果word1[i]和word2[j]不相等相等">
+<meta name="description" content="动态规划的题目。对于可用动态规划求解的问题，一般有两个特征：①最优子结构；②重叠子问题 最长公共子序列给定两个字符串，求解这两个字符串的最长公共子序列（Longest Common Sequence）。 DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的最长公共子序列的长度  如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]">
 <meta name="keywords" content="Java,算法,leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 第72题 Edit Distance">
+<meta property="og:title" content="两道经典的动态规划问题">
 <meta property="og:url" content="https://9191rs.me/posts/43664/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="题目要求求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。 两个字符串的编辑距离越小，说明两个字符串越相似！ DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离  如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]  如果word1[i]和word2[j]不相等相等">
+<meta property="og:description" content="动态规划的题目。对于可用动态规划求解的问题，一般有两个特征：①最优子结构；②重叠子问题 最长公共子序列给定两个字符串，求解这两个字符串的最长公共子序列（Longest Common Sequence）。 DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的最长公共子序列的长度  如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://9191rs.me/posts/43664/1.jpg">
-<meta property="og:updated_time" content="2018-09-20T12:49:26.286Z">
+<meta property="og:updated_time" content="2019-01-17T14:26:34.621Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode 第72题 Edit Distance">
-<meta name="twitter:description" content="题目要求求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。 两个字符串的编辑距离越小，说明两个字符串越相似！ DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离  如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]  如果word1[i]和word2[j]不相等相等">
+<meta name="twitter:title" content="两道经典的动态规划问题">
+<meta name="twitter:description" content="动态规划的题目。对于可用动态规划求解的问题，一般有两个特征：①最优子结构；②重叠子问题 最长公共子序列给定两个字符串，求解这两个字符串的最长公共子序列（Longest Common Sequence）。 DP解法dp[i][j]：它是指word1[0…i]和word2[0…j]的最长公共子序列的长度  如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]">
 <meta name="twitter:image" content="https://9191rs.me/posts/43664/1.jpg">
 
 
@@ -186,7 +186,7 @@
 
 
 
-  <title>leetcode 第72题 Edit Distance | 爱生活,爱柒柒</title>
+  <title>两道经典的动态规划问题 | 爱生活,爱柒柒</title>
   
 
 
@@ -381,7 +381,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode 第72题 Edit Distance</h1>
+          <h1 class="post-title" itemprop="name headline">两道经典的动态规划问题</h1>
         
 
         <div class="post-meta">
@@ -393,8 +393,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T19:17:04+08:00">
-                2018-09-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-17T19:17:04+08:00">
+                2019-01-17
               </time>
             
 
@@ -449,7 +449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  578
+                  880
                 </span>
               
 
@@ -474,9 +474,23 @@
       
 
       
-        <h3 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h3><p>求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。<br><img src="/posts/43664/1.jpg" alt=""></p>
+        <p>动态规划的题目。对于可用动态规划求解的问题，一般有两个特征：①最优子结构；②重叠子问题</p>
+<h3 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h3><p>给定两个字符串，求解这两个字符串的最长公共子序列（Longest Common Sequence）。</p>
+<h4 id="DP解法"><a href="#DP解法" class="headerlink" title="DP解法"></a>DP解法</h4><p>dp[i][j]：它是指word1[0…i]和word2[0…j]的最长公共子序列的长度</p>
+<ul>
+<li><p>如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]</p>
+</li>
+<li><p>如果word1[i]和word2[j]不相等相等，则要分情况讨论</p>
+<ul>
+<li>dp[i][j] = dp[i-1][j]</li>
+<li>dp[i][j] = dp[i][j-1]</li>
+</ul>
+</li>
+</ul>
+<h4 id="Java参考代码"><a href="#Java参考代码" class="headerlink" title="Java参考代码"></a>Java参考代码</h4><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  public static int LCS(String str1, String str2)&#123;</span><br><span class="line">      int<span class="string">[]</span><span class="string">[]</span> dp = new int<span class="string">[str1.length() + 1]</span><span class="string">[str2.length() + 1]</span>;</span><br><span class="line">//初始条件</span><br><span class="line">      for(int row = <span class="number">0</span>; row &lt;= str1.length(); row++)</span><br><span class="line">          dp<span class="string">[row]</span><span class="string">[0]</span> = <span class="number">0</span>;</span><br><span class="line">      for(int column = <span class="number">0</span>; column &lt;= str2.length(); column++)</span><br><span class="line">          dp<span class="string">[0]</span><span class="string">[column]</span> = <span class="number">0</span>;</span><br><span class="line">      </span><br><span class="line">      for(int i = <span class="number">1</span>; i &lt;= str1.length(); i++)</span><br><span class="line">          for(int j = <span class="number">1</span>; j &lt;= str2.length(); j++)</span><br><span class="line">          &#123;</span><br><span class="line">              if(str1.charAt(i-<span class="number">1</span>) == str2.charAt(j-<span class="number">1</span>))</span><br><span class="line">                  dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j-1]</span> + <span class="number">1</span>;</span><br><span class="line">              else if(dp<span class="string">[i]</span><span class="string">[j-1]</span> &gt; dp<span class="string">[i-1]</span><span class="string">[j]</span>)</span><br><span class="line">                  dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i]</span><span class="string">[j-1]</span>;</span><br><span class="line">              else</span><br><span class="line">                  dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j]</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      return dp<span class="string">[str1.length()]</span><span class="string">[str2.length()]</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="最小编辑距离"><a href="#最小编辑距离" class="headerlink" title="最小编辑距离"></a>最小编辑距离</h3><p>求两个字符串的编辑距离，将一个字符串变成另外一个字符串所用的最少操作数，每次只能增加、删除或者替换一个字符。<br><img src="/posts/43664/1.jpg" alt=""></p>
 <p><strong>两个字符串的编辑距离越小，说明两个字符串越相似！</strong></p>
-<h3 id="DP解法"><a href="#DP解法" class="headerlink" title="DP解法"></a>DP解法</h3><p>dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离</p>
+<h4 id="DP解法-1"><a href="#DP解法-1" class="headerlink" title="DP解法"></a>DP解法</h4><p>dp[i][j]：它是指word1[0…i]和word2[0…j]的编辑距离</p>
 <ul>
 <li><p>如果word1[i]和word2[j]相等，则dp[i][j] = dp[i-1][j-1]</p>
 </li>
@@ -488,12 +502,13 @@
 </ul>
 </li>
 </ul>
-<h3 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public  int minDistance(String w1, String w2) &#123;</span><br><span class="line"></span><br><span class="line">     int r = w1.length();</span><br><span class="line">     int c = w2.length();</span><br><span class="line"></span><br><span class="line">     int<span class="string">[]</span><span class="string">[]</span> dp = new int<span class="string">[r+1]</span><span class="string">[c+1]</span>;</span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">         dp<span class="string">[0]</span><span class="string">[i]</span> = i; //dp<span class="string">[i]</span><span class="string">[0]</span>就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">         dp<span class="string">[i]</span><span class="string">[0]</span> = i;  //dp<span class="string">[0]</span><span class="string">[j]</span>就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2</span><br><span class="line">         for(int j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">             if(w1.charAt(i-<span class="number">1</span>)==w2.charAt(j-<span class="number">1</span>))</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j-1]</span>;</span><br><span class="line">             else</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = Math.min(dp<span class="string">[i-1]</span><span class="string">[j-1]</span>,Math.min(dp<span class="string">[i-1]</span><span class="string">[j]</span>, dp<span class="string">[i]</span><span class="string">[j-1]</span>)) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     return dp<span class="string">[r]</span><span class="string">[c]</span>;         </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="基于上述代码的一种改进"><a href="#基于上述代码的一种改进" class="headerlink" title="基于上述代码的一种改进"></a>基于上述代码的一种改进</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="keyword">int</span> minDistance(<span class="keyword">String</span> w1, <span class="keyword">String</span> w2) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> r = w1.length();</span><br><span class="line"> <span class="keyword">int</span> c = w2.length();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];         </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">	 dp[i] = i;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">	 <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];</span><br><span class="line">	 temp[<span class="number">0</span>] = i;</span><br><span class="line">	 <span class="built_in">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">		 <span class="built_in">if</span>(w1.charAt(i<span class="number">-1</span>)==w2.charAt(j<span class="number">-1</span>))</span><br><span class="line">			 temp[j] = dp[j<span class="number">-1</span>];</span><br><span class="line">		 <span class="built_in">else</span></span><br><span class="line">			 temp[j] = Math.<span class="built_in">min</span>(temp[j<span class="number">-1</span>],Math.<span class="built_in">min</span>(dp[j<span class="number">-1</span>], dp[j])) + <span class="number">1</span>;</span><br><span class="line">		 <span class="comment">// temp[j-1] 添加  dp[j-1] 修改   dp[j] 删除</span></span><br><span class="line">	 &#125;</span><br><span class="line">	 </span><br><span class="line">	 dp = temp;</span><br><span class="line"> &#125;</span><br><span class="line">					   </span><br><span class="line"> <span class="built_in">return</span> dp[c];         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Java参考代码-1"><a href="#Java参考代码-1" class="headerlink" title="Java参考代码"></a>Java参考代码</h4><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public  int minDistance(String w1, String w2) &#123;</span><br><span class="line"></span><br><span class="line">     int r = w1.length();</span><br><span class="line">     int c = w2.length();</span><br><span class="line"></span><br><span class="line">     int<span class="string">[]</span><span class="string">[]</span> dp = new int<span class="string">[r+1]</span><span class="string">[c+1]</span>;</span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">         dp<span class="string">[0]</span><span class="string">[i]</span> = i; //dp<span class="string">[i]</span><span class="string">[0]</span>就是，w1长度为i，w2为空时，w1需要删除i个字符才能转换成空</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     for(int i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">         dp<span class="string">[i]</span><span class="string">[0]</span> = i;  //dp<span class="string">[0]</span><span class="string">[j]</span>就是w1为空，w2长度为j的情况，w1需要添加j个字符转换成w2</span><br><span class="line">         for(int j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">             if(w1.charAt(i-<span class="number">1</span>)==w2.charAt(j-<span class="number">1</span>))</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = dp<span class="string">[i-1]</span><span class="string">[j-1]</span>;</span><br><span class="line">             else</span><br><span class="line">                 dp<span class="string">[i]</span><span class="string">[j]</span> = Math.min(dp<span class="string">[i-1]</span><span class="string">[j-1]</span>,Math.min(dp<span class="string">[i-1]</span><span class="string">[j]</span>, dp<span class="string">[i]</span><span class="string">[j-1]</span>)) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     return dp<span class="string">[r]</span><span class="string">[c]</span>;         </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="基于上述代码的一种改进"><a href="#基于上述代码的一种改进" class="headerlink" title="基于上述代码的一种改进"></a>基于上述代码的一种改进</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="keyword">int</span> minDistance(<span class="keyword">String</span> w1, <span class="keyword">String</span> w2) &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> r = w1.length();</span><br><span class="line"> <span class="keyword">int</span> c = w2.length();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];         </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=c;i++)</span><br><span class="line">	 dp[i] = i;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=r;i++)&#123;</span><br><span class="line">	 <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[c+<span class="number">1</span>];</span><br><span class="line">	 temp[<span class="number">0</span>] = i;</span><br><span class="line">	 <span class="built_in">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=c;j++)&#123;</span><br><span class="line">		 <span class="built_in">if</span>(w1.charAt(i<span class="number">-1</span>)==w2.charAt(j<span class="number">-1</span>))</span><br><span class="line">			 temp[j] = dp[j<span class="number">-1</span>];</span><br><span class="line">		 <span class="built_in">else</span></span><br><span class="line">			 temp[j] = Math.<span class="built_in">min</span>(temp[j<span class="number">-1</span>],Math.<span class="built_in">min</span>(dp[j<span class="number">-1</span>], dp[j])) + <span class="number">1</span>;</span><br><span class="line">		 <span class="comment">// temp[j-1] 添加  dp[j-1] 修改   dp[j] 删除</span></span><br><span class="line">	 &#125;</span><br><span class="line">	 </span><br><span class="line">	 dp = temp;</span><br><span class="line"> &#125;</span><br><span class="line">					   </span><br><span class="line"> <span class="built_in">return</span> dp[c];         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <p>参考链接</p>
 <ul>
 <li><a href="https://www.cnblogs.com/masterlibin/p/5785092.html" target="_blank" rel="noopener">EditDistance,求两个字符串最小编辑距离，动态规划</a></li>
+<li><a href="https://www.cnblogs.com/hapjin/p/5572483.html" target="_blank" rel="noopener">求解两个字符串的最长公共子序列</a></li>
 </ul>
 
       
@@ -505,7 +520,7 @@
 	  
 		<div class="copyright">
 		<p><span>
-		<b>本文地址：</b><a href="/posts/43664/" title="leetcode 第72题 Edit Distance">https://9191rs.me/posts/43664/</a><br><b>转载请注明出处，谢谢！</b>
+		<b>本文地址：</b><a href="/posts/43664/" title="两道经典的动态规划问题">https://9191rs.me/posts/43664/</a><br><b>转载请注明出处，谢谢！</b>
 		</span></p>
 		</div>
 	  
@@ -564,12 +579,6 @@
 			<div class="post-nav-next post-nav-item">
 
 		      
-
-		       <a href="/posts/15239/" rel="prev" title="SpringBoot&Netty实现仿微信网页版">
-
-		          <i class="fa fa-chevron-left"></i> SpringBoot&Netty实现仿微信网页版
-				</a>
-			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -578,9 +587,9 @@
 
 		      
 		
-		        <a href="/posts/36828/" rel="next" title="leetcode 第10题 Regular Expression Matching">
+		        <a href="/posts/53466/" rel="next" title="写给实验室的下一代By刘泽豪真讨厌">
 		
-		         leetcode 第10题 Regular Expression Matching <i class="fa fa-chevron-right"></i>
+		         写给实验室的下一代By刘泽豪真讨厌 <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -815,7 +824,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目要求"><span class="nav-number">1.</span> <span class="nav-text">题目要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DP解法"><span class="nav-number">2.</span> <span class="nav-text">DP解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考代码"><span class="nav-number">3.</span> <span class="nav-text">参考代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于上述代码的一种改进"><span class="nav-number">4.</span> <span class="nav-text">基于上述代码的一种改进</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#最长公共子序列"><span class="nav-number">1.</span> <span class="nav-text">最长公共子序列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DP解法"><span class="nav-number">1.1.</span> <span class="nav-text">DP解法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java参考代码"><span class="nav-number">1.2.</span> <span class="nav-text">Java参考代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小编辑距离"><span class="nav-number">2.</span> <span class="nav-text">最小编辑距离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DP解法-1"><span class="nav-number">2.1.</span> <span class="nav-text">DP解法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java参考代码-1"><span class="nav-number">2.2.</span> <span class="nav-text">Java参考代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于上述代码的一种改进"><span class="nav-number">2.3.</span> <span class="nav-text">基于上述代码的一种改进</span></a></li></ol></li></ol></div>
             
 
           </div>
