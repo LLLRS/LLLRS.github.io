@@ -124,7 +124,7 @@
 
 
 
-  <meta name="keywords" content="Java,算法,剑指offer,">
+  <meta name="keywords" content="Java,算法,抢红包,">
 
 
 
@@ -137,20 +137,18 @@
 
 
 
-<meta name="description" content="题目描述在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007注意：输入的数组中没有的相同的数字 思路分析对于这个题目，最简单的思路就是顺序扫描整个数组，每扫描到一个数字的时候，逐个比较该数字和它后面的数字的大小，如果后面的数字比它小，则这两个数字就组">
-<meta name="keywords" content="Java,算法,剑指offer">
+<meta name="description" content="二倍均值法算法思想 假设人数为 N，钱数为 M，且都为整数。每次分配的红包为 [0, 2*M/N] 之间的某个随机数，那么分配的红包的均值为 M/N。这个公式，保证了每次随机金额的平均值是相等的，不会因为抢红包的先后顺序而造成不公平。举个例子：假设有10个人，红包总额100元。  100/10X2 = 20, 所以第一个人的随机范围是（0，20 )，平均可以抢到10元。 假设第一个人随机到10元，">
+<meta name="keywords" content="Java,算法,抢红包">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数组中的逆序对">
-<meta property="og:url" content="https://9191rs.me/posts/33062/index.html">
+<meta property="og:title" content="抢红包算法">
+<meta property="og:url" content="https://9191rs.me/posts/15969/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="题目描述在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007注意：输入的数组中没有的相同的数字 思路分析对于这个题目，最简单的思路就是顺序扫描整个数组，每扫描到一个数字的时候，逐个比较该数字和它后面的数字的大小，如果后面的数字比它小，则这两个数字就组">
+<meta property="og:description" content="二倍均值法算法思想 假设人数为 N，钱数为 M，且都为整数。每次分配的红包为 [0, 2*M/N] 之间的某个随机数，那么分配的红包的均值为 M/N。这个公式，保证了每次随机金额的平均值是相等的，不会因为抢红包的先后顺序而造成不公平。举个例子：假设有10个人，红包总额100元。  100/10X2 = 20, 所以第一个人的随机范围是（0，20 )，平均可以抢到10元。 假设第一个人随机到10元，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://9191rs.me/posts/33062/101.jpg">
-<meta property="og:updated_time" content="2018-08-03T09:50:50.587Z">
+<meta property="og:updated_time" content="2019-03-19T07:30:37.382Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数组中的逆序对">
-<meta name="twitter:description" content="题目描述在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007注意：输入的数组中没有的相同的数字 思路分析对于这个题目，最简单的思路就是顺序扫描整个数组，每扫描到一个数字的时候，逐个比较该数字和它后面的数字的大小，如果后面的数字比它小，则这两个数字就组">
-<meta name="twitter:image" content="https://9191rs.me/posts/33062/101.jpg">
+<meta name="twitter:title" content="抢红包算法">
+<meta name="twitter:description" content="二倍均值法算法思想 假设人数为 N，钱数为 M，且都为整数。每次分配的红包为 [0, 2*M/N] 之间的某个随机数，那么分配的红包的均值为 M/N。这个公式，保证了每次随机金额的平均值是相等的，不会因为抢红包的先后顺序而造成不公平。举个例子：假设有10个人，红包总额100元。  100/10X2 = 20, 所以第一个人的随机范围是（0，20 )，平均可以抢到10元。 假设第一个人随机到10元，">
 
 
 
@@ -180,13 +178,13 @@
 
 
 
-  <link rel="canonical" href="https://9191rs.me/posts/33062/">
+  <link rel="canonical" href="https://9191rs.me/posts/15969/">
 
 
 
 
 
-  <title>数组中的逆序对 | 爱生活,爱柒柒</title>
+  <title>抢红包算法 | 爱生活,爱柒柒</title>
   
 
 
@@ -364,7 +362,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/33062/">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/15969/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LI Ren">
@@ -381,7 +379,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数组中的逆序对</h1>
+          <h1 class="post-title" itemprop="name headline">抢红包算法</h1>
         
 
         <div class="post-meta">
@@ -393,8 +391,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-02T09:40:51+08:00">
-                2018-08-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-01T15:15:14+08:00">
+                2019-03-01
               </time>
             
 
@@ -416,8 +414,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/剑指offer/" itemprop="url" rel="index">
-                    <span itemprop="name">剑指offer</span>
+                  <a href="/categories/抢红包/" itemprop="url" rel="index">
+                    <span itemprop="name">抢红包</span>
                   </a>
                 </span>
 
@@ -449,7 +447,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  789
+                  650
                 </span>
               
 
@@ -474,13 +472,23 @@
       
 
       
-        <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007<br>注意：输入的数组中没有的相同的数字</p>
-<h2 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h2><p>对于这个题目，最简单的思路就是顺序扫描整个数组，每扫描到一个数字的时候，逐个比较该数字和它后面的数字的大小，如果后面的数字比它小，则这两个数字就组成了一个逆序对，对于一个长度为n的数组来说，这个算法的时间复杂度为O(n^2)。</p>
-<p>在这里以数组{7,5,6,4}为例来分析统计逆序对的过程。<br><img src="/posts/33062/101.jpg" alt=""> </p>
-<p>(a) 把长度为4的数组分解成两个长度为2的子数组；<br>(b) 把长度为2的数组分解成两个成都为1的子数组；<br>(c) 把长度为1的子数组 合并、排序并统计逆序对 ；<br>(d) 把长度为2的子数组合并、排序，并统计逆序对；</p>
-<p>在上图（a）和（b）中，先把数组分解成两个长度为2的子数组，再把这两个子数组分别拆成两个长度为1的子数组。接下来一边合并相邻的子数组，一边统计逆序对的数目。在第一对长度为1的子数组{7}、{5}中7大于5，因此（7,5）组成一个逆序对。同样在第二对长度为1的子数组{6}、{4}中也有逆序对（6,4）。由于已经统计了这两对子数组内部的逆序对，因此需要把这两对子数组 排序 如上图（c）所示， 以免在以后的统计过程中再重复统计。其实可以看到，这种做法就是归并排序的一部分操作。</p>
-<p>在每一次归并的时候，如果后半部分指数组针指向的数字比前半部分数组指针指向的数字大，则和归并排序一样，反之，前半部分指向的数字大，则进行统计，此时，前半部分剩下的所有数字都和后半部分当前的数字构成了一个逆序对。算法的时间复杂度是O(n*log n),空间复杂度是O(n)。</p>
-<h2 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h2><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> long cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">int</span>[] aux;</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> InversePairs(<span class="built_in">int</span> [] nums) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = nums.length;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">len</span>&lt;<span class="number">2</span>) return <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    aux = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="built_in">len</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> <span class="keyword">step</span> = <span class="number">1</span>;<span class="keyword">step</span>&lt;<span class="built_in">len</span>;<span class="keyword">step</span> += <span class="keyword">step</span>)</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> k=<span class="number">0</span>;k&lt;<span class="built_in">len</span>-<span class="keyword">step</span>;k += <span class="number">2</span>*<span class="keyword">step</span>)</span><br><span class="line">            merge(nums,k,k+<span class="keyword">step</span><span class="number">-1</span>,Math.min(<span class="built_in">len</span><span class="number">-1</span>,k+<span class="number">2</span>*<span class="keyword">step</span><span class="number">-1</span>));</span><br><span class="line"> </span><br><span class="line">    </span><br><span class="line">    return (<span class="built_in">int</span>)(cnt%<span class="number">1000000007</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> void merge(<span class="built_in">int</span>[] nums,<span class="built_in">int</span> l,<span class="built_in">int</span> m,<span class="built_in">int</span> r)&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> k=l;k&lt;=r;k++)</span><br><span class="line">        aux[k] = nums[k];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> i = l,j = m+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> k=l;k&lt;=r;k++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;m) nums[k] = aux[j++];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(j&gt;r) nums[k] = aux[i++];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(aux[j]&gt;aux[i]) nums[k] = aux[i++];</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            nums[k] = aux[j++];</span><br><span class="line">            cnt += m-i+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="二倍均值法"><a href="#二倍均值法" class="headerlink" title="二倍均值法"></a>二倍均值法</h3><h4 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h4><p> 假设人数为 N，钱数为 M，且都为整数。每次分配的红包为 [0, 2*M/N] 之间的某个随机数，那么分配的红包的均值为 M/N。这个公式，保证了每次随机金额的平均值是相等的，不会因为抢红包的先后顺序而造成不公平。举个例子：假设有10个人，红包总额100元。</p>
+<ul>
+<li>100/10X2 = 20, 所以第一个人的随机范围是（0，20 )，平均可以抢到10元。</li>
+<li>假设第一个人随机到10元，那么剩余金额是100-10 = 90 元。90/9X2 = 20, 所以第二个人的随机范围同样是（0，20 )，平均可以抢到10元。</li>
+<li>假设第二个人随机到10元，那么剩余金额是90-10 = 80 元。80/8X2 = 20, 所以第三个人的随机范围同样是（0，20 )，平均可以抢到10元。</li>
+<li>以此类推，每一次随机范围的均值是相等的。</li>
+</ul>
+<h4 id="Java代码实现"><a href="#Java代码实现" class="headerlink" title="Java代码实现"></a>Java代码实现</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; generatePacketsByDoubleMean(<span class="built_in">int</span> people, <span class="built_in">int</span> money) &#123;</span><br><span class="line">    List&lt;Integer&gt; packets = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Random <span class="built_in">random</span> = <span class="keyword">new</span> Random();</span><br><span class="line">    <span class="keyword">while</span> (people &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">int</span> p = <span class="built_in">random</span>.nextInt(<span class="number">2</span> * money / people);</span><br><span class="line">        packets.<span class="built_in">add</span>(p);</span><br><span class="line">        money -= p;</span><br><span class="line">        people--;</span><br><span class="line">    &#125;</span><br><span class="line">    packets.<span class="built_in">add</span>(money);</span><br><span class="line"></span><br><span class="line">    Collections.shuffle(packets); <span class="comment">//更随机</span></span><br><span class="line">    <span class="keyword">return</span> packets;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="线段切割法"><a href="#线段切割法" class="headerlink" title="线段切割法"></a>线段切割法</h3><h4 id="算法思想-1"><a href="#算法思想-1" class="headerlink" title="算法思想"></a>算法思想</h4><p>如果把红包总金额想象成一条很长的线段，而每个人抢到的金额，则是这条主线段所拆分出的若干子线段。每一条子线段的长度可以由“切割点”来决定，当N个人一起抢红包的时候，就需要确定N-1个切割点。因此，当N个人一起抢总金额为M的红包时，只需要做N-1次随机运算，以此确定N-1个切割点。随机的范围区间是（1， M）。当所有切割点确定以后，子线段的长度也随之确定。这样每个人来抢红包的时候，只需要顺次领取与子线段长度等价的红包金额即可。</p>
+<h4 id="Java代码实现-1"><a href="#Java代码实现-1" class="headerlink" title="Java代码实现"></a>Java代码实现</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; generatePacketsByLineCutting(<span class="built_in">int</span> people, <span class="built_in">int</span> money) &#123;</span><br><span class="line">    List&lt;Integer&gt; packets = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Random <span class="built_in">random</span> = <span class="keyword">new</span> Random();</span><br><span class="line">    Set&lt;Integer&gt; points = <span class="keyword">new</span> TreeSet&lt;&gt;();</span><br><span class="line">    <span class="comment">//利用TreeSet处理重复的随机切割点</span></span><br><span class="line">    <span class="keyword">while</span> (points.<span class="built_in">size</span>() &lt; people - <span class="number">1</span>) &#123;</span><br><span class="line">        points.<span class="built_in">add</span>(<span class="built_in">random</span>.nextInt(money - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    points.<span class="built_in">add</span>(money);</span><br><span class="line">    <span class="built_in">int</span> pre = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> p : points) &#123;</span><br><span class="line">        packets.<span class="built_in">add</span>(p - pre);</span><br><span class="line">        pre = p;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">   Collections.shuffle(packets); <span class="comment">//更随机</span></span><br><span class="line">   <span class="keyword">return</span> packets;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>参考链接</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_35393472/article/details/80073948" target="_blank" rel="noopener">Java抢红包代码实现及二倍均值法分析 </a></li>
+<li><a href="https://blog.csdn.net/bjweimengshu/article/details/80045958" target="_blank" rel="noopener">漫画：如何实现抢红包算法？</a></li>
+<li><a href="https://www.zhihu.com/question/22625187" target="_blank" rel="noopener">微信红包的随机算法是怎样实现的？</a></li>
+</ul>
 
       
     </div>
@@ -491,7 +499,7 @@
 	  
 		<div class="copyright">
 		<p><span>
-		<b>本文地址：</b><a href="/posts/33062/" title="数组中的逆序对">https://9191rs.me/posts/33062/</a><br><b>转载请注明出处，谢谢！</b>
+		<b>本文地址：</b><a href="/posts/15969/" title="抢红包算法">https://9191rs.me/posts/15969/</a><br><b>转载请注明出处，谢谢！</b>
 		</span></p>
 		</div>
 	  
@@ -536,7 +544,7 @@
           
             <a href="/tags/算法/" rel="tag"># 算法</a>
           
-            <a href="/tags/剑指offer/" rel="tag"># 剑指offer</a>
+            <a href="/tags/抢红包/" rel="tag"># 抢红包</a>
           
         </div>
       
@@ -550,12 +558,6 @@
 			<div class="post-nav-next post-nav-item">
 
 		      
-
-		       <a href="/posts/32844/" rel="prev" title="数字在排序数组中出现的次数">
-
-		          <i class="fa fa-chevron-left"></i> 数字在排序数组中出现的次数
-				</a>
-			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -564,9 +566,9 @@
 
 		      
 		
-		        <a href="/posts/18325/" rel="next" title="二叉搜索树转换为双向链表">
+		        <a href="/posts/43664/" rel="next" title="两道经典的动态规划问题">
 		
-		         二叉搜索树转换为双向链表 <i class="fa fa-chevron-right"></i>
+		         两道经典的动态规划问题 <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -801,7 +803,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路分析"><span class="nav-number">2.</span> <span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java实现"><span class="nav-number">3.</span> <span class="nav-text">Java实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#二倍均值法"><span class="nav-number">1.</span> <span class="nav-text">二倍均值法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法思想"><span class="nav-number">1.1.</span> <span class="nav-text">算法思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java代码实现"><span class="nav-number">1.2.</span> <span class="nav-text">Java代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线段切割法"><span class="nav-number">2.</span> <span class="nav-text">线段切割法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法思想-1"><span class="nav-number">2.1.</span> <span class="nav-text">算法思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java代码实现-1"><span class="nav-number">2.2.</span> <span class="nav-text">Java代码实现</span></a></li></ol></li></ol></div>
             
 
           </div>

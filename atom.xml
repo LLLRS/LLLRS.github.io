@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://9191rs.me/"/>
-  <updated>2019-01-17T14:26:34.621Z</updated>
+  <updated>2019-03-19T07:30:37.382Z</updated>
   <id>https://9191rs.me/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>抢红包算法</title>
+    <link href="https://9191rs.me/posts/15969/"/>
+    <id>https://9191rs.me/posts/15969/</id>
+    <published>2019-03-01T07:15:14.000Z</published>
+    <updated>2019-03-19T07:30:37.382Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="二倍均值法"><a href="#二倍均值法" class="headerlink" title="二倍均值法"></a>二倍均值法</h3><h4 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h4><p> 假设人数为 N，钱数为 M，且都为整数。每次分配的红包为 [0, 2*M/N] 之间的某个随机数，那么分配的红包的均值为 M/N。这个公式，保证了每次随机金额的平均值是相等的，不会因为抢红包的先后顺序而造成不公平。举个例子：假设有10个人，红包总额100元。</p><ul><li>100/10X2 = 20, 所以第一个人的随机范围是（0，20 )，平均可以抢到10元。</li><li>假设第一个人随机到10元，那么剩余金额是100-10 = 90 元。90/9X2 = 20, 所以第二个人的随机范围同样是（0，20 )，平均可以抢到10元。</li><li>假设第二个人随机到10元，那么剩余金额是90-10 = 80 元。80/8X2 = 20, 所以第三个人的随机范围同样是（0，20 )，平均可以抢到10元。</li><li>以此类推，每一次随机范围的均值是相等的。</li></ul><h4 id="Java代码实现"><a href="#Java代码实现" class="headerlink" title="Java代码实现"></a>Java代码实现</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; generatePacketsByDoubleMean(<span class="built_in">int</span> people, <span class="built_in">int</span> money) &#123;</span><br><span class="line">    List&lt;Integer&gt; packets = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Random <span class="built_in">random</span> = <span class="keyword">new</span> Random();</span><br><span class="line">    <span class="keyword">while</span> (people &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">int</span> p = <span class="built_in">random</span>.nextInt(<span class="number">2</span> * money / people);</span><br><span class="line">        packets.<span class="built_in">add</span>(p);</span><br><span class="line">        money -= p;</span><br><span class="line">        people--;</span><br><span class="line">    &#125;</span><br><span class="line">    packets.<span class="built_in">add</span>(money);</span><br><span class="line"></span><br><span class="line">    Collections.shuffle(packets); <span class="comment">//更随机</span></span><br><span class="line">    <span class="keyword">return</span> packets;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="线段切割法"><a href="#线段切割法" class="headerlink" title="线段切割法"></a>线段切割法</h3><h4 id="算法思想-1"><a href="#算法思想-1" class="headerlink" title="算法思想"></a>算法思想</h4><p>如果把红包总金额想象成一条很长的线段，而每个人抢到的金额，则是这条主线段所拆分出的若干子线段。每一条子线段的长度可以由“切割点”来决定，当N个人一起抢红包的时候，就需要确定N-1个切割点。因此，当N个人一起抢总金额为M的红包时，只需要做N-1次随机运算，以此确定N-1个切割点。随机的范围区间是（1， M）。当所有切割点确定以后，子线段的长度也随之确定。这样每个人来抢红包的时候，只需要顺次领取与子线段长度等价的红包金额即可。</p><h4 id="Java代码实现-1"><a href="#Java代码实现-1" class="headerlink" title="Java代码实现"></a>Java代码实现</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; generatePacketsByLineCutting(<span class="built_in">int</span> people, <span class="built_in">int</span> money) &#123;</span><br><span class="line">    List&lt;Integer&gt; packets = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Random <span class="built_in">random</span> = <span class="keyword">new</span> Random();</span><br><span class="line">    Set&lt;Integer&gt; points = <span class="keyword">new</span> TreeSet&lt;&gt;();</span><br><span class="line">    <span class="comment">//利用TreeSet处理重复的随机切割点</span></span><br><span class="line">    <span class="keyword">while</span> (points.<span class="built_in">size</span>() &lt; people - <span class="number">1</span>) &#123;</span><br><span class="line">        points.<span class="built_in">add</span>(<span class="built_in">random</span>.nextInt(money - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    points.<span class="built_in">add</span>(money);</span><br><span class="line">    <span class="built_in">int</span> pre = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> p : points) &#123;</span><br><span class="line">        packets.<span class="built_in">add</span>(p - pre);</span><br><span class="line">        pre = p;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">   Collections.shuffle(packets); <span class="comment">//更随机</span></span><br><span class="line">   <span class="keyword">return</span> packets;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><p>参考链接</p><ul><li><a href="https://blog.csdn.net/qq_35393472/article/details/80073948" target="_blank" rel="noopener">Java抢红包代码实现及二倍均值法分析 </a></li><li><a href="https://blog.csdn.net/bjweimengshu/article/details/80045958" target="_blank" rel="noopener">漫画：如何实现抢红包算法？</a></li><li><a href="https://www.zhihu.com/question/22625187" target="_blank" rel="noopener">微信红包的随机算法是怎样实现的？</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;二倍均值法&quot;&gt;&lt;a href=&quot;#二倍均值法&quot; class=&quot;headerlink&quot; title=&quot;二倍均值法&quot;&gt;&lt;/a&gt;二倍均值法&lt;/h3&gt;&lt;h4 id=&quot;算法思想&quot;&gt;&lt;a href=&quot;#算法思想&quot; class=&quot;headerlink&quot; title=&quot;算法思想&quot;
+      
+    
+    </summary>
+    
+      <category term="抢红包" scheme="https://9191rs.me/categories/%E6%8A%A2%E7%BA%A2%E5%8C%85/"/>
+    
+    
+      <category term="Java" scheme="https://9191rs.me/tags/Java/"/>
+    
+      <category term="算法" scheme="https://9191rs.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="抢红包" scheme="https://9191rs.me/tags/%E6%8A%A2%E7%BA%A2%E5%8C%85/"/>
+    
+  </entry>
   
   <entry>
     <title>两道经典的动态规划问题</title>
