@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "088e4980"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="https://fonts.cat.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+
+
+  <meta name="keywords" content="Java,算法,排序,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="爱生活,爱柒柒" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序  代码如下：12345678public static void sort(int[] nums)&amp;#123;    int n = nums.le">
+<meta name="keywords" content="Java,算法,排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java实现常用的排序算法">
+<meta property="og:url" content="https://9191rs.me/posts/27762/index.html">
+<meta property="og:site_name" content="爱生活,爱柒柒">
+<meta property="og:description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序  代码如下：12345678public static void sort(int[] nums)&amp;#123;    int n = nums.le">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://9191rs.me/posts/27762/20180415162735131.png">
+<meta property="og:updated_time" content="2019-03-22T12:18:18.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java实现常用的排序算法">
+<meta name="twitter:description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序  代码如下：12345678public static void sort(int[] nums)&amp;#123;    int n = nums.le">
+<meta name="twitter:image" content="https://9191rs.me/posts/27762/20180415162735131.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeIn","post_body":"fadeIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+  
+  
+ 
+</script>
+
+
+
+  <link rel="canonical" href="https://9191rs.me/posts/27762/">
+
+
+
+
+
+  <title>Java实现常用的排序算法 | 爱生活,爱柒柒</title>
+  
+
+
+
+
+
+
+
+
+  															
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">爱生活,爱柒柒</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'tLXWKdsstE5UZFCodRRQ','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/27762/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LI Ren">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爱生活,爱柒柒">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java实现常用的排序算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-22T17:49:27+08:00">
+                2019-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/排序/" itemprop="url" rel="index">
+                    <span itemprop="name">排序</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,199
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>重新回顾下几种常见的排序算法。</p>
+<p><img src="/posts/27762/20180415162735131.png" alt=""></p>
+<hr>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><ul>
+<li>特点：效率低，实现简单 </li>
+<li>原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成</li>
+<li>平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2)</li>
+<li>空间复杂度O(1) </li>
+<li>稳定排序</li>
+</ul>
+<p>代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n-i<span class="number">-1</span>;j++)</span><br><span class="line">            <span class="keyword">if</span>(nums[j] &gt; nums[j+<span class="number">1</span>])</span><br><span class="line">                swap(nums,j,j+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><ul>
+<li>特点：效率低，容易实现。 </li>
+<li>原理：每一趟从待排序序列选择一个最小的元素放到已排好序序列的首位，剩下的位待排序序列，重复上述步骤直到完成排序</li>
+<li>平均时间复杂度 O(n^2) , 最优时间复杂度O (n^2),最坏时间复杂度 O(n^2)</li>
+<li>空间复杂度O(1) </li>
+<li>不稳定排序</li>
+<li>比较次数与序列初始化状态无关</li>
+</ul>
+<p>代码如下：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="built_in">sort</span>(<span class="built_in">int</span>[] nums)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">min</span> = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> j=i+<span class="number">1</span>;j&lt;n;j++)</span><br><span class="line">            <span class="keyword">if</span>(nums[j] &lt; nums[<span class="built_in">min</span>])</span><br><span class="line">                <span class="built_in">min</span> = j;</span><br><span class="line"></span><br><span class="line">        swap(nums,i,<span class="built_in">min</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><ul>
+<li>特点：效率低，容易实现。 </li>
+<li>原理：将数组分为两部分，将后部分元素逐一插入前部分有序元素的适当位置</li>
+<li>平均时间复杂度 O(n^2)，最好时间复杂度O(n), 最坏时间复杂度O(n^2)</li>
+<li>空间复杂度O(1) </li>
+<li>稳定排序</li>
+</ul>
+<p>代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = nums[i];</span><br><span class="line">        <span class="keyword">int</span> j = i;</span><br><span class="line">        <span class="keyword">for</span> (; j &gt; <span class="number">0</span> &amp;&amp; nums[j<span class="number">-1</span>] &gt; t; j--)</span><br><span class="line">            nums[j] = nums[j<span class="number">-1</span>];</span><br><span class="line"></span><br><span class="line">        nums[j] = t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><ul>
+<li>特点：高效，时间复杂度为nlogn。 </li>
+<li>原理：采用分治法的思想：首先设置一个中间值，然后以这个中间值为划分基准将待排序序列分成比该值大和比该值小的两部分，将这两部分再分别进行快速排序 直到序列只剩下一个元素</li>
+<li>平均时间复杂度O(nlogn) , 最好时间复杂度O(nlogn), 最坏时间复杂度 O(n^2)</li>
+<li>空间复杂度O(logn) </li>
+<li>不稳定排序</li>
+</ul>
+<p>代码如下：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="keyword">sort</span>(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> l,<span class="keyword">int</span> r)&#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">int</span> p = partition(nums,l,r);</span><br><span class="line">       <span class="keyword">sort</span>(nums,l,p-<span class="number">1</span>);</span><br><span class="line">       <span class="keyword">sort</span>(nums,p+<span class="number">1</span>,r);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> partition(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> l, <span class="keyword">int</span> r) &#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">int</span> v = nums[l];  <span class="comment">//标定点为第一个，也可以随机在[l,r]选择一个</span></span><br><span class="line">       <span class="keyword">int</span> j = l;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=l+<span class="number">1</span>;i&lt;=r;i++)</span><br><span class="line">           <span class="keyword">if</span>(nums[i] &lt; v)</span><br><span class="line">               swap(nums,++j,i);</span><br><span class="line"></span><br><span class="line">       swap(nums,l,j);</span><br><span class="line">       <span class="keyword">return</span> j;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//三路快排</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> sort3(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> l,<span class="keyword">int</span> r)&#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">int</span> v = nums[l];</span><br><span class="line"></span><br><span class="line">       <span class="keyword">int</span> lt = l,gt = r+<span class="number">1</span>;</span><br><span class="line">       <span class="keyword">int</span> i = l+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">while</span>(i &lt; gt)&#123;</span><br><span class="line">           <span class="keyword">if</span>(nums[i] &lt; v)</span><br><span class="line">               swap(nums,i++,++lt);</span><br><span class="line">           <span class="keyword">else</span> <span class="keyword">if</span>(nums[i] &gt; v)</span><br><span class="line">               swap(nums,i,--gt);</span><br><span class="line">           <span class="keyword">else</span></span><br><span class="line">               i++;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       swap(nums,l,lt);</span><br><span class="line">       <span class="keyword">sort</span>(nums,l,lt-<span class="number">1</span>);</span><br><span class="line">       <span class="keyword">sort</span>(nums,gt,r);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><ul>
+<li>平均时间复杂度O(nlogn) , 最好时间复杂度O(nlogn), 最坏时间复杂度O(nlgn)</li>
+<li>空间复杂度O(n) </li>
+<li>稳定排序</li>
+</ul>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">int</span>[] aux = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="built_in">sort</span>(<span class="built_in">int</span>[] nums,<span class="built_in">int</span> l ,<span class="built_in">int</span> r)&#123;</span><br><span class="line">    <span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span>;  <span class="comment">//这块有一个优化就是对于小规模数组，用插入效果更好</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> m = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">    <span class="built_in">sort</span>(nums,l,m);</span><br><span class="line">    <span class="built_in">sort</span>(nums,m+<span class="number">1</span>,r);</span><br><span class="line">    merge(nums,l,m,r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> merge(<span class="built_in">int</span>[] nums,<span class="built_in">int</span> l,<span class="built_in">int</span> m,<span class="built_in">int</span> r)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i=l;i&lt;=r;i++)</span><br><span class="line">        aux[i] = nums[i];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">int</span> i = l, j = m+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>( <span class="built_in">int</span> k = l ; k &lt;= r; k ++ )&#123;</span><br><span class="line">        <span class="keyword">if</span>( i &gt; m )</span><br><span class="line">            nums[k] = aux[j++];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( j &gt; r )</span><br><span class="line">            nums[k] = aux[i++];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( aux[i] &lt; aux[j])</span><br><span class="line">            nums[k] = aux[i++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            nums[k] = aux[j++];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><ul>
+<li>时间复杂度O(nlogn) </li>
+<li>空间复杂度 O(1) O(1)O(1)</li>
+<li>不稳定排序</li>
+</ul>
+<p>代码如下：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="built_in">sort</span>(<span class="built_in">int</span>[] nums)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> n = nums.length;</span><br><span class="line">    <span class="comment">//初始化一个最大堆</span></span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">cursor</span> = nums.length / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="built_in">cursor</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        maxHeap(nums, n, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i=n<span class="number">-1</span>;i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line">        swap(nums,<span class="number">0</span>,i);  <span class="comment">// 将最大的放到数组末尾</span></span><br><span class="line">        maxHeap(nums,i,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最大堆 root = i, left = 2*i+1, right = 2*i+2</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> maxHeap(<span class="built_in">int</span>[] nums, <span class="built_in">int</span> <span class="built_in">size</span>, <span class="built_in">int</span> root) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> left = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">int</span> right = root * <span class="number">2</span> + <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">int</span> t = root;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(left &lt; <span class="built_in">size</span> &amp;&amp; nums[left] &gt; nums[t])</span><br><span class="line">        t = left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(right &lt; <span class="built_in">size</span> &amp;&amp; nums[right] &gt; nums[t])</span><br><span class="line">        t = right;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(t != root)&#123;   <span class="comment">// 子节点比根节点大</span></span><br><span class="line">        swap(nums,root,t);</span><br><span class="line">        maxHeap(nums,<span class="built_in">size</span>,t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<ul>
+<li><a href="https://blog.csdn.net/qq_39098813/article/details/79950444" target="_blank" rel="noopener">动画演示</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+	<div align="center">
+	  
+		<div class="copyright">
+		<p><span>
+		<b>本文地址：</b><a href="/posts/27762/" title="Java实现常用的排序算法">https://9191rs.me/posts/27762/</a><br><b>转载请注明出处，谢谢！</b>
+		</span></p>
+		</div>
+	  
+	</div>
+		
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/排序/" rel="tag"># 排序</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+		
+		  <div class="post-nav">
+			<div class="post-nav-next post-nav-item">
+
+		      
+			</div>
+
+			<span class="post-nav-divider"></span>
+
+			<div class="post-nav-prev post-nav-item">
+
+		      
+		
+		        <a href="/posts/15969/" rel="next" title="抢红包算法">
+		
+		         抢红包算法 <i class="fa fa-chevron-right"></i>
+				</a>
+			  
+			</div>
+		  </div>
+		
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["sqq", "qzone", "weixin", "twi"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/logo.jpeg" alt="LI Ren">
+            
+              <p class="site-author-name" itemprop="name">LI Ren</p>
+              <p class="site-description motion-element" itemprop="description">且自前行，莫问归处！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LLLRS" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="15311257617@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://tengj.top/" title="嘟嘟独立博客" target="_blank">嘟嘟独立博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://crossoverjie.top/" title="crossoverjie" target="_blank">crossoverjie</a>
+                  </li>
+                
+              </ul>
+			  <div id="days"></div>
+
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/18/2017 12:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+            </div>
+          
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">4.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-number">5.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">6.</span> <span class="nav-text">堆排序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LI Ren</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span><br>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 小红心 -->
+	<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
