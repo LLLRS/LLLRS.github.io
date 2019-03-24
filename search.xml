@@ -8,8 +8,8 @@
         <category>排序</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>排序</tag>
       </tags>
   </entry>
@@ -21,8 +21,8 @@
         <category>抢红包</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>抢红包</tag>
       </tags>
   </entry>
@@ -34,8 +34,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -48,42 +48,6 @@
       </categories>
       <tags>
         <tag>心得感悟</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Disruptor实例之多个消费者不重复处理生产者发送过来的消息]]></title>
-    <url>%2Fposts%2F1333%2F</url>
-    <content type="text"><![CDATA[这篇文章主要用多生产者，多消费者模式来演示Disruptor中多个消费者处理不同的消息，且每条消息仅被处理一次。 基本结构Evevt类：交易信息类12345678910public class Order &#123; private String id; private String name; private double price; public Order() &#123; &#125; // get和set方法省略&#125; 生产者类：12345678910111213141516171819public class Producer &#123; private RingBuffer&lt;Order&gt; ringBuffer; public Producer(RingBuffer&lt;Order&gt; ringBuffer) &#123; this.ringBuffer = ringBuffer; &#125; public void sendData(String uuid) &#123; long sequence = ringBuffer.next(); try &#123; Order order = ringBuffer.get(sequence); order.setId(uuid); &#125; finally &#123; ringBuffer.publish(sequence); &#125; &#125;&#125; 消费者类：1234567891011121314151617181920212223public class Consumer implements WorkHandler&lt;Order&gt; &#123; private String comsumerId; private static AtomicInteger count = new AtomicInteger(0); private Random random = new Random(); public Consumer(String comsumerId) &#123; this.comsumerId = comsumerId; &#125; public void onEvent(Order event) throws Exception &#123; Thread.sleep(1 * random.nextInt(5)); System.err.println("当前消费者: " + this.comsumerId + ", 消费信息ID: " + event.getId()); count.incrementAndGet(); &#125; public int getCount()&#123; return count.get(); &#125;&#125; 执行的Main方法：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879public class Main &#123; public static void main(String[] args) throws InterruptedException &#123; //1 创建RingBuffer 另外一种创建方式 RingBuffer&lt;Order&gt; ringBuffer = RingBuffer.create(ProducerType.MULTI, new EventFactory&lt;Order&gt;() &#123; public Order newInstance() &#123; return new Order(); &#125; &#125;, 1024*1024, new YieldingWaitStrategy()); //2 通过ringBuffer 创建一个屏障 SequenceBarrier sequenceBarrier = ringBuffer.newBarrier(); //3 创建多个消费者数组: Consumer[] consumers = new Consumer[10]; for(int i = 0; i &lt; consumers.length; i++) &#123; consumers[i] = new Consumer("C" + i); &#125; //4 构建多消费者工作池 // 通过workpool控制多个消费者的行为 WorkerPool&lt;Order&gt; workerPool = new WorkerPool&lt;Order&gt;( ringBuffer, sequenceBarrier, new EventExceptionHandler(), consumers); //5 设置多个消费者的sequence序号 用于单独统计消费进度, 并且设置到ringbuffer中 ringBuffer.addGatingSequences(workerPool.getWorkerSequences()); //6 启动workerPool workerPool .start(Executors.newFixedThreadPool(5)); final CountDownLatch latch = new CountDownLatch(1); // 创建100个消费者（线程），每个消费者投递100条数据 for(int i = 0; i &lt; 100; i++) &#123; final Producer producer = new Producer(ringBuffer); new Thread(new Runnable() &#123; public void run() &#123; try &#123; latch.await(); &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; for(int j = 0; j&lt;100; j++) &#123; producer.sendData(UUID.randomUUID().toString()); &#125; &#125; &#125;).start(); &#125; Thread.sleep(2000); System.err.println("----------线程创建完毕，开始生产数据----------"); latch.countDown(); Thread.sleep(10000); // 用于等待结果执行完毕 System.err.println("任务总数:" + consumers[2].getCount()); &#125; // 异常处理机制 static class EventExceptionHandler implements ExceptionHandler&lt;Order&gt; &#123; public void handleEventException(Throwable ex, long sequence, Order event) &#123; &#125; public void handleOnStartException(Throwable ex) &#123; &#125; public void handleOnShutdownException(Throwable ex) &#123; &#125; &#125;&#125; 运行结果如下：]]></content>
-      <categories>
-        <category>Disruptor</category>
-      </categories>
-      <tags>
-        <tag>Disruptor</tag>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Disruptor实例之同一消息被多个消费者重复处理]]></title>
-    <url>%2Fposts%2F9030%2F</url>
-    <content type="text"><![CDATA[这篇文章主要用来演示Disruptor中同一消息被多个消费者重复处理，这里采用单生产者，多消费者模式来设置一个Event对象的属性，来演示串行操作、并行操作和多边形操作。 基本结构Evevt类：交易信息类123456789101112public class Trade &#123; private String id; private String name; private double price; private AtomicInteger count = new AtomicInteger(0); public Trade() &#123; &#125; // get和set方法省略&#125; 生产者类：123456789101112131415161718192021222324252627282930313233343536public class TradePushlisher implements Runnable &#123; private Disruptor&lt;Trade&gt; disruptor; private CountDownLatch latch; private static int PUBLISH_COUNT = 1; public TradePushlisher(CountDownLatch latch, Disruptor&lt;Trade&gt; disruptor) &#123; this.disruptor = disruptor; this.latch = latch; &#125; public void run() &#123; TradeEventTranslator eventTranslator = new TradeEventTranslator(); for(int i =0; i &lt; PUBLISH_COUNT; i ++)&#123; //新的提交任务的方式 disruptor.publishEvent(eventTranslator); &#125; latch.countDown(); &#125;&#125;class TradeEventTranslator implements EventTranslator&lt;Trade&gt; &#123; private Random random = new Random(); public void translateTo(Trade event, long sequence) &#123; this.generateTrade(event); &#125; private void generateTrade(Trade event) &#123; event.setPrice(random.nextDouble() * 9999); &#125; &#125; EventHandler类: 这里有五个EventHandler类，分别用于设置Event类中不同的属性 Handler1：设置name属性。1234567891011121314public class Handler1 implements EventHandler&lt;Trade&gt;, WorkHandler&lt;Trade&gt;&#123; //EventHandler public void onEvent(Trade event, long sequence, boolean endOfBatch) throws Exception &#123; this.onEvent(event); &#125; //WorkHandler public void onEvent(Trade event) throws Exception &#123; System.err.println("handler 1 : SET NAME"); Thread.sleep(1000); event.setName("H1"); &#125;&#125; Handler2：设置id属性。12345678public class Handler2 implements EventHandler&lt;Trade&gt; &#123; public void onEvent(Trade event, long sequence, boolean endOfBatch) throws Exception &#123; System.err.println("handler 2 : SET ID"); Thread.sleep(2000); event.setId(UUID.randomUUID().toString()); &#125;&#125; Handler3：输出设置的信息。12345678910111213public class Handler3 implements EventHandler&lt;Trade&gt; &#123; public void onEvent(Trade event, long sequence, boolean endOfBatch) throws Exception &#123; System.err.println("handler 3 : NAME: " + event.getName() + ", ID: " + event.getId() + ", PRICE: " + event.getPrice() + " INSTANCE : " + event.toString()); &#125;&#125; Handler4：设置的Price属性为17。12345678public class Handler4 implements EventHandler&lt;Trade&gt; &#123; public void onEvent(Trade event, long sequence, boolean endOfBatch) throws Exception &#123; System.err.println("handler 4 : SET PRICE"); Thread.sleep(1000); event.setPrice(17.0); &#125;&#125; Handle5：对设置的Price属性加3。 12345678public class Handler5 implements EventHandler&lt;Trade&gt; &#123; public void onEvent(Trade event, long sequence, boolean endOfBatch) throws Exception &#123; System.err.println("handler 5 : GET PRICE: " + event.getPrice()); Thread.sleep(1000); event.setPrice(event.getPrice() + 3.0); &#125;&#125; 执行的Main方法：1234567891011121314151617181920212223242526272829303132333435363738394041public static void main(String[] args) throws Exception &#123; //构建一个线程池用于提交任务 ExecutorService es1 = Executors.newFixedThreadPool(1); ExecutorService es2 = Executors.newFixedThreadPool(5); //1 构建Disruptor Disruptor&lt;Trade&gt; disruptor = new Disruptor&lt;Trade&gt;( new EventFactory&lt;Trade&gt;() &#123; public Trade newInstance() &#123; return new Trade(); &#125; &#125;, 1024*1024, es2, ProducerType.SINGLE, new BusySpinWaitStrategy()); //2 把消费者设置到Disruptor中 handleEventsWith // TODO 用于实现不同的操作 //3 启动disruptor RingBuffer&lt;Trade&gt; ringBuffer = disruptor.start(); CountDownLatch latch = new CountDownLatch(1); long begin = System.currentTimeMillis(); // 采用线程池来提交任务 es1.submit(new TradePushlisher(latch, disruptor)); latch.await(); //进行向下 disruptor.shutdown(); es1.shutdown(); es2.shutdown(); System.err.println("总耗时: " + (System.currentTimeMillis() - begin)); &#125; 串行操作串行操作即消费者顺序的处理同一消息。在本例中即先设置name属性，在设置id属性，最后输出设置的信息。流程图如下： TODO处添加的代码为：1234disruptor .handleEventsWith(new Handler1()) .handleEventsWith(new Handler2()) .handleEventsWith(new Handler3()); 运行结果如下： 并行操作并行操作即消费者可以并行的处理同一消息。在本例中即可以同时并行name属性和设置id属性，最后输出设置的信息（严格来说应该是菱形操作）。流程图如下： TODO处添加的代码为12disruptor.handleEventsWith(new Handler1(), new Handler2()) .handleEventsWith(new Handler3()); 或者：12EventHandlerGroup&lt;Trade&gt; ehGroup = disruptor.handleEventsWith(new Handler1(), new Handler2());ehGroup.then(new Handler3()); 运行结果如下： 多边形操作并行操作即消费者可以串行并行组合任意顺序处理同一消息。流程图如下： TODO处添加的代码为:123456789Handler1 h1 = new Handler1();Handler2 h2 = new Handler2();Handler3 h3 = new Handler3();Handler4 h4 = new Handler4();Handler5 h5 = new Handler5();disruptor.handleEventsWith(h1, h4);disruptor.after(h1).handleEventsWith(h2);disruptor.after(h4).handleEventsWith(h5);disruptor.after(h2, h5).handleEventsWith(h3); 运行结果如下：]]></content>
-      <categories>
-        <category>Disruptor</category>
-      </categories>
-      <tags>
-        <tag>Disruptor</tag>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[初探Disruptor]]></title>
-    <url>%2Fposts%2F56120%2F</url>
-    <content type="text"><![CDATA[Disruptor简介Disruptor 是一个用于在线程间通信的高效低延时的开源框架，它被用在了LMAX系统中。这个系统是建立在JVM平台上，核心是一个业务逻辑处理器，官方号称它能够在一个线程里每秒处理6百万订单。 Disruptor的设计似乎和BlockingQueue相近（生产者—消费者），但是 Disruptor能够在无锁的情况下实现Queue并发操作，也就是 Disruptor实际上是非阻塞的。下图是官方给出的和ArrayBlockingQueue对比测试结果： Unicast: 1P – 1C指的是一个生产者，一个消费者。Pipeline: 1P – 3C指的是一个生产者产生的事件要顺序被三个消费者使用。Sequencer: 3P – 1C指的是三个生产者，一个消费者。Multicast: 1P – 3C指的是一个生产者，三个消费者。Diamond: 1P – 3C指的是一个生产者，三个消费者（c1和c2同时处理完成后，c3才能处理）。 从上面可以明显看出： ArrayBlockingQueue的效率比Disruptor低很多。 Disruptor构成RingBuffer RingBuffer是一个由数组（有界）构成的环形队列，它是不同线程之间传递数据的缓冲区，也就是真正存储消息数据的地方。 RingBuffer维护了一个指针（cursor/Sequence）来向队列中插入或者读取消息。这个指针是java long类型的（64位有符号数），指针采用往上计数自增的方式，通过对指针按照数组的长度取模找出数组的下标来定位入口，为了提高性能通常将ring buffer的size大小设置成2的N次方。RingBuffer对数据的写入是一个两段操作：先获取可以写入的位置，再执行真正的写入。具体过程可以参考这篇文章。 Producer Producer即生产者，泛指调用 Disruptor 发布事件(把写入缓冲队列的一个元素定义为一个事件)的用户代码。 有两种实现策略，一个是SingleThreadedStrategy（单线程策略）另一个是 MultiThreadedStrategy（多线程策略），两种策略对应的实现类为SingleProducerSequencer、MultiProducerSequencer,两者都实现了Sequencer类，之所以叫Sequencer是因为他们都是通过Sequence来实现数据写 。 它们定义在生产者和消费者之间快速、正确地传递数据的并发算法。具体使用哪个根据自己的场景来定，多线程的策略使用了AtomicLong（Java提供的CAS操作），而单线程的使用long，没有锁也没有CAS。这意味着单线程版本会非常快，因为它只有一个生产者，不会产生序号上的冲突。 Consumer/EventProcessorConsumer和EventProcessor是一个概念，新的版本中由EventProcessor概念替代了Consumer。 SequenceSequence是一个递增的序号，说白了就是计数器；其次，由于需要在线程间共享，所以Sequence是引用传递，并且是线程安全的；再次，Sequence支持CAS操作；最后，为了提高效率，Sequence通过padding来避免伪共享。 通过顺序递增的序号来编号管理通过其进行交换的数据（事件），对数据(事件)的处理过程总是沿着序号逐个递增处理。一个 Sequence 用于跟踪标识某个特定的事件处理者( RingBuffer/Consumer )的处理进度。 生产者对RingBuffer的互斥访问，生产者与消费者之间的协调以及消费者之间的协调，都是通过Sequence实现。几乎每一个重要的组件都包含Sequence。 说明：虽然一个 AtomicLong 也可以用于标识进度，但定义 Sequence 来负责该问题还有另一个目的，那就是防止不同的 Sequence 之间的CPU缓存伪共享(Flase Sharing)问题。 Sequence Barrier用于保持对RingBuffer的 main published Sequence 和Consumer依赖的其它Consumer的 Sequence 的引用。 Sequence Barrier 还定义了决定 Consumer 是否还有可处理的事件的逻辑。SequenceBarrier用来在消费者之间以及消费者和RingBuffer之间建立依赖关系。 在Disruptor中，依赖关系实际上指的是Sequence的大小关系，消费者A依赖于消费者B指的是消费者A的Sequence一定要小于等于消费者B的Sequence，这种大小关系决定了处理某个消息的先后顺序。因为所有消费者都依赖于RingBuffer，所以消费者的Sequence一定小于等于RingBuffer中名为cursor的Sequence，即消息一定是先被生产者放到Ringbuffer中，然后才能被消费者处理。 SequenceBarrier在初始化的时候会收集需要依赖的组件的Sequence，RingBuffer的cursor会被自动的加入其中。需要依赖其他消费者和/或RingBuffer的消费者在消费下一个消息时，会先等待在SequenceBarrier上，直到所有被依赖的消费者和RingBuffer的Sequence大于等于这个消费者的Sequence。当被依赖的消费者或RingBuffer的Sequence有变化时，会通知SequenceBarrier唤醒等待在它上面的消费者。 Wait Strategy当消费者等待在SequenceBarrier上时，有许多可选的等待策略，不同的等待策略在延迟和CPU资源的占用上有所不同，可以视应用场景选择： BusySpinWaitStrategy ： 自旋等待，类似Linux Kernel使用的自旋锁。低延迟但同时对CPU资源的占用也多。 BlockingWaitStrategy ： 使用锁和条件变量。CPU资源的占用少，延迟大。 SleepingWaitStrategy ： 在多次循环尝试不成功后，选择让出CPU，等待下次调度，多次调度后仍不成功，尝试前睡眠一个纳秒级别的时间再尝试。这种策略平衡了延迟和CPU资源占用，但延迟不均匀。 YieldingWaitStrategy ： 在多次循环尝试不成功后，选择让出CPU，等待下次调。平衡了延迟和CPU资源占用，但延迟也比较均匀。 PhasedBackoffWaitStrategy ： 上面多种策略的综合，CPU资源的占用少，延迟大。 Event在 Disruptor 的语义中，生产者和消费者之间进行交换的数据被称为事件(Event)。它不是一个被 Disruptor 定义的特定类型，而是由 Disruptor 的使用者定义并指定。 EventProcessorEventProcessor 持有特定消费者(Consumer)的 Sequence，并提供用于调用事件处理实现的事件循环(Event Loop)。通过把EventProcessor提交到线程池来真正执行，有两类Processor。 其中一类消费者是BatchEvenProcessor。每个BatchEvenProcessor有一个Sequence，来记录自己消费RingBuffer中消息的情况。所以，一个消息必然会被每一个BatchEvenProcessor消费。 另一类消费者是WorkProcessor。每个WorkProcessor也有一个Sequence，多个WorkProcessor还共享一个Sequence用于互斥的访问RingBuffer。一个消息被一个WorkProcessor消费，就不会被共享一个Sequence的其他WorkProcessor消费。这个被WorkProcessor共享的Sequence相当于尾指针。 EventHandlerDisruptor 定义的事件处理接口，由用户实现，用于处理事件，是 Consumer 的真正实现。开发者实现EventHandler，然后作为入参传递给EventProcessor的实例。 总上来看：Producer生产event数据，EventHandler作为消费者消费event并进行逻辑处理。消费消息的进度通过Sequence来控制。费者之间以及消费者和RingBuffer之间的依赖关系由SequenceBarrier来控制。 Disruptor入门DemoDisruptor创建过程有四步： 建立一个工厂Event类，用于创建Event类实例对象 建立一个监听事件类，用于处理数据 实例化Disruptor实例，配置相应的参数，编写Disruptor核心组件 编写生产者组件，向Disruptor容器中投递数据 下面以一个具体例子说明： Evevt类：商品信息1234567891011public class OrderEvent &#123; private long value; public long getValue() &#123; return value; &#125; public void setValue(long value) &#123; this.value = value; &#125;&#125; 工厂Event类1234567public class OrderEventFactory implements EventFactory&lt;OrderEvent&gt; &#123; public OrderEvent newInstance() &#123; return new OrderEvent(); &#125;&#125; EventHandler类:123456public class OrderEventHandler implements EventHandler&lt;OrderEvent&gt; &#123; public void onEvent(OrderEvent orderEvent, long l, boolean b) throws Exception &#123; System.out.println("消费的内容是：" + orderEvent.getValue()); &#125;&#125; Producer类：产生商品1234567891011121314151617181920212223public class OrderEventProducer &#123; private RingBuffer&lt;OrderEvent&gt; ringBuffer; public OrderEventProducer(RingBuffer&lt;OrderEvent&gt; ringBuffer) &#123; this.ringBuffer = ringBuffer; &#125; public void sendData(ByteBuffer data)&#123; //1 在生产者发送消息的时候, 首先从我们的ringBuffer里面 获取一个可用的序号 long sequence = ringBuffer.next(); //0 try &#123; //2 根据这个序号, 找到具体的 "OrderEvent" 元素 注意:此时获取的OrderEvent对象是一个没有被赋值的"空对象" OrderEvent event = ringBuffer.get(sequence); //3 进行实际的赋值处理 event.setValue(data.getLong(0)); &#125; finally &#123; //4 提交发布操作 ringBuffer.publish(sequence); &#125; &#125;&#125; 执行的Main方法：123456789101112131415161718192021222324252627282930313233343536373839404142public static void main(String[] args) &#123; int ringBufferSize = 1024 * 1024; ExecutorService executor = Executors.newFixedThreadPool(4); /** * 1 eventFactory: 消息(event)工厂对象 * 2 ringBufferSize: 容器的长度 * 3 executor: 线程池(建议使用自定义线程池) RejectedExecutionHandler * 4 ProducerType: 单生产者 还是 多生产者 * 5 waitStrategy: 等待策略 */ //1. 实例化disruptor对象 Disruptor&lt;OrderEvent&gt; disruptor = new Disruptor&lt;OrderEvent&gt;( new OrderEventFactory(), ringBufferSize, executor, ProducerType.SINGLE, new BlockingWaitStrategy() ); //2. 添加消费者的监听 (构建disruptor 与 消费者的一个关联关系) disruptor.handleEventsWith(new OrderEventHandler()); //3. 启动disruptor disruptor.start(); //4. 获取实际存储数据的容器: RingBuffer RingBuffer&lt;OrderEvent&gt; ringBuffer = disruptor.getRingBuffer(); OrderEventProducer producer = new OrderEventProducer(ringBuffer); ByteBuffer data = ByteBuffer.allocate(8) ; for(long i=0;i&lt;100;i++)&#123; data.putLong(0,i); producer.sendData(data); &#125; disruptor.shutdown(); executor.shutdown();&#125; 参考文章： LMAX-Exchange/disruptor 每秒钟承载600万订单级别的无锁并行计算框架-Disruptor Disruptor(无锁并发框架)-发布 并发框架Disruptor场景应用]]></content>
-      <categories>
-        <category>Disruptor</category>
-      </categories>
-      <tags>
-        <tag>Disruptor</tag>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -116,8 +80,8 @@
         <category>分布式</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -141,8 +105,8 @@
         <category>分布式</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -216,8 +180,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -229,8 +193,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -241,8 +205,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -254,8 +218,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
         <tag>剑指offer</tag>
       </tags>
@@ -268,8 +232,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -281,8 +245,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -306,8 +270,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -319,8 +283,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -332,8 +296,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -358,8 +322,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -461,8 +425,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -474,8 +438,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -487,8 +451,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -500,8 +464,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -513,8 +477,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -550,8 +514,8 @@
         <category>剑指offer</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>剑指offer</tag>
       </tags>
   </entry>
@@ -575,8 +539,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -588,8 +552,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -601,8 +565,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -614,8 +578,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -627,8 +591,8 @@
         <category>二叉树</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>BST</tag>
       </tags>
   </entry>
@@ -640,8 +604,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -653,8 +617,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -692,8 +656,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -705,8 +669,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -718,8 +682,8 @@
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
         <tag>leetcode</tag>
       </tags>
   </entry>
@@ -731,8 +695,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>算法</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
