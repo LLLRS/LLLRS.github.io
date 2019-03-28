@@ -134,7 +134,7 @@
 
 
 
-  <meta name="keywords" content="算法,Java,leetcode,剑指offer,">
+  <meta name="keywords" content="算法,Java,Dijkstra,">
 
 
 
@@ -147,20 +147,18 @@
 
 
 
-<meta name="description" content="题目描述输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。  解题思路这道题的暴力解法是先求出这个数组中所有数字的全排列，然后把每个排列拼接起来，最后求出拼起来的数字的最大值。但是如果能找到一个排序规则，使得根据这个规则排出来的数组能排成一个最大的数字。要确定排序规则，就得比较两个数字，也就是给出两个数字m和n，我们需要确定一个规则m和n哪个更大，而不是仅仅只">
-<meta name="keywords" content="算法,Java,leetcode,剑指offer">
+<meta name="description" content="Dijkstra算法的特点 Dijkstra算法使用了广度优先搜索解决赋权有向图最短路径问题。 Dijkstra算法的时间复杂度是n的平方。 Dijkstra算法只能适用于权值为正的情况下；如果权值存在负数，则不能使用。  Dijkstra算法的计算过程&amp;#8195;&amp;#8195;1.设置两个顶点集S和T，集合S中存放已经找到最短路径的顶点，集合T中存放着当前还未找到最短的顶点；&amp;#8195;&amp;#">
+<meta name="keywords" content="算法,Java,Dijkstra">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 第179题 Largest Number">
-<meta property="og:url" content="https://9191rs.me/posts/26752/index.html">
+<meta property="og:title" content="Dijkstra算法">
+<meta property="og:url" content="https://9191rs.me/posts/24142/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="题目描述输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。  解题思路这道题的暴力解法是先求出这个数组中所有数字的全排列，然后把每个排列拼接起来，最后求出拼起来的数字的最大值。但是如果能找到一个排序规则，使得根据这个规则排出来的数组能排成一个最大的数字。要确定排序规则，就得比较两个数字，也就是给出两个数字m和n，我们需要确定一个规则m和n哪个更大，而不是仅仅只">
+<meta property="og:description" content="Dijkstra算法的特点 Dijkstra算法使用了广度优先搜索解决赋权有向图最短路径问题。 Dijkstra算法的时间复杂度是n的平方。 Dijkstra算法只能适用于权值为正的情况下；如果权值存在负数，则不能使用。  Dijkstra算法的计算过程&amp;#8195;&amp;#8195;1.设置两个顶点集S和T，集合S中存放已经找到最短路径的顶点，集合T中存放着当前还未找到最短的顶点；&amp;#8195;&amp;#">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://9191rs.me/posts/26752/1.jpg">
-<meta property="og:updated_time" content="2018-11-01T09:20:40.315Z">
+<meta property="og:updated_time" content="2019-03-28T13:34:40.663Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode 第179题 Largest Number">
-<meta name="twitter:description" content="题目描述输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。  解题思路这道题的暴力解法是先求出这个数组中所有数字的全排列，然后把每个排列拼接起来，最后求出拼起来的数字的最大值。但是如果能找到一个排序规则，使得根据这个规则排出来的数组能排成一个最大的数字。要确定排序规则，就得比较两个数字，也就是给出两个数字m和n，我们需要确定一个规则m和n哪个更大，而不是仅仅只">
-<meta name="twitter:image" content="https://9191rs.me/posts/26752/1.jpg">
+<meta name="twitter:title" content="Dijkstra算法">
+<meta name="twitter:description" content="Dijkstra算法的特点 Dijkstra算法使用了广度优先搜索解决赋权有向图最短路径问题。 Dijkstra算法的时间复杂度是n的平方。 Dijkstra算法只能适用于权值为正的情况下；如果权值存在负数，则不能使用。  Dijkstra算法的计算过程&amp;#8195;&amp;#8195;1.设置两个顶点集S和T，集合S中存放已经找到最短路径的顶点，集合T中存放着当前还未找到最短的顶点；&amp;#8195;&amp;#">
 
 
 
@@ -193,13 +191,13 @@
 
 
 
-  <link rel="canonical" href="https://9191rs.me/posts/26752/">
+  <link rel="canonical" href="https://9191rs.me/posts/24142/">
 
 
 
 
 
-  <title>leetcode 第179题 Largest Number | 爱生活,爱柒柒</title>
+  <title>Dijkstra算法 | 爱生活,爱柒柒</title>
   
 
 
@@ -377,7 +375,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/26752/">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/24142/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LI Ren">
@@ -394,7 +392,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode 第179题 Largest Number</h1>
+          <h1 class="post-title" itemprop="name headline">Dijkstra算法</h1>
         
 
         <div class="post-meta">
@@ -406,8 +404,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T17:00:57+08:00">
-                2018-11-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T21:26:07+08:00">
+                2019-03-28
               </time>
             
 
@@ -429,8 +427,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/最短路径/" itemprop="url" rel="index">
+                    <span itemprop="name">最短路径</span>
                   </a>
                 </span>
 
@@ -462,7 +460,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  438
+                  667
                 </span>
               
 
@@ -487,13 +485,17 @@
       
 
       
-        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个正整数数组，把数组里的所有数字拼接成为一个数，求能拼接出的所有数字中最大的那个。</p>
-<p><div align="center"><img src="/posts/26752/1.jpg" alt=""></div></p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>这道题的暴力解法是先求出这个数组中所有数字的全排列，然后把每个排列拼接起来，最后求出拼起来的数字的最大值。<br>但是如果能找到一个排序规则，使得根据这个规则排出来的数组能排成一个最大的数字。要确定排序规则，就得比较两个数字，也就是给出两个数字m和n，我们需要确定一个规则m和n哪个更大，而不是仅仅只是比较这两个数字的数值哪个更大。<br>根据题目的要求，两个数字m和n能够拼接成数字mn和nm。如果mn &lt; nm,则应该打印nm。也就是n应该在m前面。反之，m应该在n前面。<br>同时应该注意两个数字的拼接过程中可能会出现溢出，而一个解决大数问题的思路就是把数字转换为字符串。同时mn和nm的长度相等，按照字符串大小的比较规则就可以。</p>
-<h3 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">  public  String largestNumber(int[] nums) &#123;</span><br><span class="line">      </span><br><span class="line">  	ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;()<span class="comment">;</span></span><br><span class="line">  	StringBuilder <span class="keyword">sb </span>= new StringBuilder()<span class="comment">;</span></span><br><span class="line">  	</span><br><span class="line">  	int z = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">  	for(int t : nums)&#123;</span><br><span class="line">  		list.<span class="keyword">add(t);</span></span><br><span class="line"><span class="keyword"> </span> 		if(t == <span class="number">0</span>)</span><br><span class="line">  			z++<span class="comment">;</span></span><br><span class="line">  	&#125;</span><br><span class="line">  	</span><br><span class="line">      if(z==nums.length)</span><br><span class="line">  		return <span class="string">"0"</span><span class="comment">;</span></span><br><span class="line">      </span><br><span class="line">  	Collections.sort(list,new Comparator&lt;Integer&gt;() &#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public int <span class="built_in">compare</span>(Integer <span class="built_in">t1</span>, Integer <span class="built_in">t2</span>) &#123;</span><br><span class="line">		String <span class="built_in">s1</span> = <span class="built_in">t1</span>.toString() + <span class="built_in">t2</span>.toString()<span class="comment">;</span></span><br><span class="line">		String <span class="built_in">s2</span> = <span class="built_in">t2</span>.toString() + <span class="built_in">t1</span>.toString()<span class="comment">;</span></span><br><span class="line">		return <span class="built_in">s2</span>.compareTo(<span class="built_in">s1</span>)<span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;)<span class="comment">;</span></span><br><span class="line">  	</span><br><span class="line">  	for(int t : list)</span><br><span class="line">  		<span class="keyword">sb.append(t);</span></span><br><span class="line"><span class="keyword"> </span> 	</span><br><span class="line">  	return <span class="keyword">sb.toString();</span></span><br><span class="line"><span class="keyword"> </span> &#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="Dijkstra算法的特点"><a href="#Dijkstra算法的特点" class="headerlink" title="Dijkstra算法的特点"></a>Dijkstra算法的特点</h3><ul>
+<li>Dijkstra算法使用了广度优先搜索解决赋权有向图最短路径问题。</li>
+<li>Dijkstra算法的时间复杂度是n的平方。</li>
+<li>Dijkstra算法只能适用于权值为正的情况下；如果权值存在负数，则不能使用。</li>
+</ul>
+<h3 id="Dijkstra算法的计算过程"><a href="#Dijkstra算法的计算过程" class="headerlink" title="Dijkstra算法的计算过程"></a>Dijkstra算法的计算过程</h3><p>&#8195;&#8195;1.设置两个顶点集S和T，集合S中存放已经找到最短路径的顶点，集合T中存放着当前还未找到最短的顶点；<br>&#8195;&#8195;2.初始状态下，集合S中只包含源点V1，T中为除了源点之外的其余顶点，此时源点到各顶点的最短路径为两个顶点所连的边上的权值，如果源点V1到该顶点没有边，则最小路径为无穷大；<br>&#8195;&#8195;3.从集合T中选取到源点V1的路径长度最短的顶点Vi加入到集合S中；<br>&#8195;&#8195;4.修改源点V1到集合T中剩余顶点Vj的最短路径长度。新的最短路径长度值为Vj原来的最短路径长度值与顶点Vi的最短路径长度加上Vi到Vj的路径长度值中的较小者；<br>&#8195;&#8195;5.不断重复步骤3、4，直至集合T的顶点全部加入到集合S中。</p>
+<h3 id="Java代码实现"><a href="#Java代码实现" class="headerlink" title="Java代码实现"></a>Java代码实现</h3><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class DijkstraDemo &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="built_in">int</span> MAXVALUE = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">int</span>[] path = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">int</span>[] dis = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line">        <span class="comment">//定义图的临接矩阵，假设0为源点</span></span><br><span class="line">        <span class="built_in">int</span>[][] wt = &#123;&#123;<span class="number">0</span>,<span class="number">4</span>,<span class="number">1</span>,MAXVALUE,MAXVALUE&#125;,</span><br><span class="line">                &#123;MAXVALUE,<span class="number">0</span>,MAXVALUE,MAXVALUE,<span class="number">4</span>&#125;,</span><br><span class="line">                &#123;MAXVALUE,<span class="number">2</span>,<span class="number">0</span>,<span class="number">4</span>,MAXVALUE&#125;,</span><br><span class="line">                &#123;MAXVALUE,MAXVALUE,MAXVALUE,<span class="number">0</span>,<span class="number">4</span>&#125;,</span><br><span class="line">                &#123;MAXVALUE,MAXVALUE,MAXVALUE,MAXVALUE,<span class="number">0</span>&#125;&#125;;</span><br><span class="line">        <span class="built_in">int</span> n = wt.length;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Dijkstra(wt,<span class="number">0</span>,n);</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">            System.out.<span class="built_in">println</span>(<span class="string">"源点0到"</span>+i+<span class="string">"的距离是： "</span> + dis[i] + <span class="string">" ;经过的路径是： "</span> + getPath(<span class="number">0</span>,i));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//返回为0到其他点的最短距离</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> Dijkstra(<span class="built_in">int</span> [][] wt,<span class="built_in">int</span> s,<span class="built_in">int</span> n)&#123;</span><br><span class="line"></span><br><span class="line">        dis = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">        <span class="built_in">boolean</span>[] used = <span class="keyword">new</span> <span class="built_in">boolean</span>[n];</span><br><span class="line">        path = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">        <span class="comment">//初始化</span></span><br><span class="line">        used[<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">        dis = wt[s];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">            path[i] = s;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="built_in">int</span> <span class="built_in">min</span> = MAXVALUE;</span><br><span class="line">            <span class="built_in">int</span> idx = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">int</span> j = <span class="number">0</span>;j &lt; n ;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(!used[j] &amp;&amp; dis[j] &lt; <span class="built_in">min</span>)&#123;</span><br><span class="line">                  idx = j;</span><br><span class="line">                  <span class="built_in">min</span> = dis[j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(idx == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">            used[idx] = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(!used[j] &amp;&amp; wt[idx][j] != MAXVALUE &amp;&amp; <span class="built_in">min</span> + wt[idx][j] &lt; dis[j]) &#123;</span><br><span class="line">                    dis[j] = <span class="built_in">min</span> + wt[idx][j];</span><br><span class="line">                    path[j] = idx;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">String</span> getPath(<span class="built_in">int</span> s,<span class="built_in">int</span> i) &#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.<span class="built_in">append</span>(i).<span class="built_in">append</span>(<span class="string">"&gt;--"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (path[i] != s)&#123;</span><br><span class="line">            i = path[i];</span><br><span class="line">            sb.<span class="built_in">append</span>(i).<span class="built_in">append</span>(<span class="string">"&gt;--"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.<span class="built_in">append</span>(s);</span><br><span class="line">        <span class="keyword">return</span> sb.<span class="built_in">reverse</span>().toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
+<p>参考链接</p>
 <ul>
-<li><strong>详情请参见剑指offer第二版面试题45</strong></li>
+<li><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank" rel="noopener">维基-Dijkstra算法</a></li>
 </ul>
 
       
@@ -505,7 +507,7 @@
 	  
 		<div class="copyright">
 		<p><span>
-		<b>本文地址：</b><a href="/posts/26752/" title="leetcode 第179题 Largest Number">https://9191rs.me/posts/26752/</a><br><b>转载请注明出处，谢谢！</b>
+		<b>本文地址：</b><a href="/posts/24142/" title="Dijkstra算法">https://9191rs.me/posts/24142/</a><br><b>转载请注明出处，谢谢！</b>
 		</span></p>
 		</div>
 	  
@@ -526,9 +528,7 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
-          
-            <a href="/tags/剑指offer/" rel="tag"># 剑指offer</a>
+            <a href="/tags/Dijkstra/" rel="tag"># Dijkstra</a>
           
         </div>
       
@@ -542,12 +542,6 @@
 			<div class="post-nav-next post-nav-item">
 
 		      
-
-		       <a href="/posts/38306/" rel="prev" title="leetcode Insert Delete GetRandom O(1) ">
-
-		          <i class="fa fa-chevron-left"></i> leetcode Insert Delete GetRandom O(1) 
-				</a>
-			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -556,9 +550,9 @@
 
 		      
 		
-		        <a href="/posts/44614/" rel="next" title="leetcode 第84题 Largest Rectangle in Histogram">
+		        <a href="/posts/27762/" rel="next" title="Java实现常用的排序算法">
 		
-		         leetcode 第84题 Largest Rectangle in Histogram <i class="fa fa-chevron-right"></i>
+		         Java实现常用的排序算法 <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -793,7 +787,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java实现"><span class="nav-number">3.</span> <span class="nav-text">Java实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dijkstra算法的特点"><span class="nav-number">1.</span> <span class="nav-text">Dijkstra算法的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dijkstra算法的计算过程"><span class="nav-number">2.</span> <span class="nav-text">Dijkstra算法的计算过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java代码实现"><span class="nav-number">3.</span> <span class="nav-text">Java代码实现</span></a></li></ol></div>
             
 
           </div>
