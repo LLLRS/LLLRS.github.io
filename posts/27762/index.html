@@ -147,19 +147,19 @@
 
 
 
-<meta name="description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序  代码如下：12345678public static void sort(int[] nums)&amp;#123;    int n = nums.le">
+<meta name="description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序 应用场景：数据量小且基本有序的情况下  代码如下：12345678public static void sort(int[] nums)&amp;#123;">
 <meta name="keywords" content="算法,Java,排序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java实现常用的排序算法">
 <meta property="og:url" content="https://9191rs.me/posts/27762/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序  代码如下：12345678public static void sort(int[] nums)&amp;#123;    int n = nums.le">
+<meta property="og:description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序 应用场景：数据量小且基本有序的情况下  代码如下：12345678public static void sort(int[] nums)&amp;#123;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://9191rs.me/posts/27762/20180415162735131.png">
-<meta property="og:updated_time" content="2019-03-22T12:18:52.801Z">
+<meta property="og:updated_time" content="2019-04-11T13:40:18.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java实现常用的排序算法">
-<meta name="twitter:description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序  代码如下：12345678public static void sort(int[] nums)&amp;#123;    int n = nums.le">
+<meta name="twitter:description" content="重新回顾下几种常见的排序算法。   冒泡排序 特点：效率低，实现简单  原理：将待排序列中最大的数往后冒泡，成为新的序列，重复以上操作直到所有元素排列完成 平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2) 空间复杂度O(1)  稳定排序 应用场景：数据量小且基本有序的情况下  代码如下：12345678public static void sort(int[] nums)&amp;#123;">
 <meta name="twitter:image" content="https://9191rs.me/posts/27762/20180415162735131.png">
 
 
@@ -462,7 +462,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,199
+                  1,326
                 </span>
               
 
@@ -496,6 +496,7 @@
 <li>平均时间复杂度 O(n^2) ,最好O(n),最差O(n^2)</li>
 <li>空间复杂度O(1) </li>
 <li>稳定排序</li>
+<li>应用场景：数据量小且基本有序的情况下</li>
 </ul>
 <p>代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n-i<span class="number">-1</span>;j++)</span><br><span class="line">            <span class="keyword">if</span>(nums[j] &gt; nums[j+<span class="number">1</span>])</span><br><span class="line">                swap(nums,j,j+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
@@ -506,6 +507,7 @@
 <li>空间复杂度O(1) </li>
 <li>不稳定排序</li>
 <li>比较次数与序列初始化状态无关</li>
+<li>应用场景：数据规模比较小</li>
 </ul>
 <p>代码如下：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="built_in">sort</span>(<span class="built_in">int</span>[] nums)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">min</span> = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> j=i+<span class="number">1</span>;j&lt;n;j++)</span><br><span class="line">            <span class="keyword">if</span>(nums[j] &lt; nums[<span class="built_in">min</span>])</span><br><span class="line">                <span class="built_in">min</span> = j;</span><br><span class="line"></span><br><span class="line">        swap(nums,i,<span class="built_in">min</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
@@ -515,6 +517,7 @@
 <li>平均时间复杂度 O(n^2)，最好时间复杂度O(n), 最坏时间复杂度O(n^2)</li>
 <li>空间复杂度O(1) </li>
 <li>稳定排序</li>
+<li>应用场景：数据量小且基本有序</li>
 </ul>
 <p>代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> t = nums[i];</span><br><span class="line">        <span class="keyword">int</span> j = i;</span><br><span class="line">        <span class="keyword">for</span> (; j &gt; <span class="number">0</span> &amp;&amp; nums[j<span class="number">-1</span>] &gt; t; j--)</span><br><span class="line">            nums[j] = nums[j<span class="number">-1</span>];</span><br><span class="line"></span><br><span class="line">        nums[j] = t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
@@ -540,6 +543,12 @@
 <li>不稳定排序</li>
 </ul>
 <p>代码如下：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="built_in">sort</span>(<span class="built_in">int</span>[] nums)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> n = nums.length;</span><br><span class="line">    <span class="comment">//初始化一个最大堆</span></span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">cursor</span> = nums.length / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="built_in">cursor</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        maxHeap(nums, n, i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i=n<span class="number">-1</span>;i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line">        swap(nums,<span class="number">0</span>,i);  <span class="comment">// 将最大的放到数组末尾</span></span><br><span class="line">        maxHeap(nums,i,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最大堆 root = i, left = 2*i+1, right = 2*i+2</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> maxHeap(<span class="built_in">int</span>[] nums, <span class="built_in">int</span> <span class="built_in">size</span>, <span class="built_in">int</span> root) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> left = root * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">int</span> right = root * <span class="number">2</span> + <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">int</span> t = root;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(left &lt; <span class="built_in">size</span> &amp;&amp; nums[left] &gt; nums[t])</span><br><span class="line">        t = left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(right &lt; <span class="built_in">size</span> &amp;&amp; nums[right] &gt; nums[t])</span><br><span class="line">        t = right;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(t != root)&#123;   <span class="comment">// 子节点比根节点大</span></span><br><span class="line">        swap(nums,root,t);</span><br><span class="line">        maxHeap(nums,<span class="built_in">size</span>,t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="应用场景总结"><a href="#应用场景总结" class="headerlink" title="应用场景总结"></a>应用场景总结</h3><ul>
+<li>当数据规模比较小，可以选择插入排序或者选择排序。</li>
+<li>若数据基本有序，插入排序、冒泡排序或者快速排序比较好。</li>
+<li>若数据量比较大，一般选择快速排序（随机分布）、归并排序（辅助空间小）和堆排序（稳定）。</li>
+</ul>
 <hr>
 <ul>
 <li><a href="https://blog.csdn.net/qq_39098813/article/details/79950444" target="_blank" rel="noopener">动画演示</a></li>
@@ -840,7 +849,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">4.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-number">5.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">6.</span> <span class="nav-text">堆排序</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">4.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-number">5.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">6.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用场景总结"><span class="nav-number">7.</span> <span class="nav-text">应用场景总结</span></a></li></ol></div>
             
 
           </div>
