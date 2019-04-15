@@ -161,7 +161,7 @@
 <meta property="og:image" content="https://9191rs.me/posts/15239/3.jpg">
 <meta property="og:image" content="https://9191rs.me/posts/15239/4.jpg">
 <meta property="og:image" content="https://9191rs.me/posts/15239/5.jpg">
-<meta property="og:updated_time" content="2019-04-03T01:26:34.800Z">
+<meta property="og:updated_time" content="2019-04-15T09:11:28.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot&amp;Netty实现仿微信网页版">
 <meta name="twitter:description" content="前言Netty是一个基于基于Java NIO的网络应用框架和client-server框架，提供了对TCP、UDP和文件传输的支持。Netty不仅能实现消息的转发，而且可以主动推送消息给客户端。在学习过程中，突然想到可以用Netty作为核心，用WebSocket为应用层通信协议做一个互联网聊天系统。WebSocket是一种基于Http协议开发的一种支持浏览器和服务端进行全双工通信的协议。它的特点是">
@@ -467,7 +467,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,969
+                  2,008
                 </span>
               
 
@@ -511,6 +511,7 @@
 <li><strong>消息签收</strong><br>对消息进行签收的目的是确定消息已经到达了对方的电脑。没有签收的消息，会在用户下次登录的过程中，全部被改用户所接受。</li>
 <li><strong>心跳包</strong><br>Netty提供了空闲状态事件，如果在一定时间内收不到心跳包，就可以认为用户已经下线，应该移除相应的WebSockt连接。</li>
 </ul>
+<p>此外，本项目还引入了Redis作为Service层缓存，对用户经常访问的数据进行缓存，减少对MySql数据库的访问。</p>
 <h3 id="前端功能模块"><a href="#前端功能模块" class="headerlink" title="前端功能模块"></a>前端功能模块</h3><p>前端主要分为两个模块：登录和注册模块和聊天模块。</p>
 <h4 id="登录和注册模块"><a href="#登录和注册模块" class="headerlink" title="登录和注册模块"></a>登录和注册模块</h4><p>登录和注册模块主要是进行用户信息管理，登录或者注册成功后，会将用户的信息保存到本地。</p>
 <h4 id="聊天模块"><a href="#聊天模块" class="headerlink" title="聊天模块"></a>聊天模块</h4><p>聊天模块又可以分为三个小的模块：聊天快照、联系人列表和聊天窗口。</p>
