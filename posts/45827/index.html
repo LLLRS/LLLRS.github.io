@@ -156,7 +156,7 @@
 <meta property="og:description" content="问题springboot应用运行在docker容器中，由于害怕文件丢失，所以mysql并没有容器化部署。于是就需要在docker容器里访问到本地的数据库，但是在docker容器里localhost并不是指宿主机的localhost，因此并不能在容器中通过localhost:3306访问到宿主机的mysql。 解决方法step1用ifconfig命令查看docker在运行时就虚拟网卡docker0的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://9191rs.me/posts/45827/1.jpg">
-<meta property="og:updated_time" content="2019-08-30T10:54:19.726Z">
+<meta property="og:updated_time" content="2019-08-30T10:58:06.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker容器内连接宿主机的Mysql服务器">
 <meta name="twitter:description" content="问题springboot应用运行在docker容器中，由于害怕文件丢失，所以mysql并没有容器化部署。于是就需要在docker容器里访问到本地的数据库，但是在docker容器里localhost并不是指宿主机的localhost，因此并不能在容器中通过localhost:3306访问到宿主机的mysql。 解决方法step1用ifconfig命令查看docker在运行时就虚拟网卡docker0的">
@@ -492,7 +492,7 @@
 <p><img src="/posts/45827/1.jpg" alt=" "></p>
 <p>所以可以在容器里通过172.0.17.1:3306访问到宿主机的mysql服务器。</p>
 <h4 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h4><p>登录mysql，设置mysql允许其他IP访问。</p>
-<p>方法一：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GRANT <span class="literal">ALL</span> PRIVILEGES <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">'pwd'</span> <span class="keyword">WITH</span> GRANT OPTION;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其中各字符的含义：</span></span><br><span class="line"><span class="comment">// *.* 对任意数据库任意表有效</span></span><br><span class="line"><span class="comment">// "root" "pwd" 是数据库用户名和密码</span></span><br><span class="line"><span class="comment">// '%' 允许访问数据库的IP地址，%意思是任意IP，也可以指定IP</span></span><br><span class="line"><span class="comment">// flush privileges 刷新权限信息</span></span><br></pre></td></tr></table></figure></p>
+<p>方法一<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GRANT <span class="literal">ALL</span> PRIVILEGES <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">'pwd'</span> <span class="keyword">WITH</span> GRANT OPTION;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其中各字符的含义：</span></span><br><span class="line"><span class="comment">// *.* 对任意数据库任意表有效</span></span><br><span class="line"><span class="comment">// "root" "pwd" 是数据库用户名和密码</span></span><br><span class="line"><span class="comment">// '%' 允许访问数据库的IP地址，%意思是任意IP，也可以指定IP</span></span><br><span class="line"><span class="comment">// flush privileges 刷新权限信息</span></span><br></pre></td></tr></table></figure></p>
 <p>方法二<br>打开mysql的配置文件/etc/my.cnf，找到配置文件中带有”bind-address=”这个字眼，并使得这个地址为0.0.0.0，如果没有找到，则在配置文件夹下找到[mysqld]，加上bind-address=0.0.0.0;</p>
 <p>重启服务：service mysqld restart</p>
 
@@ -536,6 +536,12 @@
 			<div class="post-nav-next post-nav-item">
 
 		      
+
+		       <a href="/posts/53801/" rel="prev" title="MySQL中排名问题">
+
+		          <i class="fa fa-chevron-left"></i> MySQL中排名问题
+				</a>
+			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -658,7 +664,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -680,7 +686,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
