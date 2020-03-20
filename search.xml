@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Java 8 Lambda-两个list的交集</title>
+      <link href="/posts/52567/"/>
+      <url>/posts/52567/</url>
+      
+        <content type="html"><![CDATA[<p>** 目的<br>利用Java8 Lambda求两个list的交集</p><p>代码如下：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line"><span class="keyword">public</span> class Student &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">String</span> name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Student(<span class="keyword">String</span> name, Integer age) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">boolean</span> equals(<span class="keyword">Object</span> o) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || getClass() != o.getClass()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Student student = (Student) o;</span><br><span class="line">        <span class="keyword">return</span> name.equals(student.name) &amp;&amp;</span><br><span class="line">                age.equals(student.age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> hashCode() &#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hash(name, age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line"></span><br><span class="line">        Student s1 = <span class="keyword">new</span> Student(<span class="string">"lisi"</span>, <span class="number">20</span>);</span><br><span class="line">        Student s2 = <span class="keyword">new</span> Student(<span class="string">"wangwu"</span>, <span class="number">21</span>);</span><br><span class="line">        Student s3 = <span class="keyword">new</span> Student(<span class="string">"lisi"</span>, <span class="number">22</span>);</span><br><span class="line">        Student s4 = <span class="keyword">new</span> Student(<span class="string">"zhaoliu"</span>, <span class="number">24</span>);</span><br><span class="line"></span><br><span class="line">        List&lt;Student&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list1.<span class="built_in">add</span>(s1);</span><br><span class="line">        list1.<span class="built_in">add</span>(s2);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        List&lt;Student&gt; list2 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list2.<span class="built_in">add</span>(s1);</span><br><span class="line">        list1.<span class="built_in">add</span>(s3);</span><br><span class="line">        list2.<span class="built_in">add</span>(s4);</span><br><span class="line"></span><br><span class="line">        List&lt;Student&gt; intersect = list1.stream()</span><br><span class="line">                .<span class="built_in">filter</span>(list2::contains)</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">        intersect.stream().forEach(System.out::<span class="built_in">println</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p><p><strong> 细节 </strong><br>List的contains()方法底层实现使用对象的equals方法去比较的，其实重写equals()就好，但重写了equals最好将hashCode也重写了</p><hr><p>参考链接</p><ul><li><a href="https://qinjiangbo.com/thought-about-list-contains-method.html" target="_blank" rel="noopener">关于List-contains方法的一些思考</a></li><li><a href="https://blog.csdn.net/ianly123/article/details/82658622" target="_blank" rel="noopener">使用 Java8的 stream对list数据去重</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Lambda </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> Lambda </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpringBoot 利用Apache POI 导入和导出Excel</title>
       <link href="/posts/40285/"/>
       <url>/posts/40285/</url>
@@ -1732,9 +1759,9 @@
     
     
     <entry>
-      <title>关于我</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>标签</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -1743,9 +1770,9 @@
     
     
     <entry>
-      <title>标签</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>关于我</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       

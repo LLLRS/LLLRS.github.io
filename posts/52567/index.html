@@ -134,7 +134,7 @@
 
 
 
-  <meta name="keywords" content="算法,Java,leetcode,">
+  <meta name="keywords" content="Java,Lambda,">
 
 
 
@@ -147,18 +147,18 @@
 
 
 
-<meta name="description" content="题目要求：给定2D平面上的n个点，找出位于同一条直线上的最大点数。 解决思路这个问题的一种方案是考虑两点之间斜率，把斜率相同的点放置在一个表中，再找到包含最多点的斜率。这个其中有两点需要关注，一个是点坐标的取值范围，一个是涉及斜率计算的问题。我的想法是对于每一个点，分别计算在它之后的所有不同点的斜率，并且用一个Map集合存起来，对于这个点，找出斜率最大的那个。考虑它的正确性，我们可以假设一种极端">
-<meta name="keywords" content="算法,Java,leetcode">
+<meta name="description" content="** 目的利用Java8 Lambda求两个list的交集 代码如下：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556@Datapublic class Student &amp;#123;    private String name;    pr">
+<meta name="keywords" content="Java,Lambda">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 第149题  Max Points on a Line">
-<meta property="og:url" content="https://9191rs.me/posts/33753/index.html">
+<meta property="og:title" content="Java 8 Lambda-两个list的交集">
+<meta property="og:url" content="https://9191rs.me/posts/52567/index.html">
 <meta property="og:site_name" content="爱生活,爱柒柒">
-<meta property="og:description" content="题目要求：给定2D平面上的n个点，找出位于同一条直线上的最大点数。 解决思路这个问题的一种方案是考虑两点之间斜率，把斜率相同的点放置在一个表中，再找到包含最多点的斜率。这个其中有两点需要关注，一个是点坐标的取值范围，一个是涉及斜率计算的问题。我的想法是对于每一个点，分别计算在它之后的所有不同点的斜率，并且用一个Map集合存起来，对于这个点，找出斜率最大的那个。考虑它的正确性，我们可以假设一种极端">
+<meta property="og:description" content="** 目的利用Java8 Lambda求两个list的交集 代码如下：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556@Datapublic class Student &amp;#123;    private String name;    pr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-01T11:12:25.871Z">
+<meta property="og:updated_time" content="2020-03-20T14:10:47.496Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode 第149题  Max Points on a Line">
-<meta name="twitter:description" content="题目要求：给定2D平面上的n个点，找出位于同一条直线上的最大点数。 解决思路这个问题的一种方案是考虑两点之间斜率，把斜率相同的点放置在一个表中，再找到包含最多点的斜率。这个其中有两点需要关注，一个是点坐标的取值范围，一个是涉及斜率计算的问题。我的想法是对于每一个点，分别计算在它之后的所有不同点的斜率，并且用一个Map集合存起来，对于这个点，找出斜率最大的那个。考虑它的正确性，我们可以假设一种极端">
+<meta name="twitter:title" content="Java 8 Lambda-两个list的交集">
+<meta name="twitter:description" content="** 目的利用Java8 Lambda求两个list的交集 代码如下：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556@Datapublic class Student &amp;#123;    private String name;    pr">
 
 
 
@@ -191,13 +191,13 @@
 
 
 
-  <link rel="canonical" href="https://9191rs.me/posts/33753/">
+  <link rel="canonical" href="https://9191rs.me/posts/52567/">
 
 
 
 
 
-  <title>leetcode 第149题  Max Points on a Line | 爱生活,爱柒柒</title>
+  <title>Java 8 Lambda-两个list的交集 | 爱生活,爱柒柒</title>
   
 
 
@@ -375,7 +375,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/33753/">
+    <link itemprop="mainEntityOfPage" href="https://9191rs.me/posts/52567/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LI Ren">
@@ -392,7 +392,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">leetcode 第149题  Max Points on a Line</h1>
+          <h1 class="post-title" itemprop="name headline">Java 8 Lambda-两个list的交集</h1>
         
 
         <div class="post-meta">
@@ -404,8 +404,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T20:58:29+08:00">
-                2018-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T21:55:47+08:00">
+                2020-03-20
               </time>
             
 
@@ -427,8 +427,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/Lambda/" itemprop="url" rel="index">
+                    <span itemprop="name">Lambda</span>
                   </a>
                 </span>
 
@@ -460,7 +460,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  503
+                  273
                 </span>
               
 
@@ -485,62 +485,16 @@
       
 
       
-        <a id="more"></a>
-<h2 id="题目要求："><a href="#题目要求：" class="headerlink" title="题目要求："></a>题目要求：</h2><p>给定2D平面上的n个点，找出位于同一条直线上的最大点数。</p>
-<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>这个问题的一种方案是考虑两点之间斜率，把斜率相同的点放置在一个表中，再找到包含最多点的斜率。这个其中有两点需要关注，一个是点坐标的取值范围，一个是涉及斜率计算的问题。<br>我的想法是对于每一个点，分别计算在它之后的所有不同点的斜率，并且用一个Map集合存起来，对于这个点，找出斜率最大的那个。考虑它的正确性，我们可以假设一种极端情况，即给定所有的点都在一条直线上，那么第一个点中肯定已经可以计算所要的结果，其他的点虽然能正常运行，但是同一个斜率得到结果肯定比第一个少。<br>这里还要指出的是，斜率计算的问题，当横坐标相同时，用Integer.MAX_VALUE表示。考虑到Double运算可能会出现精度溢出情况，采用了BigDecimal类来计算精确结果。</p>
-<h2 id="java代码"><a href="#java代码" class="headerlink" title="java代码"></a>java代码</h2><pre><code>/**
- * Definition for a point.
- * class Point {
- *     int x;
- *     int y;
- *     Point() { x = 0; y = 0; }
- *     Point(int a, int b) { x = a; y = b; }
- * }
- */
-class Solution {
-    public  int maxPoints(Point[] points) {
-        int res = 1;
-        if(points.length==0) return 0;
+        <p>** 目的<br>利用Java8 Lambda求两个list的交集</p>
+<p>代码如下：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line"><span class="keyword">public</span> class Student &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">String</span> name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Student(<span class="keyword">String</span> name, Integer age) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">boolean</span> equals(<span class="keyword">Object</span> o) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || getClass() != o.getClass()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Student student = (Student) o;</span><br><span class="line">        <span class="keyword">return</span> name.equals(student.name) &amp;&amp;</span><br><span class="line">                age.equals(student.age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> hashCode() &#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hash(name, age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</span><br><span class="line"></span><br><span class="line">        Student s1 = <span class="keyword">new</span> Student(<span class="string">"lisi"</span>, <span class="number">20</span>);</span><br><span class="line">        Student s2 = <span class="keyword">new</span> Student(<span class="string">"wangwu"</span>, <span class="number">21</span>);</span><br><span class="line">        Student s3 = <span class="keyword">new</span> Student(<span class="string">"lisi"</span>, <span class="number">22</span>);</span><br><span class="line">        Student s4 = <span class="keyword">new</span> Student(<span class="string">"zhaoliu"</span>, <span class="number">24</span>);</span><br><span class="line"></span><br><span class="line">        List&lt;Student&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list1.<span class="built_in">add</span>(s1);</span><br><span class="line">        list1.<span class="built_in">add</span>(s2);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        List&lt;Student&gt; list2 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list2.<span class="built_in">add</span>(s1);</span><br><span class="line">        list1.<span class="built_in">add</span>(s3);</span><br><span class="line">        list2.<span class="built_in">add</span>(s4);</span><br><span class="line"></span><br><span class="line">        List&lt;Student&gt; intersect = list1.stream()</span><br><span class="line">                .<span class="built_in">filter</span>(list2::contains)</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">        intersect.stream().forEach(System.out::<span class="built_in">println</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong> 细节 </strong><br>List的contains()方法底层实现使用对象的equals方法去比较的，其实重写equals()就好，但重写了equals最好将hashCode也重写了</p>
+<hr>
+<p>参考链接</p>
+<ul>
+<li><a href="https://qinjiangbo.com/thought-about-list-contains-method.html" target="_blank" rel="noopener">关于List-contains方法的一些思考</a></li>
+<li><a href="https://blog.csdn.net/ianly123/article/details/82658622" target="_blank" rel="noopener">使用 Java8的 stream对list数据去重</a></li>
+</ul>
 
-        for(int i =0;i&lt;points.length;i++){
-            HashMap&lt;Double,Integer&gt; hm = new HashMap&lt;&gt;();
-            hm.put((double) Integer.MIN_VALUE,1);//当points数组不空时，直线上必有一点
-
-            int de = 0;
-            for(int j=i+1;j&lt;points.length;j++){
-
-                if((points[i].y==points[j].y)&amp;&amp;(points[i].x==points[j].x)){ 
-                    de++;
-                }else{
-                    double tt = dis(points[i],points[j]);
-                    if(hm.containsKey(tt))
-                        hm.put(tt,hm.get(tt)+1);
-                    else
-                        hm.put(tt,2);               
-                }   
-            }
-
-
-            for(int re:hm.values())                 
-                res  = Math.max(res, de+re);
-        }
-
-        return res;
-    }
-
-    public static double dis(Point p1, Point p2) {
-
-        if((p1.x-p2.x)==0) 
-            return (double)Integer.MAX_VALUE;
-        if(p1.y==p2.y) 
-            return 0;
-        java.math.BigDecimal bd1 = new java.math.BigDecimal(Double.toString(p1.y-p2.y)); 
-        java.math.BigDecimal bd2 = new java.math.BigDecimal(Double.toString(p1.x-p2.x)); 
-        return bd1.divide  
-               (bd2,16,java.math.BigDecimal.ROUND_HALF_UP).doubleValue(); 
-    }
-}
-</code></pre>
       
     </div>
     
@@ -550,7 +504,7 @@ class Solution {
 	  
 		<div class="copyright">
 		<p><span>
-		<b>本文地址：</b><a href="/posts/33753/" title="leetcode 第149题  Max Points on a Line">https://9191rs.me/posts/33753/</a><br><b>转载请注明出处，谢谢！</b>
+		<b>本文地址：</b><a href="/posts/52567/" title="Java 8 Lambda-两个list的交集">https://9191rs.me/posts/52567/</a><br><b>转载请注明出处，谢谢！</b>
 		</span></p>
 		</div>
 	  
@@ -567,11 +521,9 @@ class Solution {
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
-          
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+            <a href="/tags/Lambda/" rel="tag"># Lambda</a>
           
         </div>
       
@@ -585,12 +537,6 @@ class Solution {
 			<div class="post-nav-next post-nav-item">
 
 		      
-
-		       <a href="/posts/34037/" rel="prev" title="基于链表的几种排序方法">
-
-		          <i class="fa fa-chevron-left"></i> 基于链表的几种排序方法
-				</a>
-			  
 			</div>
 
 			<span class="post-nav-divider"></span>
@@ -599,9 +545,9 @@ class Solution {
 
 		      
 		
-		        <a href="/posts/56041/" rel="next" title="leetcode Two Sum问题">
+		        <a href="/posts/40285/" rel="next" title="SpringBoot 利用Apache POI 导入和导出Excel">
 		
-		         leetcode Two Sum问题 <i class="fa fa-chevron-right"></i>
+		         SpringBoot 利用Apache POI 导入和导出Excel <i class="fa fa-chevron-right"></i>
 				</a>
 			  
 			</div>
@@ -686,17 +632,8 @@ class Solution {
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -826,22 +763,6 @@ show_date_time();
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目要求："><span class="nav-number">1.</span> <span class="nav-text">题目要求：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">2.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java代码"><span class="nav-number">3.</span> <span class="nav-text">java代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
