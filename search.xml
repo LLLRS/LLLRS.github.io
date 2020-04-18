@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[优雅的使用validator进行参数校验]]></title>
+    <url>%2Fposts%2F60112%2F</url>
+    <content type="text"><![CDATA[https://juejin.im/post/5d3fbeb46fb9a06b317b3c48]]></content>
+      <categories>
+        <category>validator</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>validator</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[StringBoot中Autowired踩坑坑记录]]></title>
     <url>%2Fposts%2F52614%2F</url>
     <content type="text"><![CDATA[问题在开发一个im项目的时候用到了一个第三方sdk，这个sdk给的初始化方式是新建对象来实现的，这样在使用它的回调接口中使用一个@Autowired注入的类，但是一直报空指针异常。 分析 @Autowired注入的类应该是被被spring容器管理的类，也就是被贴有@Controller,@Service,@Repository,@Component等注解的类，且这些类都能被扫描到 使用@Autowired类本身应该也被spring容器管理，也就是说这个类就要从容器中拿,而不能直接new出来 而我现在的问题就是第二点。 解决思路由于sdk已经被封装好了，所以不是像改动它，这样的化就必须手动去spring容器中拿要用的类。 OffmsgMapper offmsgMapper = (OffmsgMapper) SpringUtil.getBean(“offmsgMapper”); 封装的SpringUtil如下：1234567891011121314151617181920212223242526272829303132333435363738394041import org.springframework.beans.BeansException;import org.springframework.context.ApplicationContext;import org.springframework.context.ApplicationContextAware;import org.springframework.stereotype.Component;/** * @Description: 提供手动获取被spring管理的bean对象 */@Componentpublic class SpringUtil implements ApplicationContextAware &#123; private static ApplicationContext applicationContext; @Override public void setApplicationContext(ApplicationContext applicationContext) throws BeansException &#123; if (SpringUtil.applicationContext == null) &#123; SpringUtil.applicationContext = applicationContext; &#125; &#125; // 获取applicationContext public static ApplicationContext getApplicationContext() &#123; return applicationContext; &#125; // 通过name获取 Bean. public static Object getBean(String name) &#123; return getApplicationContext().getBean(name); &#125; // 通过class获取Bean. public static &lt;T&gt; T getBean(Class&lt;T&gt; clazz) &#123; return getApplicationContext().getBean(clazz); &#125; // 通过name,以及Clazz返回指定的Bean public static &lt;T&gt; T getBean(String name, Class&lt;T&gt; clazz) &#123; return getApplicationContext().getBean(name, clazz); &#125;&#125; 参考链接 关于@Autowired后Spring无法注入的问题]]></content>
@@ -790,6 +802,11 @@
     <content type="text"><![CDATA[]]></content>
   </entry>
   <entry>
+    <title><![CDATA[关于我]]></title>
+    <url>%2Fabout%2Findex.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[分类]]></title>
     <url>%2Fcategories%2Findex.html</url>
     <content type="text"></content>
@@ -797,11 +814,6 @@
   <entry>
     <title><![CDATA[标签]]></title>
     <url>%2Ftags%2Findex.html</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
-    <title><![CDATA[关于我]]></title>
-    <url>%2Fabout%2Findex.html</url>
     <content type="text"></content>
   </entry>
   <entry>
